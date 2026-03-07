@@ -3,53 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas Pro</title>
+    <title>Generador de Ligas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
         
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; background-color: #0b1120;
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh; overflow-x: hidden;
-        }
+        /* FONDO DE VIDEO */
+        #video-viewport { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; background-color: #0b1120; }
+        #bg-video { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); }
 
-        /* FONDO OPTIMIZADO PARA MÓVILES */
-        #video-viewport {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden; background-color: #0b1120;
-        }
-        #bg-video {
-            position: absolute; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            /* Evita parpadeos en carga */
-            background-size: cover;
-        }
-        .overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); 
-        }
-
-        #login-screen { position: relative; z-index: 10; width: 100%; display: flex; justify-content: center; padding: 20px; }
-        .login-card { 
-            width: 100%; max-width: 380px; background: rgba(255, 255, 255, 0.98); 
-            padding: 2rem; border-radius: 2.5rem; text-align: center; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        #main-app { display: none; width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; z-index: 10; margin: 10px; }
-        .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; }
-        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; }
+        /* CARD PRINCIPAL */
+        .card-container { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; z-index: 10; }
+        .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; position: relative; }
+        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; line-height: 1; }
+        
+        /* LOGIN */
+        #main-app { display: none; }
+        #login-screen { position: relative; z-index: 100; display: flex; align-items: center; justify-content: center; width: 100%; padding: 20px; }
+        .login-card { width: 100%; max-width: 380px; background: white; padding: 2.5rem; border-radius: 3rem; text-align: center; }
         .error-msg { color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; }
-        
-        /* Ajuste para inputs en iOS (evita zoom automático) */
-        input[type="text"], input[type="password"], input[type="number"], select {
-            font-size: 16px !important;
-        }
     </style>
 </head>
 <body>
@@ -62,28 +36,28 @@
     </div>
 
     <div id="login-screen">
-        <div class="login-card">
-            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+        <div class="login-card shadow-2xl">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
             </div>
-            <h2 class="text-xl font-bold text-slate-800 mb-1">Bienvenido</h2>
-            <p class="text-slate-500 text-xs mb-6">Acceso exclusivo panel administrativo</p>
-            <div class="space-y-3">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-blue-500 font-medium">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-blue-500 font-medium">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Bienvenido</h2>
+            <p class="text-slate-400 text-sm mb-8">Ingresa tus credenciales</p>
+            <div class="space-y-4">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-4 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
+                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-4 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
                 <div id="login-error" class="error-msg">Credenciales incorrectas</div>
-                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all mt-2 uppercase text-xs tracking-widest">Entrar</button>
+                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all mt-4 uppercase tracking-wider text-sm">Entrar</button>
             </div>
         </div>
     </div>
 
-    <div id="main-app">
-        <div id="header-bg" class="bg-[#14b8a6] pt-6 pb-4">
-            <div class="w-16 h-16 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
+    <div id="main-app" class="card-container">
+        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
             <div class="px-6 mb-2">
-                <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-xs font-bold text-center outline-none backdrop-blur-md">
+                <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-sm font-bold text-center outline-none backdrop-blur-md">
                     <option value="tala|#14b8a6|#0d9488" class="text-black">Tala Préstamos</option>
                     <option value="nu|#820ad1|#581c87" class="text-black">Préstamos NU</option>
                     <option value="dida|#2563eb|#1d4ed8" class="text-black">DidaPréstamos</option>
@@ -92,50 +66,60 @@
                 </select>
             </div>
             <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white shadow-lg">
-                <span class="text-[9px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
+                <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
                 <div class="flex items-center mt-1">
-                    <span class="text-2xl font-bold mr-1">$</span>
+                    <span class="text-3xl font-bold mr-1">$</span>
                     <input type="number" id="input-monto" oninput="sync()" placeholder="0.00" class="input-monto">
                 </div>
             </div>
         </div>
 
-        <div class="p-6 space-y-4">
+        <div class="p-8 space-y-4">
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Subproducto</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Subproducto</span>
                 <span class="text-sm font-bold text-slate-800">Multa</span>
             </div>
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Importe</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Importe</span>
                 <span id="res-monto" class="text-sm font-bold text-slate-800">$0.00</span>
             </div>
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Vencimiento</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
                 <input type="date" id="f-venc" onchange="dias()" class="text-sm font-bold text-slate-800 outline-none">
             </div>
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Días</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Días Vencimiento</span>
                 <span id="res-dias" class="text-sm font-bold text-slate-800">0</span>
             </div>
 
-            <div class="bg-slate-50 rounded-[1.5rem] p-4 space-y-3 border border-slate-100">
-                <select class="w-full bg-white border border-slate-200 rounded-lg py-2 text-xs font-bold text-center outline-none">
-                    <option value="STP">Metodo: STP</option>
-                    <option value="BBVA">Metodo: BBVA</option>
-                </select>
-                <select class="w-full bg-white border border-slate-200 rounded-lg py-2 text-xs font-bold text-center text-blue-600 outline-none">
-                    <option>703010052250010635</option>
-                </select>
+            <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                        <option value="STP">STP</option>
+                        <option value="BBVA">BBVA</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                        <option value="703010052250010635">703010052250010635</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="space-y-3">
-                <input type="text" placeholder="Nombre del cliente" class="w-full border-b border-slate-200 py-1 text-sm font-bold outline-none">
-                <input type="text" placeholder="Teléfono" class="w-full border-b border-slate-200 py-1 text-sm font-bold outline-none">
+            <div class="space-y-4 pt-2">
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre del cliente</label>
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
+                </div>
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
+                </div>
             </div>
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-4 rounded-xl shadow-lg uppercase text-[10px] tracking-widest mt-2">
-                GENERAR LINK
-            </button>
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">GENERAR LINK</button>
         </div>
     </div>
 
@@ -177,16 +161,8 @@
             d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
         }
 
-        function confirmar() { alert("✅ Liga Generada"); }
+        function confirmar() { alert("✅ Liga Generada Correctamente"); }
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
-
-        // Forzar reproducción en móviles al cargar
-        document.addEventListener('DOMContentLoaded', () => {
-            const v = document.getElementById('bg-video');
-            v.play().catch(() => {
-                console.log("Autoplay bloqueado, esperando interacción");
-            });
-        });
     </script>
 </body>
 </html>
