@@ -9,34 +9,36 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .card-container { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2rem; }
+        
+        /* Ajuste de Monto para que NO opaque nada */
+        .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; position: relative; }
+        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; line-height: 1; }
+        
         #main-app { display: none; }
         #login-screen { position: fixed; inset: 0; background: #0b1120; display: flex; align-items: center; justify-content: center; z-index: 1000; }
         
-        /* Ajuste para que no se encimen */
-        .header-section { padding: 2rem 1.5rem; text-align: center; transition: all 0.4s; }
-        .monto-box { border-radius: 1.5rem; padding: 1.25rem; margin-top: 1rem; text-align: left; transition: all 0.4s; }
+        select { appearance: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <div class="w-full max-w-sm bg-white p-10 rounded-[2.5rem] text-center shadow-2xl">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6">Panel de Acceso</h2>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Acceso Privado</h2>
             <input type="text" id="user" placeholder="Usuario" class="w-full mb-4 px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500">
             <input type="password" id="pass" placeholder="Contraseña" class="w-full mb-6 px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500">
-            <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95">INGRESAR</button>
+            <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all">INGRESAR</button>
         </div>
     </div>
 
     <div id="main-app" class="card-container">
-        <div id="header-bg" class="header-section bg-[#14b8a6]">
-            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
+        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4 transition-all duration-500">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
 
-            <div class="relative w-full mb-2">
-                <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-sm font-bold text-center outline-none backdrop-blur-md appearance-none cursor-pointer">
+            <div class="px-6 mb-2">
+                <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-sm font-bold text-center outline-none backdrop-blur-md">
                     <option value="tala|#14b8a6|#0d9488" class="text-black">Tala Préstamos</option>
                     <option value="nu|#820ad1|#581c87" class="text-black">Préstamos NU</option>
                     <option value="dida|#2563eb|#1d4ed8" class="text-black">DidaPréstamos</option>
@@ -46,68 +48,76 @@
             </div>
             
             <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white shadow-lg">
-                <span class="text-[9px] font-bold opacity-80 uppercase tracking-tighter">Monto de Pago</span>
-                <div class="flex items-center">
+                <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
+                <div class="flex items-center mt-1">
                     <span class="text-3xl font-bold mr-1">$</span>
                     <input type="number" id="input-monto" oninput="sync()" placeholder="0.00" class="input-monto">
                 </div>
             </div>
         </div>
 
-        <div class="p-6 space-y-4">
+        <div class="p-8 space-y-4">
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400">SUBPRODUCTO</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Subproducto</span>
                 <span class="text-sm font-bold text-slate-800">Multa</span>
             </div>
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400">IMPORTE</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Importe</span>
                 <span id="res-monto" class="text-sm font-bold text-slate-800">$0.00</span>
             </div>
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Vencimiento</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
                 <input type="date" id="f-venc" onchange="dias()" class="text-sm font-bold text-slate-800 outline-none">
             </div>
             <div class="flex justify-between items-center border-b border-slate-50 pb-2">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Días</span>
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Días Vencimiento</span>
                 <span id="res-dias" class="text-sm font-bold text-slate-800">0</span>
             </div>
 
-            <div class="bg-slate-50 rounded-2xl p-4 space-y-3">
+            <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
                 <div class="text-center">
-                    <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
-                    <select id="m-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2 text-sm font-bold text-center outline-none">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
+                    <select id="m-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none shadow-sm">
                         <option value="STP">STP</option>
                         <option value="BBVA">BBVA</option>
                         <option value="OXXO">Efectivo (OXXO/7-Eleven)</option>
                     </select>
                 </div>
                 <div class="text-center">
-                    <span class="text-[9px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
-                    <select id="l-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2 text-sm font-bold text-center text-blue-600 outline-none">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
+                    <select id="l-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none shadow-sm">
                         <option value="703010052250010635">703010052250010635</option>
                         <option value="1235132812492191">1235132812492191</option>
                     </select>
                 </div>
             </div>
 
-            <div class="space-y-3 px-1">
-                <div class="border-b border-slate-200">
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Nombre</label>
-                    <input type="text" placeholder="Nombre del cliente" class="w-full py-1 text-sm font-medium outline-none">
+            <div class="space-y-4 pt-2">
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre</label>
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
-                <div class="border-b border-slate-200">
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" placeholder="Número telefónico" class="w-full py-1 text-sm font-medium outline-none">
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
             </div>
 
-            <button onclick="alert('Generado')" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-4 rounded-2xl shadow-xl uppercase text-[11px] tracking-widest mt-2 hover:brightness-110 active:scale-95 transition-all">
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 hover:brightness-110 active:scale-95 transition-all">
                 Confirmar y Generar Link
             </button>
         </div>
     </div>
 
     <script>
+        const logos = {
+            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png',
+            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
+            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
+            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
+            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'
+        };
+
         function acceder() {
             if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
                 document.getElementById('login-screen').style.display = 'none';
@@ -120,7 +130,7 @@
             document.getElementById('header-bg').style.backgroundColor = c1;
             document.getElementById('monto-card-bg').style.backgroundColor = c2;
             document.getElementById('btn-main').style.backgroundColor = c2;
-            // Actualizar logos si tienes las URLs
+            document.getElementById('app-logo').src = logos[id] || logos['tala'];
         }
 
         function sync() {
@@ -135,7 +145,11 @@
             let v = new Date(f + 'T00:00:00');
             let d = Math.ceil((v - hoy) / (1000 * 60 * 60 * 24));
             document.getElementById('res-dias').innerText = d;
+            document.getElementById('res-dias').style.color = d < 0 ? "#ef4444" : "#1e293b";
         }
+
+        function confirmar() { alert("✅ Liga Generada Correctamente"); }
+
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
