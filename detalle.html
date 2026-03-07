@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Pago</title>
+    <title>Resumen de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -11,53 +11,58 @@
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white w-full max-w-[440px] rounded-[2.5rem] overflow-hidden shadow-2xl text-slate-800">
-        <div class="bg-[#14b8a6] pt-10 pb-6 text-center text-white">
-            <h2 id="res-prod" class="text-xl font-bold uppercase tracking-widest">PRODUCTO</h2>
+    <div class="bg-white w-full max-w-[440px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+        <div id="header-color" class="bg-[#14b8a6] pt-12 pb-8 text-center text-white">
+            <div class="text-[10px] font-bold opacity-80 uppercase tracking-[0.3em] mb-2">Orden de Pago</div>
+            <h2 id="res-prod" class="text-2xl font-bold uppercase tracking-tight">PRODUCTO</h2>
         </div>
         
-        <div class="p-8 space-y-5">
-            <div class="space-y-4 border-b border-slate-100 pb-4">
-                <div class="flex justify-between items-center">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Importe a Pagar</span>
-                    <span id="res-mon" class="text-xl font-bold text-[#0d9488]"></span>
+        <div class="p-8 space-y-6">
+            <div class="text-center bg-slate-50 py-6 rounded-[2rem] border border-slate-100">
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Monto Total a Pagar</span>
+                <div id="res-mon" class="text-4xl font-bold text-[#0d9488] mt-1"></div>
+            </div>
+
+            <div class="space-y-4 px-2">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Nombre del Cliente</span>
+                    <span id="res-nom" class="text-sm font-bold text-slate-800"></span>
                 </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
-                    <span id="res-fec" class="text-sm font-bold"></span>
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
+                    <span id="res-fec" class="text-sm font-bold text-slate-800"></span>
                 </div>
             </div>
 
-            <div class="bg-slate-50 p-6 rounded-[2rem] text-center border border-slate-100">
-                <p class="text-[10px] font-bold text-blue-500 uppercase mb-2">Método de pago: BBVA</p>
-                <p class="text-blue-700 font-bold text-lg tracking-wider mb-1">703010052250010635</p>
-                <p class="text-[9px] text-slate-400 uppercase">Toca para copiar la CLABE</p>
+            <div class="bg-blue-50/50 p-6 rounded-[2rem] text-center border border-blue-100">
+                <p class="text-[10px] font-bold text-blue-500 uppercase mb-2">Transferencia SPEI (BBVA)</p>
+                <p class="text-blue-700 font-bold text-xl tracking-wider mb-2">703010052250010635</p>
+                <p class="text-[10px] text-blue-400 font-medium italic">Referencia: Concepto de pago</p>
             </div>
 
-            <div class="space-y-2 text-sm border-t pt-4">
-                <p class="flex justify-between"><span class="text-slate-400 font-bold text-[10px] uppercase">Cliente:</span> <span id="res-nom" class="font-bold"></span></p>
-            </div>
+            <button onclick="enviarConfirmacionWA()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-[1.5rem] shadow-xl hover:brightness-110 active:scale-95 transition-all uppercase text-xs tracking-widest">
+                Confirmar Pago vía WhatsApp
+            </button>
 
-            <button onclick="enviarWA()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-[1.5rem] shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
-                ENVIAR POR WHATSAPP
-            </button>
-            
-            <button onclick="window.history.back()" class="w-full text-slate-300 text-[10px] font-bold uppercase tracking-widest">
-                ← Regresar al generador
-            </button>
+            <p class="text-center text-[10px] text-slate-400 uppercase tracking-widest leading-relaxed">
+                Una vez realizado el depósito, favor de enviar el comprobante.
+            </p>
         </div>
     </div>
 
     <script>
-        const p = new URLSearchParams(window.location.search);
-        document.getElementById('res-nom').innerText = p.get('nombre') || '---';
-        document.getElementById('res-mon').innerText = '$' + (p.get('monto') || '0.00');
-        document.getElementById('res-fec').innerText = p.get('fecha') || '---';
-        document.getElementById('res-prod').innerText = p.get('prod') || 'PAGO';
+        // Extraer datos de la URL
+        const params = new URLSearchParams(window.location.search);
+        
+        document.getElementById('res-nom').innerText = params.get('nombre') || 'No especificado';
+        document.getElementById('res-mon').innerText = '$' + (params.get('monto') || '0.00');
+        document.getElementById('res-fec').innerText = params.get('fecha') || 'Hoy';
+        document.getElementById('res-prod').innerText = params.get('prod') || 'PRÉSTAMO';
 
-        function enviarWA() {
-            const msj = `*PAGO PENDIENTE*\n\n👤 *Cliente:* ${p.get('nombre')}\n💰 *Monto:* $${p.get('monto')}\n📅 *Vence:* ${p.get('fecha')}\n💳 *CLABE:* 703010052250010635`;
-            window.open(`https://wa.me/${p.get('tel')}?text=${encodeURIComponent(msj)}`, '_blank');
+        function enviarConfirmacionWA() {
+            const mensaje = `*CONFIRMACIÓN DE PAGO*\n\n✅ *Cliente:* ${params.get('nombre')}\n💰 *Monto:* $${params.get('monto')}\n📅 *Vencimiento:* ${params.get('fecha')}\n🏦 *Banco:* BBVA\n💳 *CLABE:* 703010052250010635\n\n_Adjunto mi comprobante de pago._`;
+            const telefono = params.get('tel') || '';
+            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
     </script>
 </body>
