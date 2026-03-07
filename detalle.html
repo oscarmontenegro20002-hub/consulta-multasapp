@@ -30,22 +30,26 @@
 
             <div class="space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Cliente</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Nombre del Cliente</span>
                     <span id="display-nombre" class="text-sm font-bold text-slate-800">Cargando...</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Vencimiento</span>
-                    <span id="display-fecha" class="text-sm font-bold text-slate-800">00/00/0000</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
+                    <span id="display-fecha" class="text-sm font-bold text-slate-800">---</span>
                 </div>
                 
-                <div class="bg-red-50 rounded-2xl p-4 border border-red-100 text-center">
-                    <span class="text-[10px] font-bold text-red-600 uppercase">La liga expira en:</span>
-                    <div id="timer" class="timer-red text-2xl my-1">30:00</div>
-                    <p class="text-[9px] text-red-500 font-medium">* Al llegar a 0, se cobrarán $500.00 adicionales.</p>
+                <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold text-red-600 uppercase">La liga expira en:</span>
+                        <span id="timer" class="timer-red text-lg">30:00</span>
+                    </div>
+                    <p class="text-[9px] text-red-500 mt-2 font-medium">
+                        * Al llegar a 0, se cobrarán <b>$500.00 pesos adicionales</b> por concepto de vencimiento.
+                    </p>
                 </div>
             </div>
 
-            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-2">
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
                 <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase">TRANSFERENCIA BBVA (SPEI)</span>
                 <div id="display-clabe" class="text-xl font-black text-blue-700 tracking-wider">000000000000000000</div>
             </div>
@@ -59,7 +63,6 @@
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        // CRUCIAL: Si no hay start en la URL, usa el momento actual como respaldo
         const startTime = parseInt(params.get('start')) || Date.now();
         
         document.getElementById('display-monto').innerText = "$" + parseFloat(params.get('monto') || 0).toLocaleString('en-US', {minimumFractionDigits: 2});
@@ -73,10 +76,7 @@
 
         const duracionTotal = 30 * 60 * 1000; 
         function actualizarTimer() {
-            const ahora = Date.now();
-            const transcurrido = ahora - startTime;
-            const restante = duracionTotal - transcurrido;
-
+            const restante = duracionTotal - (Date.now() - startTime);
             if (restante <= 0) {
                 document.getElementById('timer').innerText = "EXPIRADO";
                 clearInterval(intervalo);
@@ -86,9 +86,8 @@
                 document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
             }
         }
-
         const intervalo = setInterval(actualizarTimer, 1000);
-        actualizarTimer(); // Ejecución inmediata para evitar el salto de 30:00
+        actualizarTimer();
 
         function copiarLink() {
             navigator.clipboard.writeText(window.location.href).then(() => {
