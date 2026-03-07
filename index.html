@@ -34,4 +34,114 @@
                     <option value="dida|#2563eb|#1d4ed8">DiDa Préstamos</option>
                     <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
                     <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
-                    <option value="rapidos|#10b981|#0478
+                    <option value="rapidos|#10b981|#047857">Préstamos Rápidos</option>
+                </select>
+            </div>
+
+            <div id="monto-bg" class="monto-card">
+                <span class="text-[10px] uppercase font-bold text-white/70 tracking-widest">Monto de Pago</span>
+                <div class="flex items-center">
+                    <span class="text-3xl font-bold mr-1">$</span>
+                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-3xl font-bold outline-none w-full placeholder:text-white/30">
+                </div>
+            </div>
+        </div>
+
+        <div class="h-14"></div>
+
+        <div class="p-8 space-y-4">
+            <div class="flex justify-between border-b pb-2 items-center">
+                <span class="text-sm text-slate-500">Subproducto</span>
+                <select class="text-sm font-bold text-slate-800 bg-transparent outline-none">
+                    <option>Multa</option>
+                    <option>Recargo</option>
+                    <option>Liquidación Total</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between border-b pb-2 items-center">
+                <span class="text-sm text-slate-500">Importe a Pagar</span>
+                <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
+            </div>
+
+            <div class="flex justify-between border-b pb-2 items-center">
+                <span class="text-sm text-slate-500">Fecha Vencimiento</span>
+                <input type="date" id="fecha-venc" onchange="calcVencimiento()" class="text-sm font-bold text-slate-800 outline-none">
+            </div>
+
+            <div class="flex justify-between border-b pb-2 items-center">
+                <span class="text-sm text-slate-500">Días vencimiento</span>
+                <span id="dias-count" class="text-sm font-bold text-slate-800">0</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 text-center border border-slate-100 my-4">
+                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Liga de pago</p>
+                <p id="liga-texto" class="text-xs font-mono font-bold text-blue-600">0000000000</p>
+            </div>
+
+            <div class="space-y-3">
+                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b pb-1 outline-none focus:border-blue-500">
+                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b pb-1 outline-none focus:border-blue-500">
+            </div>
+
+            <button onclick="generar()" id="btn-final" class="w-full bg-[#003d7a] text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
+                Confirmar y Generar Link
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const logos = {
+            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png',
+            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
+            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
+            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
+            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png',
+            'rapidos': 'https://i.ibb.co/vY8N9zX/image-45ec84.png'
+        };
+
+        function changeProduct() {
+            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
+            document.getElementById('header').style.backgroundColor = c1;
+            document.getElementById('monto-bg').style.backgroundColor = c2;
+            document.getElementById('btn-final').style.backgroundColor = c2;
+            document.getElementById('main-logo').src = logos[id] || logos['tala'];
+        }
+
+        function syncMonto() {
+            const val = document.getElementById('input-monto').value || "0.00";
+            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
+
+        function calcVencimiento() {
+            const fValue = document.getElementById('fecha-venc').value;
+            if(!fValue) return;
+
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            const venc = new Date(fValue + 'T00:00:00');
+            
+            const diff = venc - hoy;
+            const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            
+            const el = document.getElementById('dias-count');
+            el.innerText = dias;
+            el.style.color = dias < 0 ? "#ef4444" : "#1e293b"; // Rojo si es negativo
+        }
+
+        function toggleFoto() {
+            const img = document.getElementById('main-logo');
+            img.style.visibility = img.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+
+        function generar() {
+            const ref = Math.random().toString(36).substring(7).toUpperCase();
+            document.getElementById('liga-texto').innerText = "https://pago.mx/REF-" + ref;
+            alert("✅ Liga generada.");
+        }
+
+        // Fecha de hoy por defecto
+        document.getElementById('fecha-venc').value = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
