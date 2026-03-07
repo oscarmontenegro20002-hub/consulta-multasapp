@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Liga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b1120] flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl">
+        <div id="banner" class="bg-[#14b8a6] p-8 text-center text-white">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-80">Liga Generada para</p>
+            <h2 id="res-prod" class="text-xl font-bold mt-1">Producto</h2>
+        </div>
+        
+        <div class="p-8 space-y-6">
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-xs font-bold text-slate-400 uppercase">Cliente</span>
+                <span id="res-nom" class="text-sm font-bold text-slate-800">---</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-xs font-bold text-slate-400 uppercase">Monto Total</span>
+                <span id="res-mon" class="text-lg font-bold text-[#14b8a6]">$0.00</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-xs font-bold text-slate-400 uppercase">Vence el</span>
+                <span id="res-fec" class="text-sm font-bold text-slate-800">---</span>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-2xl text-center border border-blue-100">
+                <p class="text-[10px] font-bold text-blue-400 uppercase mb-1">Referencia de Pago (CLABE)</p>
+                <p class="text-blue-700 font-mono font-bold text-lg">703010052250010635</p>
+            </div>
+
+            <button onclick="enviarWA()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl shadow-lg shadow-green-500/20 active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span>ENVIAR POR WHATSAPP</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const p = new URLSearchParams(window.location.search);
+        document.getElementById('res-nom').innerText = p.get('nombre');
+        document.getElementById('res-mon').innerText = '$' + parseFloat(p.get('monto')).toLocaleString();
+        document.getElementById('res-fec').innerText = p.get('fecha');
+        document.getElementById('res-prod').innerText = p.get('prod');
+
+        function enviarWA() {
+            const msj = `*RESUMEN DE PAGO*\n\n👤 *Cliente:* ${p.get('nombre')}\n💰 *Monto:* $${p.get('monto')}\n📅 *Vence:* ${p.get('fecha')}\n💳 *CLABE:* 703010052250010635\n\n_Favor de enviar comprobante una vez realizado el pago._`;
+            window.open(`https://wa.me/${p.get('tel')}?text=${encodeURIComponent(msj)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
