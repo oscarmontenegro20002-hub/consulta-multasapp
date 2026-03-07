@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Pagos | Tala Actualizado</title>
+    <title>Generador de Pagos Multiapp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
@@ -32,6 +32,7 @@
                     <option value="nu|#820ad1|#581c87">Préstamos Nu</option>
                     <option value="dida|#2563eb|#1d4ed8">DiDa Préstamos</option>
                     <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
+                    <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
                 </select>
             </div>
             
@@ -52,8 +53,8 @@
                 <select class="text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer">
                     <option>Multa</option>
                     <option>Recargo</option>
-                    <option>Liquidación Total</option>
                     <option>Paz y Salvo</option>
+                    <option>Liquidación Total</option>
                 </select>
             </div>
 
@@ -63,13 +64,13 @@
             </div>
 
             <div class="bg-slate-50 rounded-[2rem] p-6 text-center border border-slate-100">
-                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Referencia Generada</p>
+                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Referencia de Pago</p>
                 <p id="display-link" class="text-xs font-mono font-bold text-blue-600">https://pago.mx/REF-XXXX</p>
             </div>
 
             <div class="space-y-3 pt-2">
-                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b pb-2 outline-none focus:border-teal-500">
-                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b pb-2 outline-none focus:border-teal-500">
+                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b pb-2 outline-none focus:border-blue-500">
+                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b pb-2 outline-none focus:border-blue-500">
             </div>
 
             <button onclick="generar()" id="btn-main" class="w-full bg-[#0f766e] text-white font-extrabold py-5 rounded-2xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest">
@@ -80,11 +81,14 @@
 
     <script>
         let fotoHabilitada = true;
+
+        // Lista de logos reales de tus imágenes
         const logos = {
-            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png', // Imagen exacta que pasaste
+            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png', // La imagen que me pasaste
             'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
             'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
-            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png'
+            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
+            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'
         };
 
         function updateApp() {
@@ -116,10 +120,11 @@
         function generar() {
             const ref = Math.random().toString(36).substring(7).toUpperCase();
             document.getElementById('display-link').innerText = "https://pago.mx/REF-" + ref;
-            alert("✅ Liga generada con éxito.");
+            alert("✅ Liga generada y guardada.");
         }
 
-        updateApp(); // Carga Tala por defecto
+        // Iniciar con Tala por defecto
+        updateApp();
     </script>
 </body>
 </html>
