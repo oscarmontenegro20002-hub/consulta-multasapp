@@ -9,6 +9,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
         .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
+        .timer-red { color: #ef4444; font-weight: 800; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -19,7 +21,7 @@
             <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase tracking-tight">PRODUCTO</h1>
         </div>
 
-        <div class="p-8 space-y-8">
+        <div class="p-8 space-y-6">
             <div class="bg-slate-50 rounded-[2rem] p-8 text-center border border-slate-100">
                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Monto Total a Pagar</span>
                 <div class="text-4xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
@@ -34,19 +36,27 @@
                     <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
                     <span id="display-fecha" class="text-sm font-bold text-slate-800">00/00/0000</span>
                 </div>
+                
+                <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold text-red-600 uppercase">La liga expira en:</span>
+                        <span id="timer" class="timer-red text-lg">30:00</span>
+                    </div>
+                    <p class="text-[9px] text-red-500 mt-2 leading-tight font-medium">
+                        * Al llegar a 0, se cobrarán <b>$500.00 pesos adicionales</b> por concepto de vencimiento de liga de pago.
+                    </p>
+                </div>
             </div>
 
             <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
                 <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block">TRANSFERENCIA BBVA (SPEI)</span>
                 <div id="display-clabe" class="text-xl font-black text-blue-700 tracking-wider">000000000000000000</div>
-                <p class="text-[10px] italic text-blue-400">Referencia: Multa</p>
+                <p class="text-[10px] italic text-blue-400">Referencia: Pago de Préstamo</p>
             </div>
 
             <button onclick="enviarWhatsApp()" class="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold py-5 rounded-[1.5rem] shadow-lg shadow-green-500/30 uppercase text-xs tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2">
                 Confirmar Pago vía WhatsApp
             </button>
-
-            <p class="text-center text-[10px] text-slate-400 font-medium pb-4">Una vez realizado el depósito, favor de enviar el comprobante.</p>
         </div>
     </div>
 
@@ -60,7 +70,6 @@
         let clabe = params.get('clabe') || "000000000000000000";
         const banco = params.get('banco') || "";
 
-        // Eliminamos todos los espacios del número CLABE
         clabe = clabe.replace(/\s+/g, '');
 
         document.getElementById('display-monto').innerText = "$" + parseFloat(monto).toLocaleString('en-US', {minimumFractionDigits: 2});
@@ -69,13 +78,34 @@
         document.getElementById('display-producto').innerText = producto;
         document.getElementById('display-clabe').innerText = clabe;
 
-        // Ajuste dinámico del título según el banco
         const label = document.getElementById('display-banco-label');
         if (banco.includes("MERCADO PAGO")) {
             label.innerText = "TRANSFERENCIA MERCADO PAGO (SPEI)";
         } else {
             label.innerText = "TRANSFERENCIA BBVA (SPEI)";
         }
+
+        // LÓGICA DEL CRONÓMETRO (30 MINUTOS)
+        let tiempo = 30 * 60; // 30 minutos en segundos
+        const timerDisplay = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            let minutos = Math.floor(tiempo / 60);
+            let segundos = tiempo % 60;
+
+            segundos = segundos < 10 ? '0' + segundos : segundos;
+            minutos = minutos < 10 ? '0' + minutos : minutos;
+
+            timerDisplay.innerText = `${minutos}:${segundos}`;
+
+            if (tiempo <= 0) {
+                clearInterval(countdown);
+                timerDisplay.innerText = "EXPIRADO";
+                // Aquí podrías sumar los 500 al monto visualmente si quisieras
+            } else {
+                tiempo--;
+            }
+        }, 1000);
 
         function enviarWhatsApp() {
             const mensaje = `Hola, mi nombre es ${nombre}. Adjunto mi comprobante de pago de ${producto} por la cantidad de $${monto}.`;
@@ -85,4 +115,3 @@
     </script>
 </body>
 </html>
-
