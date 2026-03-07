@@ -8,7 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         
-        /* Estilos base (Mantenidos del generador original) */
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
@@ -17,7 +16,7 @@
             justify-content: center; 
             min-height: 100vh; 
             padding: 20px; 
-            background-color: #0b1120; /* Fondo oscuro por defecto */
+            background-color: #0b1120; 
         }
         
         .card-container { 
@@ -47,92 +46,68 @@
             line-height: 1; 
         }
 
-        /* --- ESTILOS DE LOGIN (NUEVOS CON FONDO) --- */
-        #main-app { 
-            display: none; /* Oculto al inicio */
-        }
+        /* --- LOGIN CON VIDEO DE PIXABAY --- */
+        #main-app { display: none; }
         
         #login-screen { 
-            position: fixed; 
-            inset: 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1000; 
-            overflow: hidden;
+            position: fixed; inset: 0; 
+            display: flex; align-items: center; justify-content: center; 
+            z-index: 1000; overflow: hidden;
         }
 
-        /* Capa para el fondo con movimiento */
         .login-bg-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
             transform: translate(-50%, -50%);
             z-index: -2;
             object-fit: cover;
+            filter: brightness(0.6); /* Oscurece un poco el video para que resalte la tarjeta */
         }
 
-        /* Capa de oscurecimiento sobre el video para mejor contraste */
         .login-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(11, 17, 32, 0.7); /* Oscuro semi-transparente */
+            position: absolute; inset: 0;
+            background: rgba(11, 17, 32, 0.4); 
             z-index: -1;
         }
 
         .login-card { 
-            width: 100%; 
-            max-width: 380px; 
-            background: white; 
-            padding: 2.5rem; 
-            border-radius: 3rem; 
-            text-align: center; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
+            width: 100%; max-width: 380px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 2.5rem; border-radius: 3rem; text-align: center; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         }
 
-        .error-msg { 
-            color: #ef4444; 
-            font-size: 12px; 
-            font-weight: 600; 
-            margin-top: 10px; 
-            display: none; 
-        }
+        .error-msg { color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <video autoplay loop muted playsinline class="login-bg-video">
-            <source src="URL_DIRECTA_DE_TU_VIDEO.mp4" type="video/mp4">
-            Tu navegador no soporta video html5.
+            <source src="https://cdn.pixabay.com/video/2022/04/10/113368-697525287_tiny.mp4" type="video/mp4">
         </video>
         
         <div class="login-overlay"></div>
 
         <div class="login-card">
-            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
             </div>
             
-            <h2 class="text-2xl font-bold text-slate-800 mb-2">Bienvenido</h2>
-            <p class="text-slate-400 text-sm mb-8 font-medium">Ingresa tus credenciales para acceder</p>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Acceso Seguro</h2>
+            <p class="text-slate-500 text-sm mb-8 font-medium">Ingresa para generar tus ligas</p>
             
             <div class="space-y-4">
-                <div class="relative">
-                    <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-4 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 transition-all font-medium">
-                </div>
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white outline-none focus:border-blue-500 transition-all font-medium">
                 
                 <div class="relative">
-                    <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-4 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 transition-all font-medium">
-                    <button onclick="togglePass()" class="absolute right-4 top-4 text-slate-300 hover:text-blue-500">
+                    <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white outline-none focus:border-blue-500 transition-all font-medium">
+                    <button onclick="togglePass()" class="absolute right-4 top-4 text-slate-400 hover:text-blue-500">
                         <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -140,10 +115,10 @@
                     </button>
                 </div>
 
-                <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
+                <div id="login-error" class="error-msg">Credenciales incorrectas</div>
                 
                 <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all mt-4 uppercase tracking-wider text-sm">
-                    Entrar al Sistema
+                    Entrar
                 </button>
             </div>
         </div>
@@ -195,7 +170,7 @@
             <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
-                    <select id="m-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none shadow-sm">
+                    <select id="m-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
                         <option value="STP">STP</option>
                         <option value="BBVA">BBVA</option>
                         <option value="OXXO">Efectivo (OXXO/7-Eleven)</option>
@@ -203,9 +178,8 @@
                 </div>
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
-                    <select id="l-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none shadow-sm">
+                    <select id="l-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
                         <option value="703010052250010635">703010052250010635</option>
-                        <option value="1235132812492191">1235132812492191</option>
                     </select>
                 </div>
             </div>
@@ -213,11 +187,11 @@
             <div class="space-y-4 pt-2">
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre</label>
-                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
             </div>
 
@@ -228,96 +202,7 @@
     </div>
 
     <script>
-        // --- LOGICA LOGIN ---
         function acceder() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            const error = document.getElementById('login-error');
-
-            if(u === "admin" && p === "123") {
-                // Transición suave para ocultar el login
-                document.getElementById('login-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('main-app').style.display = 'block';
-                    // Re-calcular días por si acaso
-                    dias();
-                }, 300); // 300ms coincide con la transición css si la hubiera
-            } else {
-                // Mostrar mensaje de error visual
-                error.style.display = 'block';
-                // Ocultar después de 3 segundos
-                setTimeout(() => {
-                    error.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // Botón Ojo para Contraseña
-        function togglePass() {
-            const passInput = document.getElementById('pass');
-            const eyeIcon = document.getElementById('eye-icon');
-            
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                // Opcional: cambiar icono a ojo tachado
-                // eyeIcon.innerHTML = '... SVG de ojo tachado ...';
-            } else {
-                passInput.type = "password";
-                // eyeIcon.innerHTML = '... SVG de ojo normal ...';
-            }
-        }
-
-        // --- LOGICA GENERADOR (SIN CAMBIOS) ---
-        const logos = {
-            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png',
-            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
-            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
-            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
-            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'
-        };
-
-        function updateApp() {
-            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-card-bg').style.backgroundColor = c2;
-            document.getElementById('btn-main').style.backgroundColor = c2;
-            document.getElementById('app-logo').src = logos[id] || logos['tala'];
-        }
-
-        function sync() {
-            let v = document.getElementById('input-monto').value || "0";
-            document.getElementById('res-monto').innerText = "$" + parseFloat(v).toLocaleString('en-US', {minimumFractionDigits: 2});
-        }
-
-        function dias() {
-            let f = document.getElementById('f-venc').value;
-            if(!f) return;
-            
-            // LÓGICA DE DÍAS CORREGIDA
-            let hoy = new Date();
-            hoy.setHours(0,0,0,0);
-            let venc = new Date(f + 'T00:00:00');
-            
-            // Cálculo exacto
-            let diffTime = venc.getTime() - hoy.getTime();
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            const display = document.getElementById('res-dias');
-            display.innerText = diffDays;
-            
-            // Si es negativo (vencido), ponerlo en rojo
-            if (diffDays < 0) {
-                display.style.color = "#ef4444"; // Rojo Tailwind
-            } else {
-                display.style.color = "#1e293b"; // Color normal Tailwind
-            }
-        }
-
-        function confirmar() { alert("✅ Liga Generada Correctamente"); }
-
-        // Inicializar fecha de hoy
-        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
-    </script>
-</body>
-</html>
+            if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-
