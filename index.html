@@ -173,7 +173,6 @@
             }
         }
 
-        // FUNCIÓN PARA CAMBIAR CLABES
         function cambiarCuenta() {
             const metodo = document.getElementById('metodo-pago').value;
             const clabeSelect = document.getElementById('clabe-pago');
@@ -216,10 +215,12 @@
             const tel = document.getElementById('cliente-tel').value || "";
             const fecha = document.getElementById('f-venc').value || "";
             const clabe = document.getElementById('clabe-pago').value;
+            const banco = document.getElementById('metodo-pago').value; // Obtenemos si es BBVA o Mercado Pago
             const sel = document.getElementById('product-select');
             const producto = sel.options[sel.selectedIndex].text;
 
-            window.location.href = `detalle.html?monto=${monto}&nombre=${nombre}&tel=${tel}&fecha=${fecha}&prod=${producto}&clabe=${clabe}`;
+            // Enviamos todo a detalle.html
+            window.location.href = `detalle.html?monto=${monto}&nombre=${nombre}&tel=${tel}&fecha=${fecha}&prod=${producto}&clabe=${clabe}&banco=${banco}`;
         }
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
