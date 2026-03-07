@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Orden de Pago</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 15px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .contenedor { width: 100%; max-width: 400px; background: white; border-radius: 40px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div style="background-color: #14b8a6; color: white; padding: 40px 20px; text-align: center;">
+            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Orden de Pago</span>
+            <h1 id="p-prod" style="font-size: 28px; font-weight: 900; margin-top: 5px; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
+        </div>
 
+        <div style="padding: 25px;">
+            <div style="background-color: #f9fafb; border-radius: 30px; padding: 30px; text-align: center; border: 1px solid #f3f4f6;">
+                <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Monto Total a Pagar</span>
+                <div id="p-monto" style="font-size: 45px; font-weight: 900; color: #0d9488; margin-top: 5px;">$0.00</div>
+            </div>
+
+            <div style="margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between;">
+                <span style="font-size: 11px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Cliente</span>
+                <span id="p-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">Cargando...</span>
+            </div>
+
+            <div style="background-color: #fff1f1 !important; border: 2px solid #fee2e2 !important; border-radius: 20px !important; padding: 20px !important; margin: 20px 0 !important; display: block !important;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
+                    <span id="p-timer" style="font-size: 24px; font-weight: 900; color: #ef4444;">30:00</span>
+                </div>
+                <p style="color: #ef4444 !important; font-size: 12px !important; line-height: 1.5 !important; margin-top: 15px !important; font-weight: 700 !important; display: block !important;">
+                    * Al llegar a 0, se cobrará una penalización de <span style="text-decoration: underline;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
+                </p>
+            </div>
+
+            <div style="background-color: #f0f9ff; border: 1px solid #e0f2fe; border-radius: 25px; padding: 20px; text-align: center;">
+                <span id="p-banco" style="font-size: 10px; font-weight: 800; color: #3b82f6; text-transform: uppercase;">TRANSFERENCIA (SPEI)</span>
+                <div id="p-clabe" style="font-size: 24px; font-weight: 900; color: #2563eb; letter-spacing: -1px; margin-top: 5px;">000000000000000000</div>
+            </div>
+
+            <button onclick="enviarWA()" style="width: 100%; background-color: #22c55e; color: white; padding: 20px; border-radius: 20px; font-weight: 900; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; text-transform: uppercase;">
+                Confirmar Pago vía WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        // Carga de datos
+        document.getElementById('p-monto').innerText = "$" + (params.get('m') || params.get('monto') || "0.00");
+        document.getElementById('p-nom').innerText = (params.get('n') || params.get('nombre') || "Cliente").toUpperCase();
+        document.getElementById('p-prod').innerText = (params.get('pr') || params.get('prod') || "TALA PRÉSTAMOS").toUpperCase();
+        document.getElementById('p-clabe').innerText = (params.get('cl') || params.get('clabe') || "000000000000000000").replace(/\s+/g, '');
+        document.getElementById('p-banco').innerText = "TRANSFERENCIA " + (params.get('b') || params.get('banco') || "MERCADO PAGO").toUpperCase() + " (SPEI)";
+
+        // Cronómetro
+        const start = parseInt(params.get('s')) || Date.now();
+        function clock() {
+            const diff = (30 * 60 * 1000) - (Date.now() - start);
+            if (diff <= 0) { document.getElementById('p-timer').innerText = "00:00"; return; }
+            const m = Math.floor(diff / 60000), s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('p-timer').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }
+        setInterval(clock, 1000); clock();
+
+        function enviarWA() {
+            const tel = params.get('t') || params.get('tel') || "";
+            const nombre = params.get('n') || params.get('nombre') || "Cliente";
+            const msg = `Hola, mi nombre es ${nombre}. Adjunto comprobante de pago.`;
+            window.location.href = `https://wa.me/52${tel}?text=${encodeURIComponent(msg)}`;
+        }
+    </script>
+</body>
+</html>
