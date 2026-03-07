@@ -76,12 +76,12 @@
             <p class="text-slate-500 font-medium mb-10">Ingresa tus credenciales para acceder</p>
             
             <div class="space-y-5">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
+                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
                 
                 <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
                 
-                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-600/20 active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
+                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
                     Entrar al Sistema
                 </button>
             </div>
@@ -132,14 +132,14 @@
             <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
-                    <select id="metodo-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
                         <option value="STP">STP</option>
                         <option value="BBVA">BBVA</option>
                     </select>
                 </div>
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
-                    <select id="clabe-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
                         <option value="703010052250010635">703010052250010635</option>
                     </select>
                 </div>
@@ -161,6 +161,7 @@
     </div>
 
     <script>
+        // LOGIN CORREGIDO - INDEPENDIENTE
         function acceder() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -197,8 +198,10 @@
             let venc = new Date(f + 'T00:00:00');
             let diffDays = Math.ceil((venc.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
             const d = document.getElementById('res-dias');
-            d.innerText = diffDays;
-            d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
+            if(d) {
+                d.innerText = diffDays;
+                d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
+            }
         }
 
         function confirmar() {
@@ -208,17 +211,9 @@
             const fecha = document.getElementById('f-venc').value || "";
             const sel = document.getElementById('product-select');
             const producto = sel.options[sel.selectedIndex].text;
-            
-            // Envío de datos al link de pago
-            const params = new URLSearchParams({
-                monto: monto,
-                nombre: nombre,
-                tel: tel,
-                fecha: fecha,
-                prod: producto
-            });
 
-            window.location.href = `detalle.html?${params.toString()}`;
+            const url = `detalle.html?monto=${encodeURIComponent(monto)}&nombre=${encodeURIComponent(nombre)}&tel=${encodeURIComponent(tel)}&fecha=${encodeURIComponent(fecha)}&prod=${encodeURIComponent(producto)}`;
+            window.location.href = url;
         }
 
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
