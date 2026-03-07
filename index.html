@@ -189,31 +189,28 @@
         }
 
         function confirmar() {
-            const monto = document.getElementById('input-monto').value || "0.00";
-            const nombre = document.getElementById('cliente-nombre').value || "Cliente";
-            const tel = document.getElementById('cliente-tel').value || "";
-            const fecha = document.getElementById('f-venc').value;
-            const sel = document.getElementById('product-select');
-            const producto = sel.options[sel.selectedIndex].text;
+            cfunction confirmar() {
+    // 1. Captura el monto y la fecha que ya tienen ID
+    const monto = document.getElementById('input-monto').value || "0.00";
+    const fecha = document.getElementById('f-venc').value || "";
+    
+    // 2. Captura el nombre y el teléfono por su orden de aparición (inputs de texto)
+    // El primero es el usuario del login, por eso empezamos en el índice 1 y 2
+    const inputs = document.getElementsByTagName('input');
+    const nombre = inputs[2].value || "Cliente"; // Input del nombre
+    const tel = inputs[3].value || "";           // Input del teléfono
 
-            const datos = new URLSearchParams({
-                monto: monto,
-                nombre: nombre,
-                tel: tel,
-                fecha: fecha,
-                prod: producto
-            }).toString();
+    // 3. Captura el producto seleccionado
+    const sel = document.getElementById('product-select');
+    const producto = sel.options[sel.selectedIndex].text;
 
-            // Intento abrir la página
-            const nuevaVentana = window.open(`detalle.html?${datos}`, '_blank');
-            
-            // Si el navegador bloquea el pop-up, avisamos
-            if (!nuevaVentana) {
-                alert("⚠️ ¡Atención! Tu navegador bloqueó la ventana. Por favor permite las ventanas emergentes (pop-ups) para ver el link.");
-            }
-        }
+    // 4. Crea la dirección URL con los datos
+    const url = `detalle.html?monto=${encodeURIComponent(monto)}&nombre=${encodeURIComponent(nombre)}&tel=${encodeURIComponent(tel)}&fecha=${encodeURIComponent(fecha)}&prod=${encodeURIComponent(producto)}`;
 
-        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+    // 5. Redirige a la nueva página (esto evita que el navegador bloquee la ventana)
+    window.location.href = url;
+}
     </script>
 </body>
 </html>
+
