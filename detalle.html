@@ -6,53 +6,56 @@
     <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .card-main { width: 100%; max-width: 440px; background: white; border-radius: 3.5rem; overflow: hidden; margin: 15px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .card { width: 100%; max-width: 400px; background: white; border-radius: 50px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .pink-box { background-color: #fff1f1; border: 1.5px solid #fee2e2; border-radius: 25px; padding: 20px; margin: 15px 0; }
+        .red-text { color: #ef4444; font-weight: 700; }
     </style>
 </head>
 <body>
-    <div class="card-main">
-        <div style="background-color: #14b8a6; color: white; padding: 50px 20px 40px 20px; text-align: center;">
-            <span style="font-size: 11px; font-weight: 800; uppercase; letter-spacing: 2px; opacity: 0.9; display: block;">ORDEN DE PAGO</span>
-            <h1 id="txt-prod" style="font-size: 36px; font-weight: 900; margin-top: 5px; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
+    <div class="card">
+        <div style="background-color: #14b8a6; color: white; padding: 40px 20px; text-align: center;">
+            <p style="font-size: 10px; font-weight: 800; letter-spacing: 2px; margin: 0;">ORDEN DE PAGO</p>
+            <h1 id="txt-prod" style="font-size: 30px; font-weight: 900; margin: 5px 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
         </div>
 
-        <div style="padding: 30px 35px; display: flex; flex-direction: column; gap: 25px;">
-            
-            <div style="background-color: #f9fafb; border-radius: 40px; padding: 45px 20px; text-align: center; border: 1px solid #f3f4f6;">
-                <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px;">MONTO TOTAL A PAGAR</span>
-                <div id="txt-monto" style="font-size: 56px; font-weight: 900; color: #0d9488; margin-top: 5px;">$0.00</div>
+        <div style="padding: 25px;">
+            <div style="background-color: #f9fafb; border-radius: 35px; padding: 30px; text-align: center; border: 1px solid #f3f4f6;">
+                <p style="font-size: 10px; font-weight: 800; color: #9ca3af; margin: 0;">MONTO TOTAL A PAGAR</p>
+                <h2 id="txt-monto" style="font-size: 48px; font-weight: 900; color: #0d9488; margin: 5px 0;">$0.00</h2>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f4f6; padding-bottom: 12px;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">NOMBRE DEL CLIENTE</span>
-                    <span id="txt-nom" style="font-size: 14px; font-weight: 900; color: #1e293b; text-transform: uppercase;">---</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f4f6; padding-bottom: 12px;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">FECHA DE VENCIMIENTO</span>
-                    <span id="txt-fec" style="font-size: 14px; font-weight: 900; color: #1e293b;">2026-03-07</span>
-                </div>
+            <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 10px 0; font-size: 9px; font-weight: 800; color: #9ca3af;">NOMBRE DEL CLIENTE</td>
+                    <td id="txt-nom" style="padding: 10px 0; font-size: 13px; font-weight: 900; text-align: right; text-transform: uppercase;">CLIENTE</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f3f4f6;">
+                    <td style="padding: 10px 0; font-size: 9px; font-weight: 800; color: #9ca3af;">FECHA DE VENCIMIENTO</td>
+                    <td id="txt-fec" style="padding: 10px 0; font-size: 13px; font-weight: 900; text-align: right;">2026-03-07</td>
+                </tr>
+            </table>
 
-                <div style="background-color: #fff1f1; border-radius: 25px; padding: 22px; border: 1.5px solid #fee2e2; margin-top: 10px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 11px; font-weight: 900; color: #ef4444; letter-spacing: 0.5px;">LA LIGA EXPIRA EN:</span>
-                        <span id="timer" style="font-size: 26px; font-weight: 900; color: #ef4444;">29:30</span>
-                    </div>
-                    <p style="color: #ef4444; font-size: 11px; line-height: 1.5; margin-top: 15px; font-weight: 500;">
-                        * Al llegar a 0, se cobrarán <span style="font-weight: 800;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
-                    </p>
-                </div>
-
-                <div style="background-color: #f8fbff; border-radius: 35px; padding: 30px 20px; border: 1px solid #e0f2fe; text-align: center; margin-top: 10px;">
-                    <span id="txt-banco-label" style="font-size: 11px; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">TRANSFERENCIA MERCADO PAGO (SPEI)</span>
-                    <div id="txt-clabe" style="font-size: 28px; font-weight: 900; color: #2563eb; letter-spacing: -0.5px;">722969010005687921</div>
-                    <p style="color: #93c5fd; font-size: 11px; font-style: italic; margin-top: 10px; font-weight: 600;">Referencia: Pago de Multa</p>
+            <div class="pink-box">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="font-size: 10px; font-weight: 900; color: #ef4444;">LA LIGA EXPIRA EN:</td>
+                        <td id="timer" style="font-size: 24px; font-weight: 900; color: #ef4444; text-align: right;">29:50</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px; color: #ef4444; font-size: 11px; line-height: 1.4; font-weight: 500; display: block !important;">
+                    * Al llegar a 0, se cobrarán <span style="font-weight: 900;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
                 </div>
             </div>
 
-            <button onclick="copiar()" style="width: 100%; background-color: #22c55e; color: white; font-size: 14px; font-weight: 900; padding: 22px; border-radius: 2rem; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4); margin-top: 5px;">
+            <div style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 30px; padding: 20px; text-align: center; margin-top: 10px;">
+                <p id="txt-banco-label" style="font-size: 10px; font-weight: 800; color: #3b82f6; margin: 0 0 5px 0;">TRANSFERENCIA MERCADO PAGO (SPEI)</p>
+                <p id="txt-clabe" style="font-size: 24px; font-weight: 900; color: #1e40af; margin: 0; letter-spacing: -1px;">722969010005687921</p>
+                <p style="font-size: 10px; color: #93c5fd; font-style: italic; font-weight: 700; margin: 5px 0 0 0;">Referencia: Pago de Multa</p>
+            </div>
+
+            <button onclick="copiar()" style="width: 100%; background-color: #22c55e; color: white; padding: 20px; border-radius: 25px; font-weight: 900; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; text-transform: uppercase;">
                 CONFIRMAR PAGO VÍA WHATSAPP
             </button>
         </div>
@@ -63,13 +66,10 @@
         const start = parseInt(urlParams.get('s')) || Date.now();
         
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
-        document.getElementById('txt-nom').innerText = (urlParams.get('n') || "CLIENTE").toUpperCase();
+        document.getElementById('txt-nom').innerText = (urlParams.get('n') || "DIEGO").toUpperCase();
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "722969010005687921";
-        
-        const banco = urlParams.get('b') || 'MERCADO PAGO';
-        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${banco} (SPEI)`;
 
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
@@ -86,7 +86,7 @@
 
         function copiar() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Enlace copiado al portapapeles.");
+            alert("Enlace copiado.");
         }
     </script>
 </body>
