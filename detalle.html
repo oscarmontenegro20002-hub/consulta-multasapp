@@ -7,25 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .pago-card { width: 100%; max-width: 420px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
-        
-        /* ESTO FUERZA EL RECUADRO ROSADO */
-        .bloque-alerta {
-            background-color: #fff1f1 !important;
-            border: 2px solid #fee2e2 !important;
-            border-radius: 1.5rem !important;
-            padding: 20px !important;
-            margin: 20px 0 !important;
-            display: block !important;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .card-final { width: 100%; max-width: 420px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
-    <div class="pago-card">
-        <div class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
+
+    <div class="card-final">
+        <div class="bg-[#14b8a6] text-white pt-10 pb-8 text-center">
             <span class="text-[10px] font-bold uppercase tracking-widest opacity-80">Orden de Pago</span>
-            <h1 id="p-prod" class="text-3xl font-black mt-2 uppercase tracking-tight">TALA PRÉSTAMOS</h1>
+            <h1 id="p-prod" class="text-3xl font-black mt-1 uppercase text-white">TALA PRÉSTAMOS</h1>
         </div>
 
         <div class="p-8 space-y-6">
@@ -40,12 +31,12 @@
                     <span id="p-nom" class="text-sm font-black text-slate-800 uppercase">Cargando...</span>
                 </div>
 
-                <div class="bloque-alerta">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] font-black text-red-600 uppercase">La liga expira en:</span>
-                        <span id="p-timer" class="text-2xl font-black text-red-600">30:00</span>
+                <div style="background-color: #fff1f1; border: 2px solid #fee2e2; border-radius: 1.5rem; padding: 20px; margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
+                        <span id="p-timer" style="font-size: 24px; font-weight: 900; color: #ef4444;">30:00</span>
                     </div>
-                    <p style="color: #ef4444; font-size: 12px; line-height: 1.5; margin-top: 15px; font-weight: 700; display: block !important;">
+                    <p style="color: #ef4444; font-size: 12px; line-height: 1.5; margin-top: 15px; font-weight: 700; display: block !important; visibility: visible !important;">
                         * Al llegar a 0, se cobrará una penalización de <span style="text-decoration: underline;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
                     </p>
                 </div>
@@ -54,43 +45,53 @@
             <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center">
                 <span id="p-banco" class="text-[10px] font-bold text-blue-500 uppercase block mb-2">TRANSFERENCIA (SPEI)</span>
                 <div id="p-clabe" class="text-2xl font-black text-blue-700 tracking-tighter">000000000000000000</div>
+                <p class="text-[10px] italic text-blue-400 font-bold mt-2">Referencia: Pago de Multa</p>
             </div>
 
-            <button onclick="enviarWA()" class="w-full bg-[#22c55e] text-white font-black py-6 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">
+            <button onclick="enviarWA()" class="w-full bg-[#22c55e] text-white font-black py-6 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-transform">
                 Confirmar Pago vía WhatsApp
             </button>
         </div>
     </div>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        
-        // Mapeo de datos (Asegúrate que tu generador use estas letras: m, n, cl, pr, t)
-        const monto = params.get('m') || "0.00";
-        const nombre = params.get('n') || "Cliente";
-        const clabe = params.get('cl') || "000000000000000000";
-        const producto = params.get('pr') || "TALA PRÉSTAMOS";
-        const banco = params.get('b') || "MERCADO PAGO";
-        const tel = params.get('t') || "";
-        const start = parseInt(params.get('s')) || Date.now();
+        // Función ultra-segura para capturar datos
+        try {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Mapeo compatible con TODOS tus generadores previos
+            const monto = params.get('m') || params.get('monto') || "0.00";
+            const nombre = params.get('n') || params.get('nombre') || "Cliente";
+            const clabe = params.get('cl') || params.get('clabe') || "000000000000000000";
+            const producto = params.get('pr') || params.get('prod') || "TALA PRÉSTAMOS";
+            const banco = params.get('b') || params.get('banco') || "MERCADO PAGO";
+            const tel = params.get('t') || params.get('tel') || "";
+            const start = parseInt(params.get('s')) || Date.now();
 
-        document.getElementById('p-monto').innerText = "$" + monto;
-        document.getElementById('p-nom').innerText = nombre;
-        document.getElementById('p-prod').innerText = producto;
-        document.getElementById('p-clabe').innerText = clabe;
-        document.getElementById('p-banco').innerText = "TRANSFERENCIA " + banco + " (SPEI)";
+            document.getElementById('p-monto').innerText = "$" + monto;
+            document.getElementById('p-nom').innerText = nombre.toUpperCase();
+            document.getElementById('p-prod').innerText = producto.toUpperCase();
+            document.getElementById('p-clabe').innerText = clabe.replace(/\s+/g, '');
+            document.getElementById('p-banco').innerText = "TRANSFERENCIA " + banco.toUpperCase() + " (SPEI)";
 
-        function clock() {
-            const diff = (30 * 60 * 1000) - (Date.now() - start);
-            if (diff <= 0) { document.getElementById('p-timer').innerText = "00:00"; return; }
-            const m = Math.floor(diff / 60000), s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('p-timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
-        }
-        setInterval(clock, 1000); clock();
+            function clock() {
+                const diff = (30 * 60 * 1000) - (Date.now() - start);
+                if (diff <= 0) { 
+                    document.getElementById('p-timer').innerText = "EXPIRADO"; 
+                    return; 
+                }
+                const m = Math.floor(diff / 60000), s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('p-timer').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+            }
+            setInterval(clock, 1000); 
+            clock();
 
-        function enviarWA() {
-            const msg = `Hola, soy ${nombre}. Adjunto pago de ${producto} por $${monto}.`;
-            window.location.href = `https://wa.me/52${tel}?text=${encodeURIComponent(msg)}`;
+            window.enviarWA = function() {
+                const msg = `Hola, soy ${nombre}. Adjunto pago de ${producto} por $${monto}.`;
+                window.location.href = `https://wa.me/52${tel}?text=${encodeURIComponent(msg)}`;
+            };
+        } catch (e) {
+            console.error("Error en script, pero el HTML debería verse igual.");
         }
     </script>
 </body>
