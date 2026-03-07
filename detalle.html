@@ -10,42 +10,41 @@
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         .card-main { width: 100%; max-width: 420px; background: white; border-radius: 3rem; overflow: hidden; margin: 15px; }
         
-        /* Estilo del recuadro de expiración */
-        .timer-box { 
+        /* RECUADRO ROSADO DEL CRONÓMETRO */
+        .timer-container { 
             background-color: #fff1f1; 
             border-radius: 1.5rem; 
             padding: 1.25rem; 
             margin-top: 1rem;
             border: 1px solid #fee2e2;
-            display: block !important; /* Forzamos que se vea */
         }
-        .timer-val { color: #f87171; font-weight: 800; font-size: 1.6rem; }
 
-        /* El texto que te faltaba */
-        .texto-penalizacion {
+        /* TEXTO DE PENALIZACIÓN (EL QUE NO TE SALÍA) */
+        .aviso-penalizacion {
             color: #ef4444; 
             font-size: 11px;
             line-height: 1.4;
-            margin-top: 10px;
+            margin-top: 12px; /* Espacio arriba del texto */
             font-weight: 500;
-            display: block !important;
+            display: block !important; /* Forzar visibilidad */
         }
+        .aviso-penalizacion b { font-weight: 700; }
     </style>
 </head>
 <body>
     <div class="card-main shadow-2xl">
-        <div id="header-bg" class="bg-[#14b8a6] text-white pt-12 pb-10 text-center">
+        <div class="bg-[#14b8a6] text-white pt-12 pb-10 text-center">
             <span class="text-[11px] font-bold uppercase tracking-[0.2em] opacity-90">Orden de Pago</span>
-            <h1 id="txt-prod" class="text-3xl font-black mt-1 uppercase tracking-tight">TALA PRÉSTAMOS</h1>
+            <h1 id="txt-prod" class="text-3xl font-black mt-1 uppercase">TALA PRÉSTAMOS</h1>
         </div>
 
         <div class="px-8 py-6 space-y-6">
-            <div class="bg-gray-50/50 rounded-[2.5rem] py-10 text-center border border-gray-100">
+            <div class="bg-gray-50/50 rounded-[2.5rem] py-10 text-center border border-gray-100 shadow-sm">
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Monto Total a Pagar</span>
                 <div class="text-5xl font-black text-[#0d9488]" id="txt-monto">$0.00</div>
             </div>
 
-            <div class="space-y-4 pt-2">
+            <div class="space-y-4">
                 <div class="flex justify-between items-center border-b border-gray-100 pb-3">
                     <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre del Cliente</span>
                     <span id="txt-nom" class="text-sm font-black text-slate-800 uppercase">---</span>
@@ -55,23 +54,23 @@
                     <span id="txt-fec" class="text-sm font-black text-slate-800">2026-03-07</span>
                 </div>
                 
-                <div class="timer-box">
+                <div class="timer-container">
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] font-extrabold text-[#ef4444] uppercase tracking-wider">La liga expira en:</span>
-                        <span id="timer" class="timer-val">29:50</span>
+                        <span id="timer" class="text-2xl font-black text-[#f87171]">29:50</span>
                     </div>
-                    <p class="texto-penalizacion">
+                    <p class="aviso-penalizacion">
                         * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
                     </p>
                 </div>
             </div>
 
-            <div class="bg-blue-50/40 rounded-[2rem] p-6 border border-blue-100 text-center space-y-1">
+            <div class="bg-blue-50/40 rounded-[2rem] p-6 border border-blue-100 text-center">
                 <span id="txt-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter">TRANSFERENCIA (SPEI)</span>
                 <div id="txt-clabe" class="text-2xl font-black text-blue-700 tracking-tight">000000000000000000</div>
             </div>
 
-            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">
+            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-all">
                 CONFIRMAR PAGO VÍA WHATSAPP
             </button>
         </div>
@@ -86,7 +85,7 @@
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "";
-        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'MERCADO PAGO'} (SPEI)`;
+        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'BANCARIA'} (SPEI)`;
 
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
