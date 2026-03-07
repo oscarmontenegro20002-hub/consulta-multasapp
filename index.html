@@ -3,51 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas</title>
+    <title>Generador Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
         .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
         .input-monto::-webkit-inner-spin-button { display: none; }
         
-        /* ESTILO CRÍTICO PARA EL SELECTOR */
-        #prod {
-            background-color: white !important;
-            color: black !important;
-            text-shadow: none !important;
-            appearance: listbox !important; /* Fuerza visualización de lista */
-            -webkit-appearance: listbox !important;
+        /* Estilo para que la lista de apps sea scrollable y siempre visible */
+        .apps-grid {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
         }
-        #prod option {
-            background-color: white !important;
-            color: black !important;
+        .app-option {
             padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
         }
+        .app-option:hover { background: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
     <div class="app-card">
-        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center">
-            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
+        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4 text-center transition-colors duration-500">
+            <div class="w-16 h-16 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
             
-            <div class="px-8 mb-4">
-                <select id="prod" onchange="updateUI()" class="w-full border-2 border-white/50 rounded-xl px-4 py-3 font-bold text-center outline-none shadow-lg">
-                    <option value="tala|#14b8a6|#0d9488">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#581c87">Préstamos NU</option>
-                    <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
-                    <option value="rapidos|#10b981|#059669">Préstamos rápidos</option>
-                    <option value="worldmox|#6366f1|#4f46e5">WorldmoxPro GG</option>
-                    <option value="talacred|#0891b2|#0e7490">Tala Crédito</option>
-                    <option value="movil|#f59e0b|#d97706">Movil Cash</option>
-                    <option value="dinero|#db2777|#be185d">Préstamos de Dinero</option>
-                    <option value="prestamos|#475569|#334155">Préstamos</option>
-                </select>
+            <p class="text-white text-[10px] font-bold uppercase mb-2">Selecciona la Aplicación:</p>
+            
+            <div class="px-6 mb-4">
+                <div class="apps-grid" id="lista-apps">
+                    <div class="app-option" onclick="setApp('Tala Préstamos', '#14b8a6', '#0d9488')">Tala Préstamos</div>
+                    <div class="app-option" onclick="setApp('Préstamos NU', '#820ad1', '#581c87')">Préstamos NU</div>
+                    <div class="app-option" onclick="setApp('DidaPréstamos', '#2563eb', '#1d4ed8')">DidaPréstamos</div>
+                    <div class="app-option" onclick="setApp('Préstamos rápidos', '#10b981', '#059669')">Préstamos rápidos</div>
+                    <div class="app-option" onclick="setApp('WorldmoxPro GG', '#6366f1', '#4f46e5')">WorldmoxPro GG</div>
+                    <div class="app-option" onclick="setApp('Tala Crédito', '#0891b2', '#0e7490')">Tala Crédito</div>
+                    <div class="app-option" onclick="setApp('Movil Cash', '#f59e0b', '#d97706')">Movil Cash</div>
+                    <div class="app-option" onclick="setApp('Préstamos de Dinero', '#db2777', '#be185d')">Préstamos de Dinero</div>
+                    <div class="app-option" onclick="setApp('Préstamos', '#475569', '#334155')">Préstamos</div>
+                </div>
+                <input type="hidden" id="prod-nombre" value="Tala Préstamos">
             </div>
 
-            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-300">
+            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
                 <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                 <div class="flex items-center text-4xl font-black">
                     <span>$</span>
@@ -57,31 +64,24 @@
         </div>
 
         <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
-            <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Subproducto</span><span>Multa</span></div>
             <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
-                <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold">
-            </div>
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                <span id="l-dias">0</span>
+                <input type="date" id="fecha" class="outline-none text-right font-bold">
             </div>
 
             <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
-                <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
+                <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white text-black">
                     <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
                     <option value="BBVA">BBVA</option>
                 </select>
-                <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
                 <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none bg-white">
                     <option value="703010052250010635">703010052250010635</option>
                 </select>
             </div>
 
             <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
-            <button onclick="generar()" id="btn" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-colors duration-300">GENERAR LINK</button>
+            <button onclick="generar()" id="btn" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR LINK</button>
         </div>
     </div>
 
@@ -91,14 +91,13 @@
             document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
         });
 
-        function calcDias() {
-            const f = new Date(document.getElementById('fecha').value);
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
-            const diff = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias');
-            el.innerText = diff > 0 ? diff : 0;
-            el.style.color = diff > 0 ? "#ef4444" : "#1e293b"; 
+        function setApp(nombre, c1, c2) {
+            document.getElementById('prod-nombre').value = nombre;
+            document.getElementById('header-bg').style.backgroundColor = c1;
+            document.getElementById('monto-bg').style.backgroundColor = c2;
+            document.getElementById('btn').style.backgroundColor = c2;
+            // Feedback visual
+            alert("App seleccionada: " + nombre);
         }
 
         function cambiarCuenta() {
@@ -109,20 +108,12 @@
             c.add(new Option(n, n));
         }
 
-        function updateUI() {
-            const val = document.getElementById('prod').value;
-            const [id, c1, c2] = val.split('|');
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-bg').style.backgroundColor = c2;
-            document.getElementById('btn').style.backgroundColor = c2;
-        }
-
         function generar() {
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 f: document.getElementById('fecha').value,
-                pr: document.getElementById('prod').options[document.getElementById('prod').selectedIndex].text,
+                pr: document.getElementById('prod-nombre').value,
                 cl: document.getElementById('clabe').value,
                 b: document.getElementById('metodo').value,
                 s: Date.now()
