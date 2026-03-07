@@ -13,35 +13,11 @@
             background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
-        /* PANTALLA DE ACCESO ORIGINAL */
-        .login-card {
-            background: #1e293b;
-            padding: 3rem 2rem;
-            border-radius: 2.5rem;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-        .login-input {
-            background: #334155;
-            border: 1px solid #475569;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 1rem;
-            width: 100%;
-            outline: none;
-            margin-bottom: 1rem;
-        }
-        #btn-entrar { background: #14b8a6; color: white; font-weight: 800; padding: 1rem; border-radius: 1rem; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* GENERADOR PRINCIPAL */
-        #main-app { display: none; width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
-        .monto-display { background: rgba(0,0,0,0.1); border-radius: 1.5rem; padding: 1.5rem; margin: 1rem 1.5rem; }
+        .login-card { background: #1e293b; padding: 3rem 2rem; border-radius: 2.5rem; width: 90%; max-width: 400px; text-align: center; }
+        .login-input { background: #334155; border: 1px solid #475569; color: white; padding: 1rem 1.5rem; border-radius: 1rem; width: 100%; outline: none; margin-bottom: 1rem; }
+        #main-app { display: none; width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -51,14 +27,14 @@
             <h2 class="text-3xl font-bold text-white mb-8">Acceso</h2>
             <input type="text" id="user" placeholder="admin" class="login-input">
             <input type="password" id="pass" placeholder="•••" class="login-input">
-            <button id="btn-entrar" onclick="acceder()">ENTRAR</button>
+            <button onclick="acceder()" class="w-full bg-[#14b8a6] text-white font-extrabold py-4 rounded-2xl uppercase tracking-widest">ENTRAR</button>
         </div>
     </div>
 
-    <div id="main-app" class="shadow-2xl">
+    <div id="main-app">
         <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center">
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
-                <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
+                <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
             <div class="px-8 mb-4">
                 <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 font-bold text-center outline-none appearance-none">
@@ -67,7 +43,7 @@
                     <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
                 </select>
             </div>
-            <div id="monto-card-bg" class="monto-display bg-[#0d9488] text-white">
+            <div id="monto-card-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white">
                 <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                 <div class="flex items-center text-4xl font-bold">
                     <span>$</span>
@@ -79,29 +55,28 @@
         <div class="p-6 space-y-4 text-sm font-bold">
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Subproducto</span>
-                <span class="text-slate-800">Multa</span>
+                <span>Multa</span>
             </div>
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Importe</span>
-                <span id="label-importe" class="text-slate-800">$0.00</span>
+                <span id="label-importe">$0.00</span>
             </div>
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
-                <input type="date" id="f-venc" class="outline-none">
+                <input type="date" id="f-venc" onchange="calcularDias()" class="outline-none text-right">
             </div>
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                <span class="text-slate-800">0</span>
+                <span id="label-dias" class="text-slate-800">0</span>
             </div>
 
             <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                 <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
                 <select id="metodo-pago" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none">
-                    <option value="STP">STP</option>
-                    <option value="BBVA">BBVA</option>
                     <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
+                    <option value="BBVA">BBVA</option>
                 </select>
-                <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
+                <span class="text-[10px] text-gray-400 uppercase block">Liga de Pago</span>
                 <select id="clabe-pago" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none">
                     <option value="703010052250010635">703010052250010635</option>
                 </select>
@@ -110,7 +85,7 @@
             <input type="text" id="cliente-nombre" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none">
             <input type="text" id="cliente-tel" placeholder="Teléfono" class="w-full border-b py-2 text-center outline-none">
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl uppercase tracking-widest text-xs mt-2 shadow-lg">GENERAR LINK</button>
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs">GENERAR LINK</button>
         </div>
     </div>
 
@@ -121,17 +96,33 @@
                 document.getElementById('main-app').style.display = 'block';
             }
         }
-        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+
+        function calcularDias() {
+            const fechaInput = new Date(document.getElementById('f-venc').value);
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            fechaInput.setHours(0,0,0,0);
+            
+            const diffTime = hoy - fechaInput;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const label = document.getElementById('label-dias');
+            label.innerText = diffDays > 0 ? diffDays : 0;
+            label.style.color = diffDays > 0 ? "#ef4444" : "#1e293b"; // Rojo si es pasado
+        }
+
         document.getElementById('input-monto').addEventListener('input', (e) => {
             document.getElementById('label-importe').innerText = '$' + (e.target.value || "0.00");
         });
+
         function cambiarCuenta() {
             const m = document.getElementById('metodo-pago').value;
             const c = document.getElementById('clabe-pago');
             c.innerHTML = "";
-            let num = (m === "BBVA") ? "012180015094579916" : (m === "STP" ? "703010052250010635" : "722969010005687921");
+            let num = (m === "BBVA") ? "012180015094579916" : "703010052250010635";
             c.add(new Option(num, num));
         }
+
         function confirmar() {
             const params = new URLSearchParams({
                 monto: document.getElementById('input-monto').value,
@@ -144,12 +135,15 @@
             });
             window.location.href = `detalle.html?${params.toString()}`;
         }
+
         function updateApp() {
             const [id, c1, c2] = document.getElementById('product-select').value.split('|');
             document.getElementById('header-bg').style.backgroundColor = c1;
             document.getElementById('monto-card-bg').style.backgroundColor = c2;
             document.getElementById('btn-main').style.backgroundColor = c2;
         }
+        
+        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
 </html>
