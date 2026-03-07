@@ -1,23 +1,31 @@
-<div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
-    <span id="p-banco" class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block">TRANSFERENCIA (SPEI)</span>
+<div style="background-color: #f0f9ff; border: 1px solid #e0f2fe; border-radius: 2rem; padding: 25px; text-align: center; margin-top: 20px;">
+    <span id="p-banco" style="font-size: 10px; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px;">TRANSFERENCIA (SPEI)</span>
     
-    <div onclick="copiarClabe()" class="flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform">
-        <div id="p-clabe" class="text-2xl font-black text-blue-700 tracking-tighter">703010052250010635</div>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+    <div id="p-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb; letter-spacing: -0.5px; margin-bottom: 15px;">703010052250010635</div>
+
+    <button onclick="copiarClabe()" style="background-color: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
         </svg>
-    </div>
-    
-    <p class="text-[10px] font-bold italic text-blue-400">Toca el número para copiar</p>
+        COPIAR NÚMERO
+    </button>
 </div>
 
 <script>
     function copiarClabe() {
-        const clabe = document.getElementById('p-clabe').innerText;
-        navigator.clipboard.writeText(clabe).then(() => {
-            alert("CLABE copiada: " + clabe);
-        });
+        // Obtenemos el texto del elemento con id p-clabe
+        const textoClabe = document.getElementById('p-clabe').innerText;
+        
+        // Creamos un elemento temporal para copiar (método más compatible)
+        const aux = document.createElement("input");
+        aux.setAttribute("value", textoClabe);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+        
+        // Avisamos al usuario
+        alert("Número copiado: " + textoClabe);
     }
-    
-    // El resto de tu código de cronómetro y WhatsApp sigue igual...
 </script>
