@@ -3,117 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Cobro Profesional</title>
+    <title>Generador de Ligas Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; }
-        .glass-card { background: rgba(255, 255, 255, 1); border-radius: 48px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5); }
-        .input-style { width: 100%; border-bottom: 2px solid #f1f5f9; padding: 8px 0; outline: none; transition: all 0.3s; font-size: 14px; }
-        .input-style:focus { border-color: #3b82f6; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: #1e293b; }
+        .main-card { background: white; border-radius: 3rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .input-field { width: 100%; border-bottom: 2px solid #f1f5f9; padding: 12px 0; outline: none; transition: 0.3s; font-weight: 600; }
+        .input-field:focus { border-color: #3b82f6; }
+        select { cursor: pointer; appearance: none; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
-    <div class="glass-card w-full max-w-[400px] overflow-hidden">
-        
-        <div id="header-bg" class="bg-[#0d9488] p-10 pb-16 text-center relative transition-all duration-500">
+    <div class="main-card overflow-hidden">
+        <div id="header-color" class="p-10 pb-20 text-center relative transition-all duration-500 bg-slate-800">
             
-            <div class="w-24 h-24 bg-white rounded-[2rem] mx-auto mb-6 flex items-center justify-center shadow-2xl p-4 overflow-hidden">
-                <div id="logo-svg-container" class="w-full h-full flex items-center justify-center">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-xl p-4">
+                <div id="icon-target" class="w-full h-full text-slate-400">
                     </div>
             </div>
 
-            <div class="relative group">
-                <select id="select-app" onchange="actualizarTodo()" class="w-full bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl px-4 py-3 text-white font-bold text-sm cursor-pointer outline-none appearance-none text-center hover:bg-white/30 transition-all">
-                    <option value="tala|#0d9488|#134e4a" class="text-slate-800">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#4c0577" class="text-slate-800">Préstamos Nu</option>
-                    <option value="dida|#2563eb|#1e3a8a" class="text-slate-800">DiDa Préstamos</option>
-                    <option value="worldmox|#0ea5e9|#0369a1" class="text-slate-800">WorldmoxPro Cash GG</option>
-                    <option value="movil|#8b5cf6|#5b21b6" class="text-slate-800">Movil Cash</option>
+            <div class="relative inline-block w-full">
+                <select id="app-selector" onchange="updateUI()" class="w-full bg-white/20 border border-white/30 text-white rounded-2xl px-4 py-3 font-bold text-sm outline-none backdrop-blur-md">
+                    <option value="nu|#820ad1" class="text-slate-800">Préstamos Nu</option>
+                    <option value="tala|#0d9488" class="text-slate-800">Tala Préstamos</option>
+                    <option value="dida|#2563eb" class="text-slate-800">DiDa Préstamos</option>
+                    <option value="worldmox|#0284c7" class="text-slate-800">WorldmoxPro Cash</option>
+                    <option value="movil|#7c3aed" class="text-slate-800">Movil Cash</option>
                 </select>
             </div>
 
-            <div id="monto-banner" class="absolute -bottom-10 left-8 right-8 bg-[#134e4a] rounded-[2rem] p-6 text-left shadow-2xl transition-all duration-500">
-                <p class="text-white/60 text-[10px] uppercase font-extrabold tracking-tighter mb-1">Monto a Liquidar</p>
-                <div class="flex items-center text-white">
-                    <span class="text-4xl font-black mr-1">$</span>
-                    <input type="number" id="input-monto" oninput="syncDisplay()" placeholder="0.00" class="bg-transparent text-4xl font-black outline-none w-full placeholder:text-white/10">
+            <div class="absolute -bottom-10 left-8 right-8 bg-white rounded-[2rem] p-6 shadow-2xl text-left border border-slate-50">
+                <p class="text-[10px] uppercase font-extrabold text-slate-400 tracking-widest mb-1">Monto a pagar</p>
+                <div class="flex items-center">
+                    <span class="text-3xl font-extrabold text-slate-800 mr-1">$</span>
+                    <input type="number" id="monto-input" oninput="syncMonto()" placeholder="0.00" class="text-3xl font-extrabold text-slate-800 w-full outline-none placeholder:text-slate-200">
                 </div>
             </div>
         </div>
 
         <div class="h-16"></div>
 
-        <div class="px-10 pb-10 space-y-6">
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-slate-400 uppercase">Subproducto</span>
-                <select class="text-sm font-bold text-slate-700 bg-transparent outline-none">
-                    <option>Multa</option>
-                    <option>Recargo</option>
-                    <option>Liquidación</option>
-                    <option>Paz y Salvo</option>
-                </select>
-            </div>
-
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-slate-400 uppercase">Importe Total</span>
-                <span id="display-importe" class="text-lg font-black text-slate-800">$0.00</span>
-            </div>
-
-            <div class="bg-slate-50 rounded-3xl p-5 border border-slate-100 text-center">
-                <p class="text-[9px] text-slate-400 font-bold uppercase mb-2">Enlace de Pago Generado</p>
-                <p id="display-link" class="text-[11px] font-mono font-bold text-blue-600 break-all bg-white p-2 rounded-lg border border-slate-200">Esperando datos...</p>
+        <div class="p-10 space-y-6">
+            <div class="flex justify-between items-center text-sm border-b border-slate-50 pb-2">
+                <span class="text-slate-400 font-bold uppercase text-[10px]">Referencia</span>
+                <span id="ref-display" class="font-mono font-bold text-blue-600">---</span>
             </div>
 
             <div class="space-y-4">
-                <input type="text" placeholder="Nombre completo del cliente" class="input-style">
-                <input type="text" placeholder="Número de teléfono" class="input-style">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Concepto</label>
+                    <select class="input-field">
+                        <option>Liquidación Total</option>
+                        <option>Multa por Atraso</option>
+                        <option>Pago Parcial</option>
+                        <option>Extensión de Plazo</option>
+                    </select>
+                </div>
+                
+                <input type="text" id="nombre-cliente" placeholder="Nombre del Cliente" class="input-field">
+                <input type="text" id="tel-cliente" placeholder="WhatsApp / Teléfono" class="input-field">
             </div>
 
-            <button onclick="generar()" id="btn-main" class="w-full bg-[#134e4a] text-white font-black py-5 rounded-[1.5rem] shadow-xl active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
-                Generar y Copiar Liga
+            <button onclick="generateLink()" id="main-btn" class="w-full py-5 rounded-2xl text-white font-extrabold text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all bg-slate-800 mt-4">
+                Generar Liga de Pago
             </button>
+            
+            <p id="copy-msg" class="text-center text-[10px] text-green-500 font-bold opacity-0 transition-opacity">¡Copiado al portapapeles!</p>
         </div>
     </div>
 
     <script>
-        // LOGOS EN FORMATO SVG (DIBUJADOS POR CÓDIGO)
-        const logos = {
-            'tala': `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="20" fill="#0d9488"/><text x="50" y="55" font-family="Arial" font-size="22" font-weight="900" text-anchor="middle" fill="white">TALA</text><text x="50" y="75" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" fill="white">TE PRESTA</text></svg>`,
-            'nu': `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="20" fill="#820ad1"/><text x="50" y="65" font-family="Arial" font-size="45" font-weight="900" text-anchor="middle" fill="white">nu</text></svg>`,
-            'dida': `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="20" fill="#2563eb"/><text x="50" y="62" font-family="Arial" font-size="30" font-weight="900" text-anchor="middle" fill="white">DIDA</text></svg>`,
-            'worldmox': `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="20" fill="#0ea5e9"/><path d="M30 40 L50 70 L70 40" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/><text x="50" y="30" font-family="Arial" font-size="12" font-weight="900" text-anchor="middle" fill="white">WORLDMOX</text></svg>`,
-            'movil': `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" rx="20" fill="#8b5cf6"/><text x="50" y="62" font-family="Arial" font-size="40" font-weight="900" text-anchor="middle" fill="white">M</text></svg>`
+        // Íconos SVG internos (No fallan nunca)
+        const icons = {
+            'nu': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>`,
+            'tala': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45l8.15 13.55H3.85L12 5.45zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>`,
+            'dida': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`,
+            'worldmox': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+            'movil': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM7 19V5h10v14H7z"/></svg>`
         };
 
-        function actualizarTodo() {
-            const select = document.getElementById('select-app');
-            const [id, color1, color2] = select.value.split('|');
+        function updateUI() {
+            const selector = document.getElementById('app-selector');
+            const [id, color] = selector.value.split('|');
             
-            document.getElementById('header-bg').style.backgroundColor = color1;
-            document.getElementById('monto-banner').style.backgroundColor = color2;
-            document.getElementById('btn-main').style.backgroundColor = color2;
-            document.getElementById('logo-svg-container').innerHTML = logos[id];
+            document.getElementById('header-color').style.backgroundColor = color;
+            document.getElementById('main-btn').style.backgroundColor = color;
+            document.getElementById('icon-target').innerHTML = icons[id];
+            document.getElementById('icon-target').style.color = color;
         }
 
-        function syncDisplay() {
-            const val = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2});
+        function syncMonto() {
+            const val = document.getElementById('monto-input').value || "---";
+            document.getElementById('ref-display').innerText = val !== "---" ? "$" + val : "---";
         }
 
-        function generar() {
-            const idRandom = Math.random().toString(36).substring(7).toUpperCase();
-            const liga = `https://pago.mx/secure/REF-${idRandom}`;
-            document.getElementById('display-link').innerText = liga;
+        function generateLink() {
+            const cliente = document.getElementById('nombre-cliente').value || "Cliente";
+            const monto = document.getElementById('monto-input').value || "0";
+            const randomID = Math.random().toString(36).substring(7).toUpperCase();
+            
+            const finalLink = `https://pago.mx/pay?ref=${randomID}&amt=${monto}`;
             
             // Copiar al portapapeles
-            navigator.clipboard.writeText(liga);
-            alert("✅ Liga generada y copiada al portapapeles.");
+            navigator.clipboard.writeText(finalLink);
+            
+            // Efecto visual
+            const msg = document.getElementById('copy-msg');
+            msg.opacity = "1";
+            setTimeout(() => msg.opacity = "0", 2000);
+            
+            alert(`✅ Enlace Generado para ${cliente}\n\n${finalLink}`);
         }
 
-        // Iniciar la app con Tala
-        actualizarTodo();
+        // Inicializar
+        updateUI();
     </script>
 </body>
 </html>
