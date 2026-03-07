@@ -2,68 +2,104 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; position: relative; }
         .timer-red { color: #ef4444; font-weight: 800; animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        #toast { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 10px 20px; border-radius: 12px; font-size: 11px; opacity: 0; transition: 0.3s; z-index: 100; }
     </style>
 </head>
 <body>
-    <div class="card shadow-2xl">
+    <div class="card-detalle shadow-2xl">
+        <div id="toast">¡Link de pago copiado!</div>
+        
         <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
-            <span class="text-[10px] font-bold uppercase tracking-widest opacity-80">Orden de Pago</span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
             <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase">PRODUCTO</h1>
         </div>
+
         <div class="p-8 space-y-6">
-            <div class="bg-gray-50 rounded-[2rem] p-8 text-center border border-gray-100">
-                <span class="text-[10px] font-bold text-gray-400 uppercase block mb-2">Monto Total a Pagar</span>
+            <div class="bg-gray-50/50 rounded-[2rem] p-8 text-center border border-gray-100">
+                <span class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-widest">Monto Total a Pagar</span>
                 <div class="text-4xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
             </div>
-            <div class="space-y-4 text-sm font-bold">
-                <div class="flex justify-between border-b pb-3">
-                    <span class="text-gray-400 uppercase text-[10px]">Nombre del Cliente</span>
-                    <span id="display-nombre">Cargando...</span>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre del Cliente</span>
+                    <span id="display-nombre" class="text-sm font-bold text-gray-800">Cargando...</span>
                 </div>
-                <div class="flex justify-between border-b pb-3">
-                    <span class="text-gray-400 uppercase text-[10px]">Fecha de Vencimiento</span>
-                    <span id="display-fecha">---</span>
+                <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Fecha de Vencimiento</span>
+                    <span id="display-fecha" class="text-sm font-bold text-gray-800">---</span>
                 </div>
+                
                 <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] font-bold text-red-600 uppercase">La liga expira en:</span>
                         <span id="timer" class="timer-red text-lg">30:00</span>
                     </div>
+                    <p class="text-[9px] text-red-500 mt-2 font-medium">
+                        * Al llegar a 0, se cobrarán <b class="font-bold">$500.00 pesos adicionales</b> por concepto de vencimiento de liga de pago.
+                    </p>
                 </div>
             </div>
-            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center">
-                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase">TRANSFERENCIA</span>
-                <div id="display-clabe" class="text-xl font-black text-blue-700">000000000000000000</div>
+
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-2">
+                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase">TRANSFERENCIA SPEI</span>
+                <div id="display-clabe" class="text-xl font-black text-blue-700 tracking-widest">000000000000000000</div>
+                <p class="text-[10px] italic text-blue-400">Referencia: Pago de Multa</p>
             </div>
-            <button onclick="copiarLink()" class="w-full bg-[#1e293b] text-white font-bold py-5 rounded-[1.5rem] uppercase text-xs tracking-widest">Copiar Link de Pago</button>
+
+            <button onclick="copiarLink()" class="w-full bg-[#1e293b] text-white font-bold py-5 rounded-[1.5rem] uppercase text-[11px] tracking-widest flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" stroke-width="2"/></svg>
+                Copiar Link de Pago
+            </button>
         </div>
     </div>
+
     <script>
         const params = new URLSearchParams(window.location.search);
         const startTime = parseInt(params.get('start')) || Date.now();
-        document.getElementById('display-monto').innerText = "$" + (params.get('monto') || "0.00");
+        
+        document.getElementById('display-monto').innerText = "$" + parseFloat(params.get('monto') || 0).toLocaleString('en-US', {minimumFractionDigits: 2});
         document.getElementById('display-nombre').innerText = params.get('nombre') || "Cliente";
         document.getElementById('display-fecha').innerText = params.get('fecha') || "---";
-        document.getElementById('display-producto').innerText = params.get('prod') || "ORDEN";
-        document.getElementById('display-clabe').innerText = params.get('clabe') || "";
+        document.getElementById('display-producto').innerText = params.get('prod') || "PRESTAMO";
+        document.getElementById('display-clabe').innerText = (params.get('clabe') || "");
         
-        const duracion = 30 * 60 * 1000; 
-        function update() {
-            const r = duracion - (Date.now() - startTime);
-            if(r <= 0) { document.getElementById('timer').innerText = "00:00"; return; }
-            const m = Math.floor(r/60000), s = Math.floor((r%60000)/1000);
-            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+        const banco = params.get('banco') || "";
+        document.getElementById('display-banco-label').innerText = `TRANSFERENCIA ${banco} (SPEI)`;
+
+        const duracionTotal = 30 * 60 * 1000; 
+        function actualizarTimer() {
+            const ahora = Date.now();
+            const restante = duracionTotal - (ahora - startTime);
+
+            if (restante <= 0) {
+                document.getElementById('timer').innerText = "00:00";
+                clearInterval(intervalo);
+            } else {
+                const m = Math.floor(restante / 60000);
+                const s = Math.floor((restante % 60000) / 1000);
+                document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+            }
         }
-        setInterval(update, 1000); update();
-        function copiarLink() { navigator.clipboard.writeText(window.location.href); alert("Copiado"); }
+        const intervalo = setInterval(actualizarTimer, 1000);
+        actualizarTimer();
+
+        function copiarLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const t = document.getElementById('toast');
+                t.style.opacity = "1";
+                setTimeout(() => t.style.opacity = "0", 2000);
+            });
+        }
     </script>
 </body>
 </html>
