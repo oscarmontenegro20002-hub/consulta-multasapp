@@ -3,100 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Detalle de Pago</title>
+    <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .main-card { width: 100%; max-width: 400px; background: white; border-radius: 40px; overflow: hidden; margin-top: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
+        .timer-red { color: #ef4444; font-weight: 900; animation: pulse 1s infinite; font-size: 1.8rem; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
         
-        /* ESTILO DEL RECUADRO ROSADO */
+        /* FUERZA LA VISIBILIDAD DEL RECUADRO */
         .alerta-vencimiento {
             background-color: #fff1f1 !important;
             border: 2px solid #fee2e2 !important;
-            border-radius: 20px !important;
-            padding: 20px !important;
-            margin: 20px 0 !important;
+            border-radius: 1.5rem !important;
+            padding: 1.5rem !important;
             display: block !important;
-            clear: both !important;
+            margin: 1.5rem 0 !important;
         }
     </style>
 </head>
 <body>
-    <div class="main-card">
-        <div style="background-color: #14b8a6; color: white; padding: 40px 20px; text-align: center;">
-            <p style="font-size: 10px; font-weight: 800; letter-spacing: 2px; margin: 0;">ORDEN DE PAGO</p>
-            <h1 id="p-prod" style="font-size: 28px; font-weight: 900; margin: 5px 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
+
+    <div class="card-detalle shadow-2xl">
+        <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
+            <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase tracking-tight text-white">CARGANDO...</h1>
         </div>
 
-        <div style="padding: 25px;">
-            <div style="background-color: #f9fafb; border-radius: 30px; padding: 30px; text-align: center; border: 1px solid #f3f4f6;">
-                <p style="font-size: 10px; font-weight: 800; color: #9ca3af; margin: 0;">MONTO TOTAL A PAGAR</p>
-                <h2 id="p-monto" style="font-size: 45px; font-weight: 900; color: #0d9488; margin: 5px 0;">$0.00</h2>
+        <div class="p-8 space-y-6">
+            <div class="bg-slate-50 rounded-[2rem] p-8 text-center border border-slate-100">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Monto Total a Pagar</span>
+                <div class="text-5xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
             </div>
 
-            <div style="margin-top: 20px;">
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af;">CLIENTE</span>
-                    <span id="p-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">---</span>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Nombre del Cliente</span>
+                    <span id="display-nombre" class="text-sm font-black text-slate-800 uppercase">---</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af;">VENCIMIENTO</span>
-                    <span id="p-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">---</span>
-                </div>
-            </div>
-
-            <div class="alerta-vencimiento">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: #ef4444; font-size: 11px; font-weight: 900;">LA LIGA EXPIRA EN:</span>
-                    <span id="p-timer" style="color: #ef4444; font-size: 26px; font-weight: 900;">29:50</span>
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
+                    <span id="display-fecha" class="text-sm font-black text-slate-800">---</span>
                 </div>
                 
-                <p style="color: #ef4444; font-size: 12px; line-height: 1.5; margin-top: 15px; font-weight: 600; display: block !important;">
-                    * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
-                </p>
+                <div class="alerta-vencimiento">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[11px] font-black text-red-600 uppercase tracking-wider">La liga expira en:</span>
+                        <span id="timer" class="timer-red">30:00</span>
+                    </div>
+                    <p class="text-[12px] text-red-500 mt-4 leading-normal font-bold">
+                        * Al llegar a 0, se cobrará una penalización de <span class="underline text-red-700 font-black">$500,00 pesos ADICIONALES</span> por concepto de vencimiento de liga de pago.
+                    </p>
+                </div>
             </div>
 
-            <div style="background-color: #f0f9ff; border: 1px solid #e0f2fe; border-radius: 25px; padding: 20px; text-align: center;">
-                <p id="p-banco" style="font-size: 10px; font-weight: 800; color: #3b82f6; margin: 0;">TRANSFERENCIA (SPEI)</p>
-                <p id="p-clabe" style="font-size: 24px; font-weight: 900; color: #2563eb; letter-spacing: -1px; margin: 5px 0;">000000000000000000</p>
-                <p style="font-size: 10px; color: #93c5fd; font-style: italic; font-weight: 700; margin: 0;">Referencia: Pago de Multa</p>
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
+                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block">TRANSFERENCIA (SPEI)</span>
+                <div id="display-clabe" class="text-2xl font-black text-blue-700 tracking-tighter">000000000000000000</div>
+                <p class="text-[10px] font-bold italic text-blue-400">Referencia: Pago de Multa</p>
             </div>
 
-            <button onclick="copiarLink()" style="width: 100%; background-color: #22c55e; color: white; padding: 20px; border-radius: 25px; font-weight: 900; font-size: 13px; border: none; margin-top: 20px; text-transform: uppercase; cursor: pointer;">
+            <button onclick="enviarWhatsApp()" class="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-black py-6 rounded-[1.5rem] shadow-lg shadow-green-500/30 uppercase text-[13px] tracking-widest transition-all active:scale-95 flex items-center justify-center">
                 Confirmar Pago vía WhatsApp
             </button>
         </div>
     </div>
 
     <script>
+        // Mapeo de parámetros del generador al visualizador
         const params = new URLSearchParams(window.location.search);
-        const startTime = parseInt(params.get('s')) || Date.now();
-        
-        document.getElementById('p-monto').innerText = "$" + (params.get('m') || "0.00");
-        document.getElementById('p-nom').innerText = (params.get('n') || "CLIENTE").toUpperCase();
-        document.getElementById('p-fec').innerText = params.get('f') || "---";
-        document.getElementById('p-prod').innerText = params.get('pr') || "TALA PRÉSTAMOS";
-        document.getElementById('p-clabe').innerText = params.get('cl') || "";
-        document.getElementById('p-banco').innerText = `TRANSFERENCIA ${params.get('b') || 'MERCADO PAGO'} (SPEI)`;
+        const monto = params.get('m') || "0.00";
+        const nombre = params.get('n') || "Cliente";
+        const tel = params.get('t') || "";
+        const fecha = params.get('f') || "---";
+        const producto = params.get('pr') || "TALA PRESTAMOS";
+        const clabe = params.get('cl') || "000000000000000000";
+        const banco = params.get('b') || "MERCADO PAGO";
+        const startTimestamp = parseInt(params.get('s')) || Date.now();
 
-        function startTimer() {
+        // Llenar datos en pantalla
+        document.getElementById('display-monto').innerText = "$" + monto;
+        document.getElementById('display-nombre').innerText = nombre.toUpperCase();
+        document.getElementById('display-fecha').innerText = fecha;
+        document.getElementById('display-producto').innerText = producto.toUpperCase();
+        document.getElementById('display-clabe').innerText = clabe;
+        document.getElementById('display-banco-label').innerText = `TRANSFERENCIA ${banco.toUpperCase()} (SPEI)`;
+
+        // LÓGICA DEL CRONÓMETRO (Sincronizado con el generador)
+        function updateTimer() {
             const now = Date.now();
-            const distance = (30 * 60 * 1000) - (now - startTime);
-            if (distance <= 0) {
-                document.getElementById('p-timer').innerText = "00:00";
+            const diff = (30 * 60 * 1000) - (now - startTimestamp);
+            
+            if (diff <= 0) {
+                document.getElementById('timer').innerText = "EXPIRADO";
+                document.getElementById('timer').classList.remove('pulse');
                 return;
             }
-            const mins = Math.floor(distance / 60000);
-            const secs = Math.floor((distance % 60000) / 1000);
-            document.getElementById('p-timer').innerText = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
-        }
-        setInterval(startTimer, 1000);
-        startTimer();
 
-        function copiarLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert("Copiado al portapapeles");
+            const minutos = Math.floor(diff / 60000);
+            const segundos = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('timer').innerText = 
+                (minutos < 10 ? '0' + minutos : minutos) + ":" + 
+                (segundos < 10 ? '0' + segundos : segundos);
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function enviarWhatsApp() {
+            const mensaje = `Hola, mi nombre es ${nombre}. Adjunto mi comprobante de pago de ${producto} por la cantidad de $${monto}.`;
+            const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
+            window.location.href = url;
         }
     </script>
 </body>
