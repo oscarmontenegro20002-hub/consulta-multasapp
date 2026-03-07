@@ -203,9 +203,27 @@
             d.innerText = diffDays;
             d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
         }
+function confirmar() {
+    // Capturamos los datos reales del formulario
+    const monto = document.getElementById('input-monto').value || "0.00";
+    const nombre = document.getElementById('cliente-nombre').value || "Cliente";
+    const tel = document.getElementById('cliente-tel').value || "";
+    const fecha = document.getElementById('f-venc').value;
+    const producto = document.getElementById('product-select').options[document.getElementById('product-select').selectedIndex].text;
 
-        function confirmar() { alert("✅ Liga Generada Correctamente"); }
-        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+    // Creamos la "maleta" de datos para enviar
+    const datos = new URLSearchParams({
+        monto: monto,
+        nombre: nombre,
+        tel: tel,
+        fecha: fecha,
+        prod: producto
+    }).toString();
+
+    // Abrimos la nueva pestaña
+    window.open(`detalle.html?${datos}`, '_blank');
+}
     </script>
 </body>
 </html>
+
