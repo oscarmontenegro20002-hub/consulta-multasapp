@@ -3,28 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Ligas</title>
+    <title>Generador de Ligas Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .card-container { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; position: relative; }
-        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; line-height: 1; }
         
-        /* LOGIN MEJORADO */
-        #main-app { display: none; }
-        #login-screen { 
-            position: fixed; inset: 0; background: radial-gradient(circle at top, #1e293b 0%, #0b1120 100%); 
-            display: flex; align-items: center; justify-content: center; z-index: 1000; 
+        /* Estilos base (Mantenidos del generador original) */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+            background-color: #0b1120; /* Fondo oscuro por defecto */
         }
-        .login-card { width: 100%; max-width: 380px; background: white; padding: 2.5rem; border-radius: 3rem; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
-        .error-msg { color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; }
+        
+        .card-container { 
+            width: 100%; 
+            max-width: 440px; 
+            background: white; 
+            border-radius: 2.5rem; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+        }
+        
+        .monto-box { 
+            border-radius: 1.5rem; 
+            padding: 1rem 1.5rem; 
+            margin: 1rem 1.5rem 0 1.5rem; 
+            position: relative; 
+        }
+        
+        .input-monto { 
+            background: transparent; 
+            border: none; 
+            outline: none; 
+            width: 100%; 
+            color: white; 
+            font-weight: 700; 
+            font-size: 2.2rem; 
+            line-height: 1; 
+        }
+
+        /* --- ESTILOS DE LOGIN (NUEVOS CON FONDO) --- */
+        #main-app { 
+            display: none; /* Oculto al inicio */
+        }
+        
+        #login-screen { 
+            position: fixed; 
+            inset: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 1000; 
+            overflow: hidden;
+        }
+
+        /* Capa para el fondo con movimiento */
+        .login-bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        /* Capa de oscurecimiento sobre el video para mejor contraste */
+        .login-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 17, 32, 0.7); /* Oscuro semi-transparente */
+            z-index: -1;
+        }
+
+        .login-card { 
+            width: 100%; 
+            max-width: 380px; 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 3rem; 
+            text-align: center; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-msg { 
+            color: #ef4444; 
+            font-size: 12px; 
+            font-weight: 600; 
+            margin-top: 10px; 
+            display: none; 
+        }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
+        <video autoplay loop muted playsinline class="login-bg-video">
+            <source src="URL_DIRECTA_DE_TU_VIDEO.mp4" type="video/mp4">
+            Tu navegador no soporta video html5.
+        </video>
+        
+        <div class="login-overlay"></div>
+
         <div class="login-card">
             <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,6 +154,7 @@
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
+
             <div class="px-6 mb-2">
                 <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-sm font-bold text-center outline-none backdrop-blur-md">
                     <option value="tala|#14b8a6|#0d9488" class="text-black">Tala Préstamos</option>
@@ -73,6 +164,7 @@
                     <option value="movil|#8b5cf6|#6d28d9" class="text-black">Movil Cash</option>
                 </select>
             </div>
+            
             <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white shadow-lg">
                 <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
                 <div class="flex items-center mt-1">
@@ -121,15 +213,15 @@
             <div class="space-y-4 pt-2">
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre</label>
-                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
             </div>
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 hover:brightness-110 active:scale-95 transition-all">
                 Confirmar y Generar Link
             </button>
         </div>
@@ -139,3 +231,93 @@
         // --- LOGICA LOGIN ---
         function acceder() {
             const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            const error = document.getElementById('login-error');
+
+            if(u === "admin" && p === "123") {
+                // Transición suave para ocultar el login
+                document.getElementById('login-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                    // Re-calcular días por si acaso
+                    dias();
+                }, 300); // 300ms coincide con la transición css si la hubiera
+            } else {
+                // Mostrar mensaje de error visual
+                error.style.display = 'block';
+                // Ocultar después de 3 segundos
+                setTimeout(() => {
+                    error.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Botón Ojo para Contraseña
+        function togglePass() {
+            const passInput = document.getElementById('pass');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                // Opcional: cambiar icono a ojo tachado
+                // eyeIcon.innerHTML = '... SVG de ojo tachado ...';
+            } else {
+                passInput.type = "password";
+                // eyeIcon.innerHTML = '... SVG de ojo normal ...';
+            }
+        }
+
+        // --- LOGICA GENERADOR (SIN CAMBIOS) ---
+        const logos = {
+            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png',
+            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
+            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
+            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
+            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'
+        };
+
+        function updateApp() {
+            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
+            document.getElementById('header-bg').style.backgroundColor = c1;
+            document.getElementById('monto-card-bg').style.backgroundColor = c2;
+            document.getElementById('btn-main').style.backgroundColor = c2;
+            document.getElementById('app-logo').src = logos[id] || logos['tala'];
+        }
+
+        function sync() {
+            let v = document.getElementById('input-monto').value || "0";
+            document.getElementById('res-monto').innerText = "$" + parseFloat(v).toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
+
+        function dias() {
+            let f = document.getElementById('f-venc').value;
+            if(!f) return;
+            
+            // LÓGICA DE DÍAS CORREGIDA
+            let hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            let venc = new Date(f + 'T00:00:00');
+            
+            // Cálculo exacto
+            let diffTime = venc.getTime() - hoy.getTime();
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const display = document.getElementById('res-dias');
+            display.innerText = diffDays;
+            
+            // Si es negativo (vencido), ponerlo en rojo
+            if (diffDays < 0) {
+                display.style.color = "#ef4444"; // Rojo Tailwind
+            } else {
+                display.style.color = "#1e293b"; // Color normal Tailwind
+            }
+        }
+
+        function confirmar() { alert("✅ Liga Generada Correctamente"); }
+
+        // Inicializar fecha de hoy
+        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
