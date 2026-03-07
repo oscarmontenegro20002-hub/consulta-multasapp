@@ -19,12 +19,14 @@
                 <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
             <div class="px-8 mb-4">
-                <select id="prod" onchange="updateUI()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 font-bold text-center outline-none appearance-none">
-                    <option value="tala|#14b8a6|#0d9488">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#581c87">Préstamos NU</option>
-                    <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
+                <select id="prod" onchange="updateUI()" style="background-color: white !important; color: black !important;" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none appearance-none">
+                    <option value="tala|#14b8a6|#0d9488" style="background: white; color: black;">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87" style="background: white; color: black;">Préstamos NU</option>
+                    <option value="mercado|#00aae7|#009ee3" style="background: white; color: black;">Mercado Crédito</option>
+                    <option value="kueski|#4b2c92|#3a1f75" style="background: white; color: black;">Kueski</option>
+                    <option value="dida|#2563eb|#1d4ed8" style="background: white; color: black;">DidaPréstamos</option>
                 </select>
-            </div>
+                </div>
             <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white">
                 <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                 <div class="flex items-center text-4xl font-black">
@@ -74,7 +76,7 @@
             const diff = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
             const el = document.getElementById('l-dias');
             el.innerText = diff > 0 ? diff : 0;
-            el.style.color = diff > 0 ? "#ef4444" : "#1e293b"; // Rojo si es pasado
+            el.style.color = diff > 0 ? "#ef4444" : "#1e293b"; 
         }
 
         function cambiarCuenta() {
