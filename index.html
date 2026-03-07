@@ -9,16 +9,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; }
         .card-container { width: 100%; max-width: 450px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .header-blue { background-color: #0056b3; padding: 2rem 1.5rem 4rem 1.5rem; text-center: center; position: relative; transition: background 0.3s; }
+        .header-main { background-color: #0d9488; padding: 2rem 1.5rem 4rem 1.5rem; text-align: center; position: relative; transition: background 0.3s; }
         .logo-box { width: 90px; height: 90px; background: white; border-radius: 1.5rem; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .monto-card { position: absolute; bottom: -40px; left: 1.5rem; right: 1.5rem; background: #003d7a; border-radius: 1rem; padding: 1.2rem; color: white; display: flex; flex-direction: column; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); transition: background 0.3s; }
-        input[type="number"]::-webkit-inner-spin-button { display: none; }
+        .monto-card { position: absolute; bottom: -40px; left: 1.5rem; right: 1.5rem; background: #065f46; border-radius: 1rem; padding: 1.2rem; color: white; display: flex; flex-direction: column; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); transition: background 0.3s; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
     <div class="card-container">
-        <div id="header" class="header-blue">
+        <div id="header" class="header-main">
             <div class="logo-box">
                 <img id="main-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
@@ -29,17 +28,18 @@
 
             <div class="relative max-w-[280px] mx-auto">
                 <select id="product-select" onchange="changeProduct()" class="w-full bg-white border-none rounded-lg px-4 py-2 text-sm font-bold text-blue-600 appearance-none text-center outline-none shadow-md">
-                    <option value="tala|#0056b3|#003d7a">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#581c87">Préstamos Nu</option>
-                    <option value="dida|#2563eb|#1d4ed8">DiDa Préstamos</option>
-                    <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
-                    <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
+                    <option value="tala|#0d9488|#065f46">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87">Préstamos NU</option>
+                    <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
                     <option value="rapidos|#10b981|#047857">Préstamos Rápidos</option>
+                    <option value="worldmox|#0ea5e9|#0369a1">Worldmoxpro Cash GG</option>
+                    <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
+                    <option value="talacredito|#0d9488|#065f46">Tala Crédito</option>
                 </select>
             </div>
 
-            <div id="monto-bg" class="monto-card">
-                <span class="text-[10px] uppercase font-bold text-white/70 tracking-widest">Monto de Pago</span>
+            <div id="monto-bg" class="monto-card text-left">
+                <span class="text-[10px] uppercase font-bold text-white/70 tracking-widest">MONTO DE PAGO</span>
                 <div class="flex items-center">
                     <span class="text-3xl font-bold mr-1">$</span>
                     <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-3xl font-bold outline-none w-full placeholder:text-white/30">
@@ -51,32 +51,37 @@
 
         <div class="p-8 space-y-4">
             <div class="flex justify-between border-b pb-2 items-center">
-                <span class="text-sm text-slate-500">Subproducto</span>
-                <select class="text-sm font-bold text-slate-800 bg-transparent outline-none">
-                    <option>Multa</option>
-                    <option>Recargo</option>
-                    <option>Liquidación Total</option>
-                </select>
+                <span class="text-sm text-slate-500 font-semibold">Subproducto</span>
+                <span class="text-sm font-bold text-slate-800">Multa</span>
             </div>
 
             <div class="flex justify-between border-b pb-2 items-center">
-                <span class="text-sm text-slate-500">Importe a Pagar</span>
+                <span class="text-sm text-slate-500 font-semibold">Importe a Pagar</span>
                 <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
             </div>
 
             <div class="flex justify-between border-b pb-2 items-center">
-                <span class="text-sm text-slate-500">Fecha Vencimiento</span>
+                <span class="text-sm text-slate-500 font-semibold">Fecha Vencimiento</span>
                 <input type="date" id="fecha-venc" onchange="calcVencimiento()" class="text-sm font-bold text-slate-800 outline-none">
             </div>
 
             <div class="flex justify-between border-b pb-2 items-center">
-                <span class="text-sm text-slate-500">Días vencimiento</span>
+                <span class="text-sm text-slate-500 font-semibold">Días vencimiento</span>
                 <span id="dias-count" class="text-sm font-bold text-slate-800">0</span>
             </div>
 
+            <div class="flex justify-between border-b pb-2 items-center">
+                <span class="text-sm text-slate-500 font-semibold">Método de pago</span>
+                <select class="text-sm font-bold text-slate-800 bg-transparent outline-none">
+                    <option>Transferencia</option>
+                    <option>Efectivo</option>
+                    <option>Tarjeta</option>
+                </select>
+            </div>
+
             <div class="bg-slate-50 rounded-2xl p-6 text-center border border-slate-100 my-4">
-                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Liga de pago</p>
-                <p id="liga-texto" class="text-xs font-mono font-bold text-blue-600">0000000000</p>
+                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">LIGA DE PAGO</p>
+                <p id="liga-texto" class="text-xs font-mono font-bold text-blue-600">1235132812492191</p>
             </div>
 
             <div class="space-y-3">
@@ -84,7 +89,7 @@
                 <input type="text" placeholder="Teléfono" class="w-full text-sm border-b pb-1 outline-none focus:border-blue-500">
             </div>
 
-            <button onclick="generar()" id="btn-final" class="w-full bg-[#003d7a] text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
+            <button onclick="generar()" id="btn-final" class="w-full bg-[#065f46] text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
                 Confirmar y Generar Link
             </button>
         </div>
@@ -97,7 +102,7 @@
             'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
             'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
             'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png',
-            'rapidos': 'https://i.ibb.co/vY8N9zX/image-45ec84.png'
+            'talacredito': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png'
         };
 
         function changeProduct() {
@@ -116,17 +121,14 @@
         function calcVencimiento() {
             const fValue = document.getElementById('fecha-venc').value;
             if(!fValue) return;
-
             const hoy = new Date();
             hoy.setHours(0,0,0,0);
             const venc = new Date(fValue + 'T00:00:00');
-            
             const diff = venc - hoy;
             const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            
             const el = document.getElementById('dias-count');
             el.innerText = dias;
-            el.style.color = dias < 0 ? "#ef4444" : "#1e293b"; // Rojo si es negativo
+            el.style.color = dias < 0 ? "#ef4444" : "#1e293b";
         }
 
         function toggleFoto() {
@@ -135,12 +137,9 @@
         }
 
         function generar() {
-            const ref = Math.random().toString(36).substring(7).toUpperCase();
-            document.getElementById('liga-texto').innerText = "https://pago.mx/REF-" + ref;
-            alert("✅ Liga generada.");
+            alert("✅ Liga generada con referencia: 1235132812492191");
         }
 
-        // Fecha de hoy por defecto
         document.getElementById('fecha-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
