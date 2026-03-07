@@ -3,118 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Liga de Pago</title>
+    <title>Generador de Cobros México</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { 
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; 
-        }
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 md:p-10">
 
-    <div class="flex flex-col lg:flex-row gap-10 w-full max-w-6xl items-start justify-center">
+    <div class="flex flex-col lg:flex-row gap-10 w-full max-w-6xl items-center lg:items-start justify-center">
         
-        <div class="w-full max-w-[420px] bg-white rounded-[3rem] shadow-2xl overflow-hidden self-center">
+        <div class="w-full max-w-[400px] bg-white rounded-[3rem] shadow-2xl overflow-hidden text-slate-800">
             <div class="bg-[#7dd3fc] p-8 pb-12 text-center relative">
-                <div class="w-20 h-20 bg-white rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-sm">
-                    <span class="text-slate-300 font-bold text-xs uppercase">Logo</span>
+                <div class="w-24 h-24 bg-white rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-md overflow-hidden p-2">
+                    <img id="logo-img" src="https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png" alt="Logo App" class="max-w-full max-h-full object-contain">
                 </div>
-                <button class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-600 mb-6 hover:bg-white transition">
-                    Inhabilitar foto
-                </button>
                 
-                <div class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 text-left shadow-xl">
-                    <p class="text-blue-200 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Pago</p>
+                <div class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 shadow-xl">
+                    <p class="text-blue-200 text-[10px] uppercase font-bold tracking-widest mb-1">Monto del Préstamo</p>
                     <h2 id="view-monto" class="text-white text-4xl font-bold">$0.00</h2>
                 </div>
             </div>
 
             <div class="h-14"></div>
 
-            <div class="p-8 space-y-5 text-slate-800">
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-sm text-slate-500 font-medium">Producto</span>
-                    <span id="view-producto" class="text-sm font-bold">Servicio ▼</span>
+            <div class="p-8 space-y-4">
+                <div class="flex justify-between border-b border-slate-100 pb-2">
+                    <span class="text-sm text-slate-500 font-medium">Institución</span>
+                    <span id="view-app-name" class="text-sm font-bold text-slate-800 tracking-tight">Nu México</span>
                 </div>
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-sm text-slate-500 font-medium">Importe a Pagar</span>
-                    <span id="view-importe" class="text-sm font-bold">$0.00</span>
-                </div>
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-sm text-slate-500 font-medium">Fecha Vencimiento</span>
-                    <span class="text-sm font-bold text-slate-400">dd/mm/aaaa 📅</span>
+                <div class="flex justify-between border-b border-slate-100 pb-2">
+                    <span class="text-sm text-slate-500 font-medium">Vencimiento</span>
+                    <span id="view-fecha" class="text-sm font-bold text-blue-600">-- / -- / ----</span>
                 </div>
 
-                <div class="bg-slate-50 rounded-[2rem] p-8 text-center border border-slate-100 my-4">
-                    <p class="text-[11px] text-slate-400 uppercase tracking-widest mb-2 font-bold">Método de pago</p>
-                    <h3 class="text-2xl font-extrabold text-[#1e293b] mb-1">Liga de pago</h3>
-                    <p id="view-link" class="text-[10px] text-slate-400 font-mono truncate">0000000000</p>
+                <div class="bg-slate-50 rounded-[2.5rem] p-6 text-center border border-slate-100 mt-4">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1 tracking-tighter">Referencia de Pago</p>
+                    <p id="view-link" class="text-[10px] text-blue-500 font-mono truncate px-2">Esperando datos...</p>
                 </div>
 
-                <div class="space-y-4 pt-2">
-                    <input type="text" placeholder="Nombre" class="w-full text-sm border-b border-slate-200 py-2 outline-none focus:border-blue-500 transition">
-                    <input type="text" placeholder="Teléfono" class="w-full text-sm border-b border-slate-200 py-2 outline-none focus:border-blue-500 transition">
+                <div class="space-y-3 pt-2">
+                    <input type="text" placeholder="Nombre del Titular" class="w-full text-sm border-b border-slate-200 py-1 outline-none focus:border-blue-500 transition placeholder:text-slate-300">
+                    <input type="text" placeholder="Número de Cuenta / CLABE" class="w-full text-sm border-b border-slate-200 py-1 outline-none focus:border-blue-500 transition placeholder:text-slate-300">
                 </div>
             </div>
         </div>
 
         <aside class="w-full lg:w-80 space-y-4">
-            <div class="glass-panel p-4 rounded-2xl flex justify-between items-center text-white">
-                <span class="text-xs font-medium">Mostrar datos del cliente</span>
-                <div class="w-10 h-5 bg-blue-600 rounded-full relative">
-                    <div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+            <div class="glass p-6 rounded-[2.5rem] space-y-5">
+                <h3 class="text-xs font-bold uppercase text-slate-400 tracking-widest border-b border-slate-700 pb-2">Panel Asesor</h3>
+                
+                <div>
+                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Aplicación de Crédito</label>
+                    <select id="input-app" onchange="update()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-500 text-white">
+                        <option value="Nu México|https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png">Préstamos NU</option>
+                        <option value="Rápidos|https://cdn-icons-png.flaticon.com/512/3135/3135706.png">Préstamos Rápidos</option>
+                        <option value="Kueski|https://kueski.com/blog/wp-content/uploads/2021/11/Logo-Kueski.png">Kueski Pay</option>
+                        <option value="Baubap|https://www.baubap.com/hubfs/Logo%20Baubap%202022.png">Baubap</option>
+                        <option value="Credmex|https://credmex.mx/img/logo.png">Credmex</option>
+                    </select>
                 </div>
-            </div>
 
-            <div class="glass-panel p-6 rounded-[2rem] text-white">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Configuración</h3>
-                <div class="space-y-5">
-                    <div>
-                        <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Concepto</label>
-                        <input type="text" id="input-prod" oninput="update()" placeholder="Ej. Pago Multa #154" 
-                            class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Monto</label>
-                        <input type="number" id="input-monto" oninput="update()" placeholder="0.00" 
-                            class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <button onclick="generate()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold text-sm transition-all shadow-lg active:scale-95">
-                        GENERAR LIGA
-                    </button>
+                <div>
+                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Fecha de Vencimiento</label>
+                    <input type="date" id="input-fecha" oninput="update()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm outline-none text-white">
                 </div>
+
+                <div>
+                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Importe Total ($)</label>
+                    <input type="number" id="input-monto" oninput="update()" placeholder="0.00" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm outline-none text-white">
+                </div>
+
+                <button onclick="generate()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold shadow-lg shadow-blue-900/40 transition-all active:scale-95 uppercase text-xs tracking-widest">
+                    Generar Liga de Pago
+                </button>
             </div>
+            <p class="text-[9px] text-slate-500 text-center font-bold tracking-widest">VERCEL DEPLOYMENT v2.1</p>
         </aside>
 
     </div>
 
     <script>
         function update() {
-            const m = document.getElementById('input-monto').value || "0.00";
-            const p = document.getElementById('input-prod').value || "Servicio";
-            document.getElementById('view-monto').innerText = "$" + m;
-            document.getElementById('view-importe').innerText = "$" + m;
-            document.getElementById('view-producto').innerText = p + " ▼";
+            // Manejo de Monto
+            const monto = document.getElementById('input-monto').value || "0.00";
+            document.getElementById('view-monto').innerText = "$" + monto;
+            
+            // Manejo de Fecha
+            const fechaVal = document.getElementById('input-fecha').value;
+            if(fechaVal) {
+                const [y, m, d] = fechaVal.split('-');
+                document.getElementById('view-fecha').innerText = `${d}/${m}/${y}`;
+            }
+
+            // Manejo de Logo y Nombre
+            const appData = document.getElementById('input-app').value.split('|');
+            document.getElementById('view-app-name').innerText = appData[0];
+            document.getElementById('logo-img').src = appData[1];
         }
 
         function generate() {
             const m = document.getElementById('input-monto').value;
-            const p = document.getElementById('input-prod').value || "Pago";
-            if(!m) return alert("Ingresa un monto");
+            if(!m) return alert("Por favor, ingresa un monto válido.");
             
-            const link = "https://checkout.pago.com/" + Math.random().toString(36).substring(7);
+            // Simulación de link de pago seguro
+            const hash = Math.random().toString(36).substring(2, 10).toUpperCase();
+            const link = `https://pagos-mexico.vercel.app/secure/MXN-${hash}`;
+            
             document.getElementById('view-link').innerText = link;
             
-            navigator.clipboard.writeText(link);
-            alert("Liga generada y copiada.");
+            // Copiar al portapapeles
+            navigator.clipboard.writeText(link).then(() => {
+                alert("¡Liga generada y copiada al portapapeles!");
+            });
         }
     </script>
 </body>
