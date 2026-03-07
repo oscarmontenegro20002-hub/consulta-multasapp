@@ -19,8 +19,8 @@
         }
         .timer-val { color: #f87171; font-weight: 800; font-size: 1.6rem; }
 
-        /* ESTILO DEL TEXTO DE PENALIZACIÓN QUE SOLICITASTE */
-        .texto-penalizacion {
+        /* ESTILO ESPECÍFICO PARA EL MENSAJE DE PENALIZACIÓN */
+        .texto-advertencia {
             color: #ef4444; 
             font-size: 11px;
             line-height: 1.4;
@@ -57,7 +57,7 @@
                         <span class="text-[10px] font-extrabold text-[#ef4444] uppercase tracking-wider">La liga expira en:</span>
                         <span id="timer" class="timer-val">29:50</span>
                     </div>
-                    <p class="texto-penalizacion">
+                    <p class="texto-advertencia">
                         * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
                     </p>
                 </div>
@@ -100,7 +100,7 @@
 
         function copiar() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link copiado para WhatsApp.");
+            alert("Link de pago copiado.");
         }
     </script>
 </body>
