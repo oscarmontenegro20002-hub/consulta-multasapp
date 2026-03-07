@@ -10,25 +10,27 @@
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         .card-main { width: 100%; max-width: 420px; background: white; border-radius: 3rem; overflow: hidden; margin: 15px; }
         
-        /* RECUADRO ROSADO DEL CRONÓMETRO */
-        .timer-container { 
+        /* RECUADRO ROSADO - AJUSTADO PARA QUE EL TEXTO QUE QUIERES QUEPA SÍ O SÍ */
+        .timer-box { 
             background-color: #fff1f1; 
+            border: 1.5px solid #fee2e2; 
             border-radius: 1.5rem; 
-            padding: 1.25rem; 
-            margin-top: 1rem;
-            border: 1px solid #fee2e2;
+            padding: 1.5rem; 
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* TEXTO DE PENALIZACIÓN (EL QUE NO TE SALÍA) */
-        .aviso-penalizacion {
+        /* EL TEXTO QUE TE ESTABA DANDO PROBLEMAS */
+        .texto-vencimiento {
             color: #ef4444; 
-            font-size: 11px;
-            line-height: 1.4;
-            margin-top: 12px; /* Espacio arriba del texto */
-            font-weight: 500;
-            display: block !important; /* Forzar visibilidad */
+            font-size: 11.5px; /* Un poco más grande para que se note */
+            line-height: 1.5;
+            margin-top: 15px; 
+            font-weight: 600;
+            display: block !important;
+            text-align: left;
         }
-        .aviso-penalizacion b { font-weight: 700; }
     </style>
 </head>
 <body>
@@ -54,23 +56,23 @@
                     <span id="txt-fec" class="text-sm font-black text-slate-800">2026-03-07</span>
                 </div>
                 
-                <div class="timer-container">
+                <div class="timer-box">
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] font-extrabold text-[#ef4444] uppercase tracking-wider">La liga expira en:</span>
                         <span id="timer" class="text-2xl font-black text-[#f87171]">29:50</span>
                     </div>
-                    <p class="aviso-penalizacion">
+                    <p class="texto-vencimiento">
                         * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
                     </p>
                 </div>
             </div>
 
             <div class="bg-blue-50/40 rounded-[2rem] p-6 border border-blue-100 text-center">
-                <span id="txt-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter">TRANSFERENCIA (SPEI)</span>
+                <span id="txt-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter uppercase">TRANSFERENCIA (SPEI)</span>
                 <div id="txt-clabe" class="text-2xl font-black text-blue-700 tracking-tight">000000000000000000</div>
             </div>
 
-            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-all">
+            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">
                 CONFIRMAR PAGO VÍA WHATSAPP
             </button>
         </div>
@@ -102,7 +104,7 @@
 
         function copiar() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Enlace copiado.");
+            alert("¡Link copiado!");
         }
     </script>
 </body>
