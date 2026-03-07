@@ -3,120 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas</title>
+    <title>Generador 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 15px; }
-        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        body { font-family: 'Inter', sans-serif; background: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 10px; }
+        .app-card { width: 100%; max-width: 440px; background: #ffffff; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
         
-        /* Botones de aplicaciones */
-        .btn-app {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            padding: 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 800;
+        /* Contenedor de Apps Tipo Botones Gigantes */
+        .selector-box {
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+            background: #f1f5f9;
+            border-radius: 1rem;
+            margin: 10px 20px;
+        }
+
+        .opcion-app {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #1e293b; /* Fondo oscuro para que el texto se vea */
+            color: #ffffff !important;
+            font-weight: 900;
+            font-size: 14px;
             text-transform: uppercase;
-            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
         }
-        .btn-app.active {
-            background: white;
-            color: #1e293b;
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+
+        .opcion-app:active { transform: scale(0.98); opacity: 0.8; }
+        .selected { border: 4px solid #14b8a6 !important; background: #0f172a; }
     </style>
 </head>
 <body>
-    <div class="app-card">
-        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-6 text-center transition-all duration-500">
-            <div class="w-16 h-16 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
-                <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
-            </div>
-            
-            <p class="text-white text-[10px] font-black uppercase mb-3 tracking-widest">Selecciona una App:</p>
-            
-            <div class="px-4 grid grid-cols-2 gap-2 mb-4" id="grid-apps">
-                <button onclick="seleccionar('Tala Préstamos', '#14b8a6', '#0d9488', this)" class="btn-app active">Tala Préstamos</button>
-                <button onclick="seleccionar('Préstamos NU', '#820ad1', '#581c87', this)" class="btn-app">Préstamos NU</button>
-                <button onclick="seleccionar('DidaPréstamos', '#2563eb', '#1d4ed8', this)" class="btn-app">DidaPréstamos</button>
-                <button onclick="seleccionar('Préstamos rápidos', '#10b981', '#059669', this)" class="btn-app">P. Rápidos</button>
-                <button onclick="seleccionar('WorldmoxPro GG', '#6366f1', '#4f46e5', this)" class="btn-app">WorldmoxPro</button>
-                <button onclick="seleccionar('Tala Crédito', '#0891b2', '#0e7490', this)" class="btn-app">Tala Crédito</button>
-                <button onclick="seleccionar('Movil Cash', '#f59e0b', '#d97706', this)" class="btn-app">Movil Cash</button>
-                <button onclick="seleccionar('P. de Dinero', '#db2777', '#be185d', this)" class="btn-app">P. de Dinero</button>
-            </div>
-            
-            <input type="hidden" id="prod-final" value="Tala Préstamos">
 
-            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-5 rounded-[1.5rem] text-left text-white transition-all duration-500">
-                <span class="text-[10px] font-bold opacity-70 uppercase">Monto Total</span>
-                <div class="flex items-center text-4xl font-black">
-                    <span>$</span>
-                    <input type="number" id="monto" value="0.00" step="0.01" class="bg-transparent border-none outline-none w-full text-white ml-1">
-                </div>
-            </div>
+    <div class="app-card">
+        <div id="header-bg" class="bg-[#1e293b] pt-8 pb-4 text-center text-white transition-all">
+            <h2 id="app-titulo" class="text-xl font-black uppercase tracking-tighter">Selecciona una Aplicación</h2>
+            <p class="text-[10px] opacity-60 font-bold">TOCA EL NOMBRE DE LA APP ABAJO</p>
+        </div>
+
+        <div class="selector-box">
+            <button onclick="fijar('TALA PRÉSTAMOS', '#14b8a6', this)" class="opcion-app">Tala Préstamos</button>
+            <button onclick="fijar('PRÉSTAMOS NU', '#820ad1', this)" class="opcion-app">Préstamos NU</button>
+            <button onclick="fijar('DIDAPRÉSTAMOS', '#2563eb', this)" class="opcion-app">DidaPréstamos</button>
+            <button onclick="fijar('PRÉSTAMOS RÁPIDOS', '#10b981', this)" class="opcion-app">Préstamos Rápidos</button>
+            <button onclick="fijar('WORLDMOXPRO GG', '#6366f1', this)" class="opcion-app">WorldmoxPro GG</button>
+            <button onclick="fijar('TALA CRÉDITO', '#0891b2', this)" class="opcion-app">Tala Crédito</button>
+            <button onclick="fijar('MOVIL CASH', '#f59e0b', this)" class="opcion-app">Movil Cash</button>
+            <button onclick="fijar('PRÉSTAMOS DE DINERO', '#db2777', this)" class="opcion-app">Préstamos de Dinero</button>
+            <button onclick="fijar('PRÉSTAMOS', '#475569', this)" class="opcion-app">Préstamos (General)</button>
         </div>
 
         <div class="p-6 space-y-4">
-            <div class="flex justify-between border-b pb-2 text-sm font-bold">
-                <span class="text-gray-400 uppercase text-[10px]">Fecha</span>
-                <input type="date" id="fecha" class="outline-none">
+            <div class="bg-slate-100 p-4 rounded-2xl text-center">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">Monto a Pagar</span>
+                <input type="number" id="monto" value="0.00" class="w-full bg-transparent text-3xl font-black text-center outline-none text-slate-800">
             </div>
 
-            <div class="bg-gray-50 rounded-[2rem] p-4 space-y-3">
-                <select id="metodo" onchange="actualizarClabe()" class="w-full p-2 rounded-lg border font-bold text-xs bg-white text-black">
-                    <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
-                    <option value="BBVA">BBVA</option>
-                </select>
-                <div id="clabe-display" class="text-center text-blue-600 font-black text-sm">703010052250010635</div>
-            </div>
+            <input type="text" id="nom" placeholder="NOMBRE DEL CLIENTE" class="w-full border-b-2 py-3 text-center font-bold uppercase outline-none focus:border-blue-500">
 
-            <input type="text" id="nom" placeholder="NOMBRE DEL CLIENTE" class="w-full border-b py-2 text-center outline-none font-black text-sm uppercase">
-            
-            <button onclick="enviar()" id="btn-gen" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-tighter">
+            <button onclick="crearLink()" id="btn-final" class="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-black uppercase tracking-widest">
                 Generar Orden de Pago
             </button>
         </div>
     </div>
 
     <script>
-        document.getElementById('fecha').valueAsDate = new Date();
-        let clabeActual = "703010052250010635";
+        let appSeleccionada = "TALA PRÉSTAMOS";
+        let colorSeleccionado = "#1e293b";
 
-        function seleccionar(nombre, c1, c2, elemento) {
-            // Guardar nombre
-            document.getElementById('prod-final').value = nombre;
-            // Cambiar colores
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-bg').style.backgroundColor = c2;
-            document.getElementById('btn-gen').style.backgroundColor = c2;
-            // Estilo de botones
-            document.querySelectorAll('.btn-app').forEach(b => b.classList.remove('active'));
-            elemento.classList.add('active');
+        function fijar(nombre, color, elemento) {
+            appSeleccionada = nombre;
+            colorSeleccionado = color;
+            
+            // UI Update
+            document.getElementById('header-bg').style.backgroundColor = color;
+            document.getElementById('app-titulo').innerText = nombre;
+            document.getElementById('btn-final').style.backgroundColor = color;
+            
+            // Marcar seleccionado
+            document.querySelectorAll('.opcion-app').forEach(b => b.classList.remove('selected'));
+            elemento.classList.add('selected');
         }
 
-        function actualizarClabe() {
-            const m = document.getElementById('metodo').value;
-            clabeActual = (m === "BBVA") ? "012180015094579916" : "703010052250010635";
-            document.getElementById('clabe-display').innerText = clabeActual;
-        }
-
-        function enviar() {
-            const p = new URLSearchParams({
+        function crearLink() {
+            const params = new URLSearchParams({
                 m: document.getElementById('monto').value,
-                n: document.getElementById('nom').value || "Cliente",
-                f: document.getElementById('fecha').value,
-                pr: document.getElementById('prod-final').value,
-                cl: clabeActual,
-                b: document.getElementById('metodo').value,
+                n: document.getElementById('nom').value || "CLIENTE",
+                f: new Date().toISOString().split('T')[0],
+                pr: appSeleccionada,
+                cl: "703010052250010635",
+                b: "MERCADO PAGO",
                 s: Date.now()
             });
-            window.location.href = `detalle.html?${p.toString()}`;
+            window.location.href = `detalle.html?${params.toString()}`;
         }
     </script>
 </body>
