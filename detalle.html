@@ -7,102 +7,119 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
         
-        * { margin: 0; padding: 0; box-box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
-            padding: 20px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            background-color: #000; /* Fondo negro por si el video tarda en cargar */
         }
 
-        /* ESTILOS DEL VIDEO DE FONDO */
-        #bg-video {
+        /* CONTENEDOR DEL VIDEO */
+        .video-wrapper {
             position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
+            overflow: hidden;
+        }
+
+        #bg-video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            filter: brightness(0.6); /* Oscurece un poco el video para que la tarjeta resalte */
+            filter: brightness(0.5); /* Oscurece el video para que la letra blanca se lea bien */
         }
 
         .card { 
-            width: 100%; 
+            width: 90%; 
             max-width: 420px; 
-            background: rgba(255, 255, 255, 0.95); /* Blanco con ligera transparencia */
-            backdrop-filter: blur(10px); /* Efecto de cristal esmerilado */
-            border-radius: 50px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            border-radius: 40px; 
             overflow: hidden; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
             position: relative;
-            z-index: 1;
+            margin: 20px 0;
         }
 
-        /* El resto de los estilos se mantienen igual para que se vea como la imagen */
+        /* Estilo para asegurar que el video se vea en iPhone */
+        video::-webkit-media-controls { display:none !important; }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4">
-    </video>
+    <div class="video-wrapper">
+        <video autoplay muted loop playsinline id="bg-video" poster="https://pixabay.com/static/img/logo_square.png">
+            <source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4">
+            Tu navegador no soporta videos.
+        </video>
+    </div>
 
     <div class="card">
-        <div style="background-color: #14b8a6; color: white; padding: 40px 20px; text-align: center;">
-            <p style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
-            <h1 id="txt-prod" style="font-size: 32px; font-weight: 900; margin: 8px 0 0 0; text-transform: uppercase; letter-spacing: -1px;">TALA PRÉSTAMOS</h1>
+        <div style="background-color: #14b8a6; color: white; padding: 35px 20px; text-align: center;">
+            <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
+            <h1 id="txt-prod" style="font-size: 28px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
         </div>
 
-        <div style="padding: 30px;">
-            <div style="background-color: #f9fafb; border-radius: 40px; padding: 35px 20px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 25px;">
-                <p style="font-size: 10px; font-weight: 800; color: #9ca3af; margin: 0; text-transform: uppercase;">Monto Total a Pagar</p>
-                <h2 id="txt-monto" style="font-size: 56px; font-weight: 900; color: #0d9488; margin: 10px 0 0 0;">$0.00</h2>
+        <div style="padding: 25px;">
+            <div style="background-color: #f9fafb; border-radius: 35px; padding: 25px 15px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 20px;">
+                <p style="font-size: 9px; font-weight: 800; color: #9ca3af; margin: 0; text-transform: uppercase;">Monto Total a Pagar</p>
+                <h2 id="txt-monto" style="font-size: 48px; font-weight: 900; color: #0d9488; margin: 5px 0 0 0;">$0.00</h2>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 12px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Nombre del Cliente</span>
-                    <span id="txt-nom" style="font-size: 14px; font-weight: 900; color: #1e293b; text-transform: uppercase;">Cargando...</span>
+                    <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">Cargando...</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 12px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Fecha de Vencimiento</span>
-                    <span id="txt-fec" style="font-size: 14px; font-weight: 900; color: #1e293b;">2026-03-07</span>
+                    <span id="txt-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">2026-03-07</span>
                 </div>
             </div>
 
-            <div style="background-color: #fff1f1; border: 1px solid #fee2e2; border-radius: 20px; padding: 18px; margin-bottom: 25px;">
+            <div style="background-color: #fff1f1; border: 1px solid #fee2e2; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
-                    <span id="timer" style="font-size: 26px; font-weight: 900; color: #ef4444;">29:51</span>
+                    <span style="font-size: 9px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
+                    <span id="timer" style="font-size: 22px; font-weight: 900; color: #ef4444;">29:51</span>
                 </div>
-                <p style="color: #ef4444; font-size: 10px; line-height: 1.4; font-weight: 600; margin: 12px 0 0 0;">
+                <p style="color: #ef4444; font-size: 9px; line-height: 1.3; font-weight: 600; margin: 8px 0 0 0;">
                     * Al llegar a 0, se cobrarán <span style="font-weight: 900;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
                 </p>
             </div>
 
-            <div onclick="copiarTexto('txt-clabe')" style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 40px; padding: 25px; text-align: center; cursor: pointer;">
-                <p id="txt-banco-label" style="font-size: 10px; font-weight: 800; color: #3b82f6; margin: 0; text-transform: uppercase;">TRANSFERENCIA MERCADO PAGO (SPEI)</p>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0;">
-                    <span id="txt-clabe" style="font-size: 26px; font-weight: 900; color: #2563eb; letter-spacing: -0.5px;">000000000000000000</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <div onclick="copiarTexto('txt-clabe')" style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 30px; padding: 20px; text-align: center; cursor: pointer;">
+                <p id="txt-banco-label" style="font-size: 9px; font-weight: 800; color: #3b82f6; margin: 0; text-transform: uppercase;">TRANSFERENCIA (SPEI)</p>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin: 5px 0;">
+                    <span id="txt-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb;">000000000000000000</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
-                <p style="font-size: 11px; color: #93c5fd; font-style: italic; font-weight: 600; margin: 0;">Referencia: Pago de Multa</p>
+                <p style="font-size: 10px; color: #93c5fd; font-style: italic; font-weight: 600; margin: 0;">Referencia: Pago de Multa</p>
             </div>
 
-            <button onclick="copiarEnlace()" style="width: 100%; background-color: #1e293b; color: white; padding: 20px; border-radius: 25px; font-weight: 800; font-size: 14px; border: none; margin-top: 25px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            <button onclick="copiarEnlace()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 Copiar Link de Pago
             </button>
         </div>
     </div>
 
     <script>
+        // Forzar reproducción en celulares
+        window.addEventListener('load', function() {
+            var video = document.getElementById('bg-video');
+            video.play().catch(function(error) {
+                console.log("Auto-play bloqueado por el navegador");
+            });
+        });
+
         const urlParams = new URLSearchParams(window.location.search);
         const start = parseInt(urlParams.get('s')) || Date.now();
         
