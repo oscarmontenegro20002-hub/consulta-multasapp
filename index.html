@@ -3,55 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Pagos Pro</title>
+    <title>Generador Pagos Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
-        .card-shadow { box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5); }
-        select { appearance: none; cursor: pointer; }
-        .transition-theme { transition: all 0.4s ease; }
+        .card-shadow { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.5); }
+        .transition-theme { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800 transition-theme">
+    <div class="w-full max-w-[400px] bg-white rounded-[3rem] card-shadow overflow-hidden">
         
-        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-theme">
+        <div id="header-bg" class="bg-sky-400 p-8 pb-16 text-center relative transition-theme">
             
-            <div id="logo-container" class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md p-4 transition-all">
-                <div id="logo-svg-wrapper" class="w-full h-full flex items-center justify-center text-blue-600">
-                    <svg id="dynamic-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
-                        <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
-                        <path fill-rule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.839 1.875 1.875v14.25c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 19.125V4.875zM11.25 12.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM4.5 6a.75.75 0 000 1.5h1.5A.75.75 0 006 6H4.5z" clip-rule="evenodd" />
-                    </svg>
+            <div id="logo-box" class="w-20 h-20 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-sm p-3">
+                <div id="icon-container" class="text-sky-500 w-full h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" /></svg>
                 </div>
             </div>
             
-            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 hover:bg-white transition uppercase shadow-sm">
+            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 uppercase">
                 Inhabilitar foto
             </button>
 
-            <div class="relative w-full max-w-[280px] mx-auto z-10">
-                <select id="select-app" onchange="updateApp()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-blue-600 text-center shadow-sm focus:outline-none">
-                    <option value="default|#7dd3fc|#1d4ed8">-- Seleccionar App --</option>
-                    <option value="nu|#820ad1|#5d0796">Préstamos NU</option>
-                    <option value="dida|#2563eb|#1e40af">DidaPréstamos</option>
-                    <option value="tala|#00d3a1|#00a37d">Tala Préstamos</option>
-                    <option value="rapidos|#ef4444|#b91c1c">Préstamos Rápidos</option>
-                    <option value="worldmox|#0ea5e9|#0369a1">Worldmoxpro Cash GG</option>
-                    <option value="movil|#8b5cf6|#5b21b6">Movil Cash</option>
-                    <option value="talacredito|#059669|#064e3b">Tala Crédito</option>
-                    <option value="prestamos|#475569|#1e293b">Préstamos Gral</option>
-                </select>
-                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-blue-600 text-[10px]">▼</div>
-            </div>
+            <select id="select-app" onchange="actualizar()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-blue-600 text-center shadow-sm outline-none">
+                <option value="default|#38bdf8|#1d4ed8">-- Seleccionar App --</option>
+                <option value="nu|#a855f7|#6b21v8">Préstamos NU</option>
+                <option value="dida|#3b82f6|#1d4ed8">DidaPréstamos</option>
+                <option value="tala|#10b981|#065f46">Tala Préstamos</option>
+                <option value="worldmox|#0ea5e9|#0369a1">Worldmoxpro Cash GG</option>
+                <option value="movil|#8b5cf6|#4c1d95">Movil Cash</option>
+                <option value="rapidos|#ef4444|#991b1b">Préstamos Rápidos</option>
+            </select>
             
-            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 text-left shadow-xl z-20 transition-theme">
-                <p class="text-white/70 text-[10px] uppercase font-bold tracking-widest mb-1">Monto del Préstamo</p>
+            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-blue-700 rounded-2xl p-6 text-left shadow-xl z-20 transition-theme">
+                <p class="text-white/70 text-[10px] uppercase font-bold mb-1">Monto del Préstamo</p>
                 <div class="flex items-center">
                     <span class="text-white text-4xl font-bold mr-1">$</span>
-                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-white text-4xl font-bold outline-none w-full placeholder:text-white/20">
+                    <input type="number" id="val-monto" oninput="sync()" placeholder="0.00" class="bg-transparent text-white text-4xl font-bold outline-none w-full">
                 </div>
             </div>
         </div>
@@ -59,99 +50,35 @@
         <div class="h-14"></div>
 
         <div class="p-8 space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-sm text-slate-500 font-medium">Subproducto</span>
-                <select class="text-sm font-bold text-slate-800 outline-none bg-transparent text-right">
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-sm text-slate-400">Subproducto</span>
+                <select class="text-sm font-bold bg-transparent outline-none">
                     <option>Multa</option>
                     <option>Recargo</option>
-                    <option>Bloqueo de WhatsApp</option>
+                    <option>Bloqueo WhatsApp</option>
                     <option>Liquidación Total</option>
-                    <option>Abono</option>
                     <option>Intereses</option>
-                    <option>Paz y Salvo</option>
                 </select>
             </div>
 
-            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-sm text-slate-500 font-medium">Importe a Pagar</span>
-                <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-sm text-slate-400">Importe a Pagar</span>
+                <span id="res-importe" class="text-sm font-bold">$0.00</span>
             </div>
 
-            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-sm text-slate-500 font-medium">Fecha Vencimiento</span>
-                <input type="date" class="text-sm font-bold text-slate-400 outline-none bg-transparent text-right">
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-sm text-slate-400">Vencimiento</span>
+                <input type="date" class="text-sm font-bold bg-transparent outline-none">
             </div>
 
-            <div class="bg-slate-50 rounded-[2.5rem] p-6 text-center border border-slate-100 mt-4">
-                <select class="text-[10px] text-slate-400 uppercase font-bold tracking-widest outline-none bg-transparent mb-1 text-center w-full">
-                    <option>STP / BBVA</option>
-                    <option>BANCOLOMBIA / NEQUI</option>
-                    <option>OXXO PAY</option>
-                </select>
-                <h3 class="text-2xl font-black text-slate-800 mb-1">Liga de pago</h3>
-                <p id="display-link" class="text-[10px] text-slate-400 font-mono">Generando enlace...</p>
+            <div class="bg-slate-50 rounded-3xl p-6 text-center border mt-4">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Liga de pago</p>
+                <p id="res-link" class="text-xs text-blue-500 font-mono break-all font-bold">0000000000</p>
             </div>
 
-            <div class="bg-white rounded-2xl p-4 border border-slate-100 space-y-2">
-                <input type="text" placeholder="Nombre" class="w-full text-sm outline-none border-b border-slate-50 pb-1 text-slate-600">
-                <input type="text" placeholder="Teléfono" class="w-full text-sm outline-none border-b border-slate-50 pb-1 text-slate-600">
+            <div class="space-y-2">
+                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b p-1 outline-none">
+                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b p-1 outline-none">
             </div>
 
-            <button onclick="generateLink()" id="btn-generar" class="w-full bg-[#1d4ed8] text-white font-extrabold py-5 rounded-2xl shadow-lg transition-theme active:scale-95 mt-4 uppercase text-xs tracking-widest">
-                Confirmar y Generar Link
-            </button>
-        </div>
-    </div>
-
-    <script>
-        let fotoHabilitada = true;
-
-        // ICONOS SVG INTERNOS (No necesitan internet)
-        const svgIcons = {
-            'default': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" /><path fill-rule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.839 1.875 1.875v14.25c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 19.125V4.875zM11.25 12.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM4.5 6a.75.75 0 000 1.5h1.5A.75.75 0 006 6H4.5z" clip-rule="evenodd" /></svg>',
-            'nu': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-purple-600"><path d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zM3.75 6.75c0-.414.336-.75.75-.75h15a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-15a.75.75 0 01-.75-.75V6.75z" /></svg>',
-            'tala': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-emerald-500"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" /></svg>'
-        };
-
-        function updateApp() {
-            const select = document.getElementById('select-app');
-            const [id, colorLight, colorDark] = select.value.split('|');
-            
-            document.getElementById('header-bg').style.backgroundColor = colorLight;
-            document.getElementById('monto-banner').style.backgroundColor = colorDark;
-            document.getElementById('btn-generar').style.backgroundColor = colorDark;
-
-            const wrapper = document.getElementById('logo-svg-wrapper');
-            const container = document.getElementById('logo-container');
-
-            if (!fotoHabilitada) {
-                container.style.opacity = "0.3";
-                wrapper.innerHTML = svgIcons['default'];
-            } else {
-                container.style.opacity = "1";
-                wrapper.innerHTML = svgIcons[id] || svgIcons['default'];
-            }
-        }
-
-        function toggleFoto() {
-            fotoHabilitada = !fotoHabilitada;
-            const btn = document.getElementById('btn-foto');
-            btn.innerText = fotoHabilitada ? "Inhabilitar foto" : "Habilitar foto";
-            btn.classList.toggle('bg-red-500', !fotoHabilitada);
-            btn.classList.toggle('text-white', !fotoHabilitada);
-            updateApp();
-        }
-
-        function syncMonto() {
-            const val = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString();
-        }
-
-        function generateLink() {
-            const hash = Math.random().toString(36).substring(7).toUpperCase();
-            document.getElementById('display-link').innerText = `https://pago.mx/ref-${hash}`;
-            alert("✅ Enlace generado y copiado.");
-        }
-    </script>
-</body>
-</html>
+            <button onclick="generar()" id="btn-gen
