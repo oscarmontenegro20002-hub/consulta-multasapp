@@ -10,22 +10,25 @@
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         .card-main { width: 100%; max-width: 420px; background: white; border-radius: 3rem; overflow: hidden; margin: 15px; }
         
+        /* Estilo del recuadro de expiración */
         .timer-box { 
             background-color: #fff1f1; 
             border-radius: 1.5rem; 
             padding: 1.25rem; 
             margin-top: 1rem;
             border: 1px solid #fee2e2;
+            display: block !important; /* Forzamos que se vea */
         }
         .timer-val { color: #f87171; font-weight: 800; font-size: 1.6rem; }
 
-        /* ESTILO ESPECÍFICO PARA EL MENSAJE DE PENALIZACIÓN */
-        .texto-advertencia {
+        /* El texto que te faltaba */
+        .texto-penalizacion {
             color: #ef4444; 
             font-size: 11px;
             line-height: 1.4;
             margin-top: 10px;
             font-weight: 500;
+            display: block !important;
         }
     </style>
 </head>
@@ -33,16 +36,16 @@
     <div class="card-main shadow-2xl">
         <div id="header-bg" class="bg-[#14b8a6] text-white pt-12 pb-10 text-center">
             <span class="text-[11px] font-bold uppercase tracking-[0.2em] opacity-90">Orden de Pago</span>
-            <h1 id="txt-prod" class="text-3xl font-black mt-1 uppercase">TALA PRÉSTAMOS</h1>
+            <h1 id="txt-prod" class="text-3xl font-black mt-1 uppercase tracking-tight">TALA PRÉSTAMOS</h1>
         </div>
 
         <div class="px-8 py-6 space-y-6">
-            <div class="bg-gray-50/50 rounded-[2.5rem] py-10 text-center border border-gray-100 shadow-sm">
+            <div class="bg-gray-50/50 rounded-[2.5rem] py-10 text-center border border-gray-100">
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Monto Total a Pagar</span>
                 <div class="text-5xl font-black text-[#0d9488]" id="txt-monto">$0.00</div>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-4 pt-2">
                 <div class="flex justify-between items-center border-b border-gray-100 pb-3">
                     <span class="text-[10px] font-bold text-gray-400 uppercase">Nombre del Cliente</span>
                     <span id="txt-nom" class="text-sm font-black text-slate-800 uppercase">---</span>
@@ -57,7 +60,7 @@
                         <span class="text-[10px] font-extrabold text-[#ef4444] uppercase tracking-wider">La liga expira en:</span>
                         <span id="timer" class="timer-val">29:50</span>
                     </div>
-                    <p class="texto-advertencia">
+                    <p class="texto-penalizacion">
                         * Al llegar a 0, se cobrará una penalización de <b>$500,00 pesos ADICIONALES</b> por concepto de vencimiento de liga.
                     </p>
                 </div>
@@ -68,7 +71,7 @@
                 <div id="txt-clabe" class="text-2xl font-black text-blue-700 tracking-tight">000000000000000000</div>
             </div>
 
-            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-all">
+            <button onclick="copiar()" class="w-full bg-[#22c55e] text-white font-black py-5 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">
                 CONFIRMAR PAGO VÍA WHATSAPP
             </button>
         </div>
@@ -83,7 +86,7 @@
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "";
-        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'BANCARIA'} (SPEI)`;
+        document.getElementById('txt-banco-label').innerText = `TRANSFERENCIA ${urlParams.get('b') || 'MERCADO PAGO'} (SPEI)`;
 
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
@@ -100,7 +103,7 @@
 
         function copiar() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link de pago copiado.");
+            alert("Enlace copiado.");
         }
     </script>
 </body>
