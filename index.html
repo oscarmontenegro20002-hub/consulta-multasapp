@@ -3,129 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Pagos Real</title>
+    <title>Generador de Plantilla Profesional | Tala</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
-        .transition-all { transition: all 0.4s ease; }
-        .card-shadow { box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.45); }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .transition-all { transition: all 0.3s ease-in-out; }
+        select { appearance: none; outline: none; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-[400px] bg-white rounded-[3rem] card-shadow overflow-hidden">
-        <div id="header-bg" class="bg-[#1d4ed8] p-8 pb-16 text-center relative transition-all">
+    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800 transition-all duration-500">
+        
+        <div id="header-bg" class="bg-[#1e40af] p-8 pb-16 text-center relative transition-all">
             
-            <div class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-1">
-                <img id="app-logo" src="" class="w-full h-full object-contain">
+            <div id="logo-container" class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-1 transition-all">
+                <img id="app-logo" src="" class="hidden w-full h-full object-cover">
+                <div id="logo-placeholder" class="text-slate-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
             </div>
-
-            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/20 text-white text-[10px] font-bold px-4 py-1.5 rounded-full uppercase mb-6 hover:bg-white/30 transition-all">
-                Inhabilitar Foto
+            
+            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 hover:bg-white transition uppercase shadow-sm active:scale-95 transition-all">
+                Inhabilitar foto
             </button>
 
-            <div class="relative z-10">
-                <select id="select-app" onchange="updateApp()" class="w-full bg-white border-none rounded-2xl px-4 py-3 text-sm font-bold text-slate-800 shadow-lg outline-none cursor-pointer appearance-none text-center">
-                    <option value="default|#334155|#1e293b">Seleccionar Producto</option>
+            <div class="relative w-full max-w-[280px] mx-auto z-10">
+                <select id="select-app" onchange="updateApp()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-blue-600 text-center shadow-sm cursor-pointer focus:outline-none transition-all">
+                    <option value="default|#1e40af|#1e3a8a">-- Seleccionar Producto --</option>
+                    <option value="tala|#047857|#064e3b">Tala Préstamos</option>
                     <option value="nu|#820ad1|#581c87">Préstamos Nu</option>
-                    <option value="dida|#2563eb|#1d4ed8">DiDa Préstamos</option>
-                    <option value="tala|#00d3a1|#00a37d">Tala Préstamos</option>
-                    <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
-                    <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
+                    <option value="dida|#2563eb|#1e3a8a">DiDa Préstamos</option>
+                    <option value="worldmox|#0ea5e9|#075985">WorldmoxPro Cash GG</option>
                 </select>
+                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-blue-600 text-[10px]">▼</div>
             </div>
-
-            <div id="monto-bg" class="absolute -bottom-10 left-6 right-6 bg-[#1e3a8a] rounded-2xl p-6 text-left shadow-xl transition-all">
-                <p class="text-white/60 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Pago</p>
+            
+            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-[#1e3a8a] rounded-2xl p-6 text-left shadow-xl z-20 transition-all">
+                <p class="text-white/70 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Pago</p>
                 <div class="flex items-center text-white">
-                    <span class="text-4xl font-bold">$</span>
+                    <span class="text-4xl font-bold mr-1">$</span>
                     <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-4xl font-bold outline-none w-full placeholder:text-white/20">
                 </div>
             </div>
         </div>
 
-        <div class="h-16"></div>
+        <div class="h-14"></div>
 
-        <div class="p-8 space-y-5">
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-sm text-slate-400 font-medium">Subproducto</span>
-                <select class="text-sm font-bold text-slate-700 bg-transparent outline-none">
+        <div class="p-8 space-y-4 text-slate-800">
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-sm text-slate-500 font-medium">Subproducto</span>
+                <select class="text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer">
                     <option>Multa</option>
                     <option>Recargo</option>
-                    <option>Paz y Salvo</option>
+                    <option>Intereses</option>
+                    <option>Bloqueo de whats app</option>
                     <option>Liquidación Total</option>
+                    <option>Paz y Salvo</option>
                 </select>
             </div>
 
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-sm text-slate-400 font-medium">Importe a Pagar</span>
-                <span id="display-monto" class="text-sm font-bold text-slate-800">$0.00</span>
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-sm text-slate-500 font-medium">Importe</span>
+                <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
             </div>
 
-            <div class="bg-slate-50 rounded-3xl p-6 text-center border border-slate-100 mt-4">
-                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Referencia Generada</p>
-                <p id="display-link" class="text-xs font-mono font-bold text-blue-600">https://pago.mx/REF-XXXXX</p>
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-sm text-slate-500 font-medium">Vencimiento</span>
+                <input type="date" class="text-sm font-bold text-slate-400 outline-none bg-transparent text-right">
             </div>
 
-            <div class="space-y-3 pt-2">
-                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b border-slate-100 pb-2 outline-none focus:border-blue-500 transition-all">
-                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b border-slate-100 pb-2 outline-none focus:border-blue-500 transition-all">
+            <div class="bg-slate-50 rounded-[2rem] p-6 text-center border border-slate-100 mt-4">
+                <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Liga de pago</p>
+                <p id="display-link" class="text-xs font-mono font-bold text-blue-600">0000000000</p>
             </div>
 
-            <button onclick="generar()" id="btn-main" class="w-full bg-[#1e3a8a] text-white font-bold py-5 rounded-2xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest">
+            <div class="space-y-3 bg-white p-2 rounded-xl">
+                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm border-b pb-1 outline-none text-slate-600 placeholder:text-slate-300 focus:border-blue-500">
+                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b pb-1 outline-none text-slate-600 placeholder:text-slate-300 focus:border-blue-500">
+            </div>
+
+            <button onclick="generarLink()" id="btn-generar" class="w-full bg-[#1e3a8a] text-white font-extrabold py-5 rounded-2xl shadow-lg active:scale-95 transition-all mt-4 uppercase text-xs tracking-widest">
                 Confirmar y Generar Link
             </button>
         </div>
     </div>
 
     <script>
-        let fotoVisible = true;
-
-        // LOGOS REALES (EXTRACTOS DE TUS IMÁGENES)
+        // URLs de los logos. 'tala' ahora usa la imagenimage_15.png
         const logos = {
-            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png', // Logo Nu real
-            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png', // Logo DiDa real
-            'tala': 'https://i.ibb.co/vY8N9zX/image-45ec84.png', // Logo Tala real
-            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png', // La W de colores
-            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png', // La M azul/morada
-            'default': 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%23cbd5e1"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/%3E%3C/svg%3E'
+            'tala': 'https://i.ibb.co/Lzf7vYn/image-15.png', // Logo de Tala (image_15.png)
+            'nu': 'https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png',
+            'dida': 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%232563eb"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/%3E%3C/svg%3E',
+            'worldmox': 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%230ea5e9"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/%3E%3C/svg%3E'
         };
 
+        let fotoHabilitada = true;
+
         function updateApp() {
-            const [id, c1, c2] = document.getElementById('select-app').value.split('|');
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-bg').style.backgroundColor = c2;
-            document.getElementById('btn-main').style.backgroundColor = c2;
+            const select = document.getElementById('select-app');
+            const [id, colorLight, colorDark] = select.value.split('|');
             
-            const img = document.getElementById('app-logo');
-            if(fotoVisible) {
-                img.src = logos[id] || logos['default'];
-                img.style.opacity = "1";
+            document.getElementById('header-bg').style.backgroundColor = colorLight;
+            document.getElementById('monto-banner').style.backgroundColor = colorDark;
+            document.getElementById('btn-generar').style.backgroundColor = colorDark;
+
+            const logoImg = document.getElementById('app-logo');
+            const placeholder = document.getElementById('logo-placeholder');
+
+            if(id === "default" || !fotoHabilitada) {
+                logoImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
             } else {
-                img.src = logos['default'];
-                img.style.opacity = "0.3";
+                logoImg.src = logos[id] || '';
+                logoImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
             }
         }
 
         function toggleFoto() {
-            fotoVisible = !fotoVisible;
-            document.getElementById('btn-foto').innerText = fotoVisible ? "Inhabilitar Foto" : "Habilitar Foto";
+            fotoHabilitada = !fotoHabilitada;
+            const btn = document.getElementById('btn-foto');
+            btn.innerText = fotoHabilitada ? "Inhabilitar foto" : "Habilitar foto";
+            btn.classList.toggle('bg-red-500', !fotoHabilitada);
+            btn.classList.toggle('text-white', !fotoHabilitada);
             updateApp();
         }
 
         function syncMonto() {
             const val = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('display-monto').innerText = "$" + parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2});
         }
 
-        function generar() {
-            const ref = Math.random().toString(36).substring(7).toUpperCase();
-            document.getElementById('display-link').innerText = "https://pago.mx/REF-" + ref;
-            alert("✅ Liga generada con éxito.");
+        function generarLink() {
+            const hash = Math.random().toString(36).substring(7).toUpperCase();
+            const link = `https://pago.mx/ref-${hash}`;
+            document.getElementById('display-link').innerText = link;
+            navigator.clipboard.writeText(link);
+            alert("✅ Enlace generado y copiado.");
         }
 
-        // Iniciar con logo por defecto
+        // Inicializar
         updateApp();
     </script>
 </body>
