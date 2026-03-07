@@ -3,30 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Ligas Pro</title>
+    <title>Sistema de Pagos - Acceso Privado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; }
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; }
         .card-container { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .header-main { padding: 2rem 1.5rem 4rem 1.5rem; text-align: center; position: relative; }
-        .logo-box { width: 95px; height: 95px; background: white; border-radius: 1.8rem; margin: 0 auto 1.2rem; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .monto-card { position: absolute; bottom: -35px; left: 1.5rem; right: 1.5rem; border-radius: 1.2rem; padding: 1.2rem; color: white; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .hidden-content { display: none !important; }
         .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2rem; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="card-container">
-        <div id="header-bg" class="header-main bg-[#0d9488]">
-            <div class="logo-box">
+    <div id="login-screen" class="w-full max-w-sm bg-white p-10 rounded-[2.5rem] shadow-2xl text-center">
+        <div class="w-20 h-20 bg-[#0d9488] rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-800 mb-2">Acceso Seguro</h2>
+        <p class="text-slate-400 text-sm mb-8">Ingresa tus credenciales para continuar</p>
+        
+        <div class="space-y-4">
+            <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-3.5 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-[#0d9488] transition-all font-medium">
+            <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-3.5 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-[#0d9488] transition-all font-medium">
+            <button onclick="checkAccess()" class="w-full bg-[#0d9488] text-white font-bold py-4 rounded-2xl hover:bg-[#065f46] shadow-lg transition-all active:scale-95">
+                Entrar al Sistema
+            </button>
+        </div>
+        <p id="login-error" class="text-red-500 text-xs mt-4 font-bold hidden">❌ Usuario o contraseña incorrectos</p>
+    </div>
+
+    <div id="main-generator" class="card-container hidden-content">
+        <div id="header-bg" class="p-8 pb-12 text-center relative bg-[#0d9488] transition-all duration-500">
+            <div class="w-24 h-24 bg-white rounded-[2rem] mx-auto mb-6 flex items-center justify-center shadow-xl overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
             
-            <button onclick="toggleFoto()" class="bg-white/90 text-[10px] font-bold px-5 py-1.5 rounded-full text-slate-600 uppercase mb-5 shadow-sm active:scale-95 transition-all">Inhabilitar Foto</button>
+            <button onclick="toggleFoto()" class="bg-white/20 hover:bg-white/30 text-[10px] font-bold px-5 py-1.5 rounded-full text-white uppercase mb-5 backdrop-blur-sm transition-all">Inhabilitar Foto</button>
 
             <div class="relative max-w-[300px] mx-auto z-10">
-                <select id="product-select" onchange="updateApp()" class="w-full bg-white border-none rounded-xl px-4 py-2.5 text-sm font-bold text-blue-600 appearance-none text-center outline-none shadow-lg">
+                <select id="product-select" onchange="updateApp()" class="w-full bg-white border-none rounded-2xl px-4 py-3 text-sm font-bold text-blue-600 text-center outline-none shadow-xl">
                     <option value="tala|#0d9488|#065f46">Tala Préstamos</option>
                     <option value="nu|#820ad1|#581c87">Préstamos NU</option>
                     <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
@@ -37,112 +54,19 @@
                 </select>
             </div>
 
-            <div id="monto-card-bg" class="monto-card bg-[#065f46] text-left">
-                <span class="text-[10px] uppercase font-bold text-white/60 tracking-widest">MONTO DE PAGO</span>
-                <div class="flex items-center">
-                    <span class="text-3xl font-bold mr-1 text-white">$</span>
-                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="input-monto">
+            <div id="monto-card-bg" class="absolute -bottom-10 left-6 right-6 bg-[#065f46] rounded-[1.5rem] p-6 text-left text-white shadow-2xl transition-all duration-500">
+                <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">Monto de Pago</span>
+                <div class="flex items-center mt-1">
+                    <span class="text-4xl font-bold mr-1">$</span>
+                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="input-monto placeholder:text-white/20">
                 </div>
             </div>
         </div>
 
-        <div class="h-12"></div>
+        <div class="h-16"></div>
 
         <div class="p-8 space-y-4">
             <div class="space-y-3 border-b border-slate-100 pb-4">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold text-slate-400 uppercase">Subproducto</span>
-                    <span class="text-sm font-bold text-slate-800">Multa</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold text-slate-400 uppercase">Importe a Pagar</span>
-                    <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold text-slate-400 uppercase">Fecha Vencimiento</span>
-                    <input type="date" id="fecha-venc" onchange="calcDays()" class="text-sm font-bold text-slate-800 outline-none">
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-semibold text-slate-400 uppercase">Días vencimiento</span>
-                    <span id="days-count" class="text-sm font-bold text-slate-800">0</span>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-2 text-center">Método de pago</label>
-                <select id="metodo-pago" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 outline-none text-center">
-                    <option value="STP">STP</option>
-                    <option value="BBVA">BBVA</option>
-                </select>
-            </div>
-
-            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
-                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-2 text-center">Liga de pago</label>
-                <select id="liga-select" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-mono font-bold text-blue-600 outline-none text-center">
-                    <option value="703010052250010635">703010052250010635</option>
-                    <option value="1235132812492191">1235132812492191</option>
-                </select>
-            </div>
-
-            <div class="space-y-3 pt-2">
-                <input type="text" placeholder="Nombre" class="w-full text-sm border-b border-slate-200 pb-2 outline-none focus:border-blue-500">
-                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b border-slate-200 pb-2 outline-none focus:border-blue-500">
-            </div>
-
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#065f46] text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
-                Confirmar y Generar Link
-            </button>
-        </div>
-    </div>
-
-    <script>
-        const logos = {
-            'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png',
-            'nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png',
-            'dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png',
-            'worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png',
-            'movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png',
-            'rapidos': 'https://i.ibb.co/vY8N9zX/image-45ec84.png',
-            'talacredito': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png'
-        };
-
-        function updateApp() {
-            const [id, c1, c2] = document.getElementById('product-select').value.split('|');
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-card-bg').style.backgroundColor = c2;
-            document.getElementById('btn-main').style.backgroundColor = c2;
-            document.getElementById('app-logo').src = logos[id] || logos['tala'];
-        }
-
-        function syncMonto() {
-            const val = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString('en-US', {minimumFractionDigits: 2});
-        }
-
-        function calcDays() {
-            const fValue = document.getElementById('fecha-venc').value;
-            if(!fValue) return;
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0);
-            const venc = new Date(fValue + 'T00:00:00');
-            const diff = venc - hoy;
-            const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('days-count');
-            el.innerText = dias;
-            el.style.color = dias < 0 ? "#ef4444" : "#1e293b";
-        }
-
-        function toggleFoto() {
-            const img = document.getElementById('app-logo');
-            img.style.opacity = img.style.opacity === '0' ? '1' : '0';
-        }
-
-        function confirmar() {
-            const ref = document.getElementById('liga-select').value;
-            alert("✅ Confirmado.\nMétodo: " + document.getElementById('metodo-pago').value + "\nReferencia: " + ref);
-        }
-
-        document.getElementById('fecha-venc').value = new Date().toISOString().split('T')[0];
-    </script>
-</body>
-</html>
+                <div class="flex justify-between items-center"><span class="text-[11px] font-bold text-slate-400 uppercase">Subproducto</span><span class="text-sm font-bold text-slate-800">Multa</span></div>
+                <div class="flex justify-between items-center"><span class="text-[11px] font-bold text-slate-400 uppercase">Importe</span><span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span></div>
+                <div class="flex justify-between items-center"><span class="text-[11px] font-bold
