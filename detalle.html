@@ -5,41 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; }
+    </style>
 </head>
-<body class="bg-[#0b1120] flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl">
-        <div class="bg-[#14b8a6] p-8 text-center text-white">
-            <h2 id="p-prod" class="text-xl font-bold uppercase">PRODUCTO</h2>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white w-full max-w-[440px] rounded-[2.5rem] overflow-hidden shadow-2xl text-slate-800">
+        <div class="bg-[#14b8a6] pt-10 pb-6 text-center text-white">
+            <h2 id="res-prod" class="text-xl font-bold uppercase tracking-widest">PRODUCTO</h2>
         </div>
-        <div class="p-8 space-y-4">
-            <div class="bg-slate-50 p-6 rounded-2xl space-y-3">
-                <p class="text-xs font-bold text-slate-400 uppercase">Cliente: <span id="p-nom" class="text-slate-800 ml-2"></span></p>
-                <p class="text-xs font-bold text-slate-400 uppercase">Monto: <span id="p-mon" class="text-[#14b8a6] text-lg ml-2"></span></p>
-                <p class="text-xs font-bold text-slate-400 uppercase">Fecha: <span id="p-fec" class="text-slate-800 ml-2"></span></p>
-                <div class="border-t pt-2 mt-2">
-                    <p class="text-[10px] font-bold text-blue-400 uppercase">CLABE BBVA</p>
-                    <p class="text-blue-700 font-mono font-bold">703010052250010635</p>
+        
+        <div class="p-8 space-y-5">
+            <div class="space-y-4 border-b border-slate-100 pb-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Importe a Pagar</span>
+                    <span id="res-mon" class="text-xl font-bold text-[#0d9488]"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
+                    <span id="res-fec" class="text-sm font-bold"></span>
                 </div>
             </div>
-            <button onclick="enviarWA()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2">
+
+            <div class="bg-slate-50 p-6 rounded-[2rem] text-center border border-slate-100">
+                <p class="text-[10px] font-bold text-blue-500 uppercase mb-2">Método de pago: BBVA</p>
+                <p class="text-blue-700 font-bold text-lg tracking-wider mb-1">703010052250010635</p>
+                <p class="text-[9px] text-slate-400 uppercase">Toca para copiar la CLABE</p>
+            </div>
+
+            <div class="space-y-2 text-sm border-t pt-4">
+                <p class="flex justify-between"><span class="text-slate-400 font-bold text-[10px] uppercase">Cliente:</span> <span id="res-nom" class="font-bold"></span></p>
+            </div>
+
+            <button onclick="enviarWA()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-[1.5rem] shadow-lg active:scale-95 transition-all uppercase text-xs tracking-widest mt-4">
                 ENVIAR POR WHATSAPP
             </button>
-            <button onclick="window.history.back()" class="w-full text-slate-400 text-xs font-bold uppercase tracking-widest">
-                Volver al generador
+            
+            <button onclick="window.history.back()" class="w-full text-slate-300 text-[10px] font-bold uppercase tracking-widest">
+                ← Regresar al generador
             </button>
         </div>
     </div>
+
     <script>
-        // Leer los datos de la URL
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('p-nom').innerText = params.get('nombre') || '---';
-        document.getElementById('p-mon').innerText = '$' + (params.get('monto') || '0.00');
-        document.getElementById('p-fec').innerText = params.get('fecha') || '---';
-        document.getElementById('p-prod').innerText = params.get('prod') || 'PAGO';
+        const p = new URLSearchParams(window.location.search);
+        document.getElementById('res-nom').innerText = p.get('nombre') || '---';
+        document.getElementById('res-mon').innerText = '$' + (p.get('monto') || '0.00');
+        document.getElementById('res-fec').innerText = p.get('fecha') || '---';
+        document.getElementById('res-prod').innerText = p.get('prod') || 'PAGO';
 
         function enviarWA() {
-            const texto = `*RESUMEN DE PAGO*\n\n👤 *Cliente:* ${params.get('nombre')}\n💰 *Monto:* $${params.get('monto')}\n📅 *Vence:* ${params.get('fecha')}\n💳 *CLABE BBVA:* 703010052250010635`;
-            window.open(`https://wa.me/${params.get('tel')}?text=${encodeURIComponent(texto)}`, '_blank');
+            const msj = `*PAGO PENDIENTE*\n\n👤 *Cliente:* ${p.get('nombre')}\n💰 *Monto:* $${p.get('monto')}\n📅 *Vence:* ${p.get('fecha')}\n💳 *CLABE:* 703010052250010635`;
+            window.open(`https://wa.me/${p.get('tel')}?text=${encodeURIComponent(msj)}`, '_blank');
         }
     </script>
 </body>
