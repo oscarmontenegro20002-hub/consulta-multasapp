@@ -3,54 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador Pro - Todo en Uno</title>
+    <title>Generador Pro de Pagos | Versión Final</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
         .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .transition-all { transition: all 0.3s ease; }
+        .transition-theme { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        select { appearance: none; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800">
+    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800 transition-theme">
         
-        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-all">
-            <div id="logo-container" class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-2">
+        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-theme">
+            <div id="logo-container" class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-1 transition-all">
                 <img id="app-logo" src="" class="hidden w-full h-full object-contain">
-                <div id="logo-placeholder" class="text-slate-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                <div id="logo-placeholder" class="flex flex-col items-center text-slate-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                 </div>
             </div>
             
-            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 uppercase tracking-wider transition-all">
+            <button onclick="toggleFoto()" id="btn-foto" class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 hover:bg-white transition shadow-sm uppercase">
                 Inhabilitar foto
             </button>
 
             <div class="relative w-full max-w-[280px] mx-auto z-10">
                 <select id="select-app" onchange="updateApp()" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-blue-600 text-center shadow-sm focus:outline-none cursor-pointer">
-                    <option value="default|#7dd3fc|#1d4ed8">-- Seleccionar Producto --</option>
-                    <option value="dida|#2563eb|#1e40af">DiDa Prestamos</option>
+                    <option value="default|#7dd3fc|#1d4ed8">Producto</option>
                     <option value="nu|#820ad1|#5d0796">Prestamos Nu</option>
-                    <option value="tala|#0056b3|#003d7a">Tala Prestamos</option>
+                    <option value="dida|#2563eb|#1e40af">DiDa Prestamos</option>
+                    <option value="rapidos|#f43f5e|#be123c">Prestamos Rapidos</option>
                     <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
                     <option value="movil|#8b5cf6|#5b21b6">Movil Cash</option>
-                    <option value="rapidos|#f43f5e|#be123c">Prestamos Rapidos</option>
-                    <option value="talacredito|#10b981|#047857">Tala Crédito</option>
+                    <option value="tala|#0056b3|#003d7a">Tala Prestamos</option>
                     <option value="finanza|#f59e0b|#b45309">Finanza Dinero</option>
                     <option value="peso|#06b6d4|#0891b2">Peso Directo</option>
-                    <option value="prestamos|#475569|#1e293b">Prestamos General</option>
+                    <option value="sencillo|#10b981|#065f46">Dinero Sencillo</option>
+                    <option value="fortaprest|#ec4899|#9d174d">Fortaprest</option>
+                    <option value="prestamos|#475569|#1e293b">Prestamos</option>
                 </select>
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-blue-600 text-[10px]">▼</div>
             </div>
             
-            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 text-left shadow-xl z-20 transition-all">
+            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 text-left shadow-xl z-20 transition-theme">
                 <p class="text-white/70 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Préstamo</p>
                 <div class="flex items-center">
                     <span class="text-white text-4xl font-bold mr-1">$</span>
-                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-white text-4xl font-bold outline-none w-full placeholder:text-white/20" value="0.00">
+                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-white text-4xl font-bold outline-none w-full placeholder:text-white/20">
                 </div>
             </div>
         </div>
@@ -60,14 +63,21 @@
         <div class="p-8 space-y-4">
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                 <span class="text-sm text-slate-500 font-medium">Subproducto</span>
-                <select class="text-sm font-bold text-slate-800 outline-none bg-transparent text-right">
+                <select id="subproducto" class="text-sm font-bold text-slate-800 outline-none bg-transparent text-right cursor-pointer">
                     <option>Multa</option>
                     <option>Recargo</option>
                     <option>Intereses</option>
-                    <option>Bloqueo de WhatsApp</option>
+                    <option>Bloqueo de whats app</option>
                     <option>Paz y Salvo</option>
-                    <option>Liquidación Total</option>
+                    <option>Evasivo de pago</option>
+                    <option>Credito</option>
+                    <option>Cooperacion</option>
+                    <option>Incumplimiento</option>
+                    <option>Certificado</option>
+                    <option>Liquidacion Total</option>
                     <option>Abono</option>
+                    <option>Liquidacion</option>
+                    <option>Prestamo</option>
                 </select>
             </div>
 
@@ -77,43 +87,43 @@
             </div>
 
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                <span class="text-sm text-slate-500 font-medium">Vencimiento</span>
+                <span class="text-sm text-slate-500 font-medium">Fecha Vencimiento</span>
                 <input type="date" id="input-fecha" class="text-sm font-bold text-slate-400 outline-none bg-transparent text-right">
             </div>
 
             <div class="bg-slate-50 rounded-[2.5rem] p-6 text-center border border-slate-100 mt-4">
-                <select class="text-[10px] text-slate-400 uppercase font-bold tracking-widest outline-none bg-transparent mb-1">
+                <select id="metodo-pago" class="text-[10px] text-slate-400 uppercase font-bold tracking-widest outline-none bg-transparent mb-1 text-center w-full">
+                    <option>Método de pago</option>
                     <option>STP</option>
                     <option>BBVA</option>
                     <option>Bancolombia</option>
                     <option>Nequi</option>
-                    <option>OXXO</option>
+                    <option>Daviplata</option>
+                    <option>Dep. contabilidad S.A de C.V</option>
+                    <option>Banxico.org.mx/cep</option>
                 </select>
                 <h3 class="text-2xl font-black text-slate-800 mb-1">Liga de pago</h3>
-                <p id="display-link" class="text-[10px] text-slate-400 font-mono truncate px-4">Esperando...</p>
+                <p id="display-link" class="text-[10px] text-slate-400 font-mono truncate px-4">0000000000</p>
             </div>
 
-            <div class="bg-white rounded-2xl p-4 border border-slate-100 space-y-2">
-                <input type="text" placeholder="Nombre del cliente" class="w-full text-sm outline-none border-b border-slate-50 pb-1">
-                <input type="text" placeholder="Teléfono" class="w-full text-sm outline-none border-b border-slate-50 pb-1">
+            <div class="bg-white rounded-2xl p-4 border border-slate-50 space-y-3">
+                <input type="text" placeholder="Nombre" class="w-full text-sm border-b border-slate-100 pb-1 outline-none text-slate-600">
+                <input type="text" placeholder="Teléfono" class="w-full text-sm border-b border-slate-100 pb-1 outline-none text-slate-600">
             </div>
 
-            <button onclick="generateLink()" id="btn-generar" class="w-full bg-[#1d4ed8] text-white font-extrabold py-5 rounded-2xl shadow-lg transition-all active:scale-95 mt-4 uppercase text-xs tracking-widest">
+            <button onclick="generateLink()" id="btn-generar" class="w-full bg-[#1d4ed8] text-white font-extrabold py-5 rounded-2xl shadow-lg transition-theme active:scale-95 mt-4 uppercase text-xs tracking-widest">
                 Confirmar y Generar Link
             </button>
         </div>
     </div>
 
     <script>
-        // URLs alternativas más estables
+        // LOGOS INTEGRADOS EN BASE64 (No necesitan internet para cargar)
         const logos = {
-            'dida': 'https://logo.clearbit.com/dida.com',
-            'nu': 'https://logo.clearbit.com/nu.com.mx',
-            'tala': 'https://logo.clearbit.com/tala.co',
-            'worldmox': 'https://logo.clearbit.com/worldmox.com',
-            'movil': 'https://logo.clearbit.com/movil.com',
-            'rapidos': 'https://logo.clearbit.com/prestamos.mx',
-            'talacredito': 'https://logo.clearbit.com/talacredito.com'
+            'nu': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAMFBMVEVHcEzaOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3aOk3v8G9kAAAADHRSTlMA70Dfv2C/YI9A30DfT6O3OQAAASVJREFUeNrt1MENgDAMA0FpS6H7b9YREAnS786SPSfXpI0DAAAAAAAAAAAAAAAAAAAAwD9at6S9S9uP7pZ07G9I7H8EAAAAAAAAAAAAAAAAAAAAfGECsh0DsqvY7C82Y0AAAAAAAAAAAAAAAAAAAAD8InuR7UWWKzb7Kzb7HAAAAAAAAAAAAAAAAAAAAHzS5iL7iyxWv79SDAAAAAAAAAAAAAAAAAAAAL7REmR7kSXL9yvFAMAAAAAAAAAAAAAAAAAAAAD4RAtke5H9Vv69FAAAAAAAAAAAAAAAAAAAAL6R7UWWKzb7Kzb7HAAAAAAAAAAAAAAAAAAAAHzSBmR7kWXF9ivFAMAAAAAAAAAAAAAAAAAAAAD4RAtke5H9Vv69FAAAAAAAAAAAAAAAAAAAAL6R7UWWKzb7Kzb7HAAAAAAAAAAAAAAAAAAAAHzS5iL7iyxWv79SDAAAAAAAAAAAAAAAAAAAAL7R7ki6S9uP7pZ07I8AAAAAAAAAAAAAAAAAAAAA4Atv370DODXpXAYAAAAASUVORK5CYII=',
+            'dida': 'https://i.ibb.co/Lzf7vYn/image-46429b.png', // Logo DiDa
+            'tala': 'https://i.ibb.co/vY8N9zX/image-45ec84.png', // Logo Tala
+            'worldmox': 'https://i.ibb.co/BccC9Rz/image-45e8a1.png' // Logo Worldmox
         };
 
         let fotoHabilitada = true;
@@ -122,7 +132,6 @@
             const select = document.getElementById('select-app');
             const [id, colorLight, colorDark] = select.value.split('|');
             
-            // Cambiar colores
             document.getElementById('header-bg').style.backgroundColor = colorLight;
             document.getElementById('monto-banner').style.backgroundColor = colorDark;
             document.getElementById('btn-generar').style.backgroundColor = colorDark;
@@ -130,20 +139,14 @@
             const logoImg = document.getElementById('app-logo');
             const placeholder = document.getElementById('logo-placeholder');
 
-            // Lógica de imagen
-            if (id === "default" || !fotoHabilitada) {
+            if(id === "default" || !fotoHabilitada) {
                 logoImg.classList.add('hidden');
                 placeholder.classList.remove('hidden');
             } else {
+                // Si el logo no está en la lista Base64, intenta cargar la URL
                 logoImg.src = logos[id] || '';
-                logoImg.onload = () => {
-                    logoImg.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                logoImg.onerror = () => {
-                    logoImg.classList.add('hidden');
-                    placeholder.classList.remove('hidden');
-                };
+                logoImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
             }
         }
 
@@ -151,26 +154,22 @@
             fotoHabilitada = !fotoHabilitada;
             const btn = document.getElementById('btn-foto');
             btn.innerText = fotoHabilitada ? "Inhabilitar foto" : "Habilitar foto";
-            btn.classList.toggle('bg-red-500', !fotoHabilitada);
-            btn.classList.toggle('text-white', !fotoHabilitada);
+            btn.className = fotoHabilitada ? "bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 shadow-sm uppercase" : "bg-red-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-full mb-6 uppercase shadow-sm";
             updateApp();
         }
 
         function syncMonto() {
             const val = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('display-importe').innerText = "$" + val;
+            document.getElementById('display-importe').innerText = "$" + parseFloat(val).toLocaleString('es-MX', {minimumFractionDigits: 2});
         }
 
         function generateLink() {
-            const random = Math.random().toString(36).substring(7).toUpperCase();
-            const link = `https://pago.mx/ref-${random}`;
+            const hash = Math.random().toString(36).substring(7).toUpperCase();
+            const link = `https://pago.mx/ref-${hash}`;
             document.getElementById('display-link').innerText = link;
             navigator.clipboard.writeText(link);
-            alert("¡Link copiado al portapapeles!");
+            alert("✅ Link generado y copiado");
         }
-
-        // Inicializar
-        updateApp();
     </script>
 </body>
 </html>
