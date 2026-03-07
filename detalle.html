@@ -6,116 +6,91 @@
     <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
-        .timer-red { color: #ef4444; font-weight: 900; animation: pulse 1s infinite; font-size: 1.8rem; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .pago-card { width: 100%; max-width: 420px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
-        /* FUERZA LA VISIBILIDAD DEL RECUADRO */
-        .alerta-vencimiento {
+        /* ESTO FUERZA EL RECUADRO ROSADO */
+        .bloque-alerta {
             background-color: #fff1f1 !important;
             border: 2px solid #fee2e2 !important;
             border-radius: 1.5rem !important;
-            padding: 1.5rem !important;
+            padding: 20px !important;
+            margin: 20px 0 !important;
             display: block !important;
-            margin: 1.5rem 0 !important;
         }
     </style>
 </head>
 <body>
-
-    <div class="card-detalle shadow-2xl">
-        <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
-            <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
-            <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase tracking-tight text-white">CARGANDO...</h1>
+    <div class="pago-card">
+        <div class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
+            <span class="text-[10px] font-bold uppercase tracking-widest opacity-80">Orden de Pago</span>
+            <h1 id="p-prod" class="text-3xl font-black mt-2 uppercase tracking-tight">TALA PRÉSTAMOS</h1>
         </div>
 
         <div class="p-8 space-y-6">
             <div class="bg-slate-50 rounded-[2rem] p-8 text-center border border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Monto Total a Pagar</span>
-                <div class="text-5xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Monto Total a Pagar</span>
+                <div class="text-5xl font-black text-[#0d9488]" id="p-monto">$0.00</div>
             </div>
 
             <div class="space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Nombre del Cliente</span>
-                    <span id="display-nombre" class="text-sm font-black text-slate-800 uppercase">---</span>
+                    <span class="text-[11px] font-bold text-slate-400 uppercase">Cliente</span>
+                    <span id="p-nom" class="text-sm font-black text-slate-800 uppercase">Cargando...</span>
                 </div>
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
-                    <span id="display-fecha" class="text-sm font-black text-slate-800">---</span>
-                </div>
-                
-                <div class="alerta-vencimiento">
+
+                <div class="bloque-alerta">
                     <div class="flex justify-between items-center">
-                        <span class="text-[11px] font-black text-red-600 uppercase tracking-wider">La liga expira en:</span>
-                        <span id="timer" class="timer-red">30:00</span>
+                        <span class="text-[10px] font-black text-red-600 uppercase">La liga expira en:</span>
+                        <span id="p-timer" class="text-2xl font-black text-red-600">30:00</span>
                     </div>
-                    <p class="text-[12px] text-red-500 mt-4 leading-normal font-bold">
-                        * Al llegar a 0, se cobrará una penalización de <span class="underline text-red-700 font-black">$500,00 pesos ADICIONALES</span> por concepto de vencimiento de liga de pago.
+                    <p style="color: #ef4444; font-size: 12px; line-height: 1.5; margin-top: 15px; font-weight: 700; display: block !important;">
+                        * Al llegar a 0, se cobrará una penalización de <span style="text-decoration: underline;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
                     </p>
                 </div>
             </div>
 
-            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
-                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block">TRANSFERENCIA (SPEI)</span>
-                <div id="display-clabe" class="text-2xl font-black text-blue-700 tracking-tighter">000000000000000000</div>
-                <p class="text-[10px] font-bold italic text-blue-400">Referencia: Pago de Multa</p>
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center">
+                <span id="p-banco" class="text-[10px] font-bold text-blue-500 uppercase block mb-2">TRANSFERENCIA (SPEI)</span>
+                <div id="p-clabe" class="text-2xl font-black text-blue-700 tracking-tighter">000000000000000000</div>
             </div>
 
-            <button onclick="enviarWhatsApp()" class="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-black py-6 rounded-[1.5rem] shadow-lg shadow-green-500/30 uppercase text-[13px] tracking-widest transition-all active:scale-95 flex items-center justify-center">
+            <button onclick="enviarWA()" class="w-full bg-[#22c55e] text-white font-black py-6 rounded-[1.5rem] uppercase text-xs tracking-widest shadow-lg">
                 Confirmar Pago vía WhatsApp
             </button>
         </div>
     </div>
 
     <script>
-        // Mapeo de parámetros del generador al visualizador
         const params = new URLSearchParams(window.location.search);
+        
+        // Mapeo de datos (Asegúrate que tu generador use estas letras: m, n, cl, pr, t)
         const monto = params.get('m') || "0.00";
         const nombre = params.get('n') || "Cliente";
-        const tel = params.get('t') || "";
-        const fecha = params.get('f') || "---";
-        const producto = params.get('pr') || "TALA PRESTAMOS";
         const clabe = params.get('cl') || "000000000000000000";
+        const producto = params.get('pr') || "TALA PRÉSTAMOS";
         const banco = params.get('b') || "MERCADO PAGO";
-        const startTimestamp = parseInt(params.get('s')) || Date.now();
+        const tel = params.get('t') || "";
+        const start = parseInt(params.get('s')) || Date.now();
 
-        // Llenar datos en pantalla
-        document.getElementById('display-monto').innerText = "$" + monto;
-        document.getElementById('display-nombre').innerText = nombre.toUpperCase();
-        document.getElementById('display-fecha').innerText = fecha;
-        document.getElementById('display-producto').innerText = producto.toUpperCase();
-        document.getElementById('display-clabe').innerText = clabe;
-        document.getElementById('display-banco-label').innerText = `TRANSFERENCIA ${banco.toUpperCase()} (SPEI)`;
+        document.getElementById('p-monto').innerText = "$" + monto;
+        document.getElementById('p-nom').innerText = nombre;
+        document.getElementById('p-prod').innerText = producto;
+        document.getElementById('p-clabe').innerText = clabe;
+        document.getElementById('p-banco').innerText = "TRANSFERENCIA " + banco + " (SPEI)";
 
-        // LÓGICA DEL CRONÓMETRO (Sincronizado con el generador)
-        function updateTimer() {
-            const now = Date.now();
-            const diff = (30 * 60 * 1000) - (now - startTimestamp);
-            
-            if (diff <= 0) {
-                document.getElementById('timer').innerText = "EXPIRADO";
-                document.getElementById('timer').classList.remove('pulse');
-                return;
-            }
-
-            const minutos = Math.floor(diff / 60000);
-            const segundos = Math.floor((diff % 60000) / 1000);
-            
-            document.getElementById('timer').innerText = 
-                (minutos < 10 ? '0' + minutos : minutos) + ":" + 
-                (segundos < 10 ? '0' + segundos : segundos);
+        function clock() {
+            const diff = (30 * 60 * 1000) - (Date.now() - start);
+            if (diff <= 0) { document.getElementById('p-timer').innerText = "00:00"; return; }
+            const m = Math.floor(diff / 60000), s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('p-timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
         }
+        setInterval(clock, 1000); clock();
 
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        function enviarWhatsApp() {
-            const mensaje = `Hola, mi nombre es ${nombre}. Adjunto mi comprobante de pago de ${producto} por la cantidad de $${monto}.`;
-            const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
-            window.location.href = url;
+        function enviarWA() {
+            const msg = `Hola, soy ${nombre}. Adjunto pago de ${producto} por $${monto}.`;
+            window.location.href = `https://wa.me/52${tel}?text=${encodeURIComponent(msg)}`;
         }
     </script>
 </body>
