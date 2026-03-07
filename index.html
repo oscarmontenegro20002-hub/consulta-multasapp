@@ -131,18 +131,31 @@
         }
 
         function confirmar() {
-            const monto = document.getElementById('input-monto').value || "0.00";
-            const nombre = document.getElementById('cliente-nombre').value || "Cliente";
-            const tel = document.getElementById('cliente-tel').value || "";
-            const fecha = document.getElementById('f-venc').value || "";
-            const sel = document.getElementById('product-select');
-            const producto = sel.options[sel.selectedIndex].text;
+            // 1. Recolectamos los datos sin mover nada de la interfaz
+    const monto = document.getElementById('input-monto').value || "0.00";
+    const fecha = document.getElementById('f-venc').value || "";
+    const nombre = document.getElementById('cliente-nombre').value || "Cliente";
+    const tel = document.getElementById('cliente-tel').value || "";
+    
+    const sel = document.getElementById('product-select');
+    const producto = sel.options[sel.selectedIndex].text;
 
-            const url = `detalle.html?monto=${encodeURIComponent(monto)}&nombre=${encodeURIComponent(nombre)}&tel=${encodeURIComponent(tel)}&fecha=${encodeURIComponent(fecha)}&prod=${encodeURIComponent(producto)}`;
-            window.location.href = url;
+    // 2. Creamos la "maleta" de datos
+    const datos = new URLSearchParams({
+        monto: monto,
+        nombre: nombre,
+        tel: tel,
+        fecha: fecha,
+        prod: producto
+    }).toString();
+
+    // 3. Mandamos al cliente a la nueva página (detalle.html)
+    // Usamos location.href para que el navegador no bloquee la ventana
+    window.location.href = `detalle.html?${datos}`;
         }
 
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
 </html>
+
