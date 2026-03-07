@@ -3,64 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Ligas Pro v3</title>
+    <title>Generador de Pagos Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: #1e293b; }
-        .main-card { background: white; border-radius: 3rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5); width: 100%; max-width: 420px; }
-        .input-field { width: 100%; border-bottom: 2px solid #f1f5f9; padding: 10px 0; outline: none; transition: 0.3s; font-weight: 600; font-size: 14px; }
-        .input-field:focus { border-color: #3b82f6; }
-        .label-mini { text-transform: uppercase; font-size: 10px; font-weight: 800; color: #94a3b8; letter-spacing: 0.05em; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; }
+        .card-container { width: 100%; max-width: 450px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .header-blue { background-color: #0056b3; padding: 2rem 1.5rem 4rem 1.5rem; text-center: center; position: relative; transition: background 0.3s; }
+        .logo-box { width: 90px; height: 90px; background: white; border-radius: 1.5rem; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .monto-card { position: absolute; bottom: -40px; left: 1.5rem; right: 1.5rem; background: #003d7a; border-radius: 1rem; padding: 1.2rem; color: white; display: flex; flex-direction: column; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); transition: background 0.3s; }
+        input[type="number"]::-webkit-inner-spin-button { display: none; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="main-card overflow-hidden">
-        <div id="header-color" class="p-8 pb-20 text-center relative transition-all duration-500 bg-[#0d9488]">
+    <div class="card-container">
+        <div id="header" class="header-blue">
+            <div class="logo-box">
+                <img id="main-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
+            </div>
             
-            <div class="w-24 h-24 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-xl overflow-hidden">
-                <img id="logo-img" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
+            <div class="text-center mb-4">
+                <button onclick="toggleFoto()" class="bg-white/90 text-[10px] font-bold px-4 py-1 rounded-full text-slate-600 uppercase">Inhabilitar Foto</button>
             </div>
 
-            <select id="app-selector" onchange="updateUI()" class="w-full bg-white/20 border border-white/30 text-white rounded-2xl px-4 py-3 font-bold text-sm outline-none backdrop-blur-md cursor-pointer">
-                <option value="tala|#0d9488" class="text-slate-800">Tala Préstamos</option>
-                <option value="nu|#820ad1" class="text-slate-800">Préstamos Nu</option>
-                <option value="dida|#2563eb" class="text-slate-800">DiDa Préstamos</option>
-                <option value="worldmox|#0284c7" class="text-slate-800">WorldmoxPro Cash</option>
-                <option value="movil|#7c3aed" class="text-slate-800">Movil Cash</option>
-            </select>
-
-            <div class="absolute -bottom-10 left-8 right-8 bg-white rounded-[2rem] p-6 shadow-2xl border border-slate-50">
-                <p class="label-mini mb-1">Monto de Pago</p>
-                <div class="flex items-center">
-                    <span class="text-3xl font-black text-slate-800 mr-1">$</span>
-                    <input type="number" id="monto-input" oninput="syncData()" placeholder="0.00" class="text-3xl font-black text-slate-800 w-full outline-none placeholder:text-slate-100">
-                </div>
-            </div>
-        </div>
-
-        <div class="h-14"></div>
-
-        <div class="p-10 space-y-5">
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="label-mini">Vencimiento</label>
-                    <input type="date" id="fecha-venc" onchange="calcularDias()" class="input-field text-blue-600">
-                </div>
-                <div>
-                    <label class="label-mini">Días restantes</label>
-                    <div id="dias-display" class="pt-2 text-lg font-black text-slate-700">0</div>
-                </div>
-            </div>
-
-            <div class="space-y-4 pt-2">
-                <div>
-                    <label class="label-mini">Subproducto</label>
-                    <select class="input-field">
-                        <option>Multa</option>
-                        <option>Recargo</option>
-                        <option>Liquidación Total</option>
-                    </select>
-                </div>
+            <div class="relative max-w-[280px] mx-auto">
+                <select id="product-select" onchange="changeProduct()" class="w-full bg-white border-none rounded-lg px-4 py-2 text-sm font-bold text-blue-600 appearance-none text-center outline-none shadow-md">
+                    <option value="tala|#0056b3|#003d7a">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87">Préstamos Nu</option>
+                    <option value="dida|#2563eb|#1d4ed8">DiDa Préstamos</option>
+                    <option value="worldmox|#0ea5e9|#0369a1">WorldmoxPro Cash GG</option>
+                    <option value="movil|#8b5cf6|#6d28d9">Movil Cash</option>
+                    <option value="rapidos|#10b981|#0478
