@@ -3,23 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Plantilla Inteligente</title>
+    <title>Generador de Plantilla Personalizada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; transition: background 0.5s ease; }
-        .card-shadow { box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; }
+        .card-shadow { box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         select { appearance: none; cursor: pointer; background: transparent; }
-        .transition-all-custom { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .transition-theme { transition: all 0.4s ease; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800 transition-all-custom">
+    <div class="w-full max-w-[420px] bg-white rounded-[2.5rem] card-shadow overflow-hidden text-slate-800">
         
-        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-all-custom">
-            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-2">
-                <img id="view-logo" src="" class="hidden max-w-full max-h-full object-contain">
-                <span id="display-logo-text" class="text-slate-300 font-bold text-xs">LOGO</span>
+        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-theme">
+            <div class="w-20 h-20 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-sm overflow-hidden p-2">
+                <img id="app-logo" src="" class="hidden max-w-full max-h-full object-contain">
+                <span id="logo-placeholder" class="text-slate-300 font-bold text-xs">LOGO</span>
             </div>
-            <button class="bg-white/80 backdrop-blur-sm text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-600 mb
+            <button class="bg-white/90 text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-500 mb-6 hover:bg-white transition">
+                Inhabilitar foto
+            </button>
+
+            <div class="relative w-full max-w-[280px] mx-auto z-10">
+                <select id="select-app" onchange="updateTheme()" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2 text-sm font-bold text-blue-600 text-center shadow-sm focus:outline-none">
+                    <option value="default|#7dd3fc|#1d4ed8">Producto</option>
+                    <option value="nu|#820ad1|#5d0796">Prestamos Nu</option>
+                    <option value="dida|#2563eb|#1e40af">DiDa Prestamos</option>
+                    <option value="rapidos|#ff4c4c|#cc0000">Prestamos Rapidos</option>
+                    <option value="worldmox|#1e293b|#0f172a">WorldmoxPro Cash GG</option>
+                    <option value="movil|#00c853|#009624">Móvil Cash</option>
+                    <option value="tala|#ffb800|#cc9300">Tala Prestamos</option>
+                    <option value="finanza|#3b82f6|#1d4ed8">Finanza Dinero</option>
+                    <option value="peso|#10b981|#047857">Peso Directo</option>
+                    <option value="dinero|#f59e0b|#b45309">Dinero Sencillo</option>
+                    <option value="fortaprest|#6366f1|#4338ca">Fortaprest</option>
+                    <option value="prestamos|#64748b|#334155">Prestamos</option>
+                    <option value="dinero_prest|#475569|#1e293b">Prestamos De Dinero</option>
+                </select>
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-blue-600 text-[10px]">▼</div>
+            </div>
+            
+            <div id="monto-banner" class="absolute -bottom-10 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-6 text-left shadow-xl z-20 transition-theme">
+                <p class="text-white/70 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Préstamo</p>
+                <div class="flex items-center">
+                    <span class="text-white text-4xl font-bold mr-1">$</span>
+                    <input type="number" id="input-monto" oninput="syncMonto()" placeholder="0.00" class="bg-transparent text-white text-4xl font-bold outline-none w-full placeholder:text-white/30" value="0.00">
+                </div>
+            </div>
+        </div>
+
+        <div class="h-14"></div>
+
+        <div class="p-8 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                <span class="text-sm text-slate-500 font-medium">Subproducto</span>
+                <div class="relative">
+                    <select class="text-sm font-bold text-slate-800 pr-4 outline-none">
+                        <option>Multa</option>
+                        <option>Recargo</option>
+                        <option>Intereses</option>
+                        <option>Bloqueo de whats app</option>
+                        <option>Paz y Salvo</option>
+                        <option>Evasivo de pago</option>
+                        <option>Credito</option>
+                        <option>Cooperacion</option>
+                        <option>Incumplimiento - compromiso de pago</option>
+                        <option>Certificado</option>
+                        <option>Liquidacion Total</option>
+                        <option>Abono</option>
+                        <option>Liquidacion</option>
+                        <option>Prestamo</option>
+                    </select>
+                    <span class="absolute right-0 top-1 text-[8px] text-slate-400">▼</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                <span class="text-sm text-slate-500 font-medium">Importe a Pagar</span>
+                <span id="display-importe" class="text-sm font-bold text-slate-800">$0.00</span>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                <span class="text-sm text-slate-500 font-medium">Fecha Vencimiento</span>
+                <input type="date" class="text-sm font-bold text-slate-400 outline-none bg-transparent">
+            </div>
+
+            <div class="flex justify-between items-center pb-2">
+                <span class="text-[11px] text-slate-400 uppercase font-bold tracking-tighter">Días vencimiento</span>
+                <span class="text-[11px] text-slate-400 font-bold">0 días</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-[2.5rem] p-6 text-center border border-slate-100 mt-6">
+                <div class="relative inline-block mb-1">
+                    <select class="text-[10px] text-slate-400 uppercase font-bold tracking-widest outline-none bg-transparent">
+                        <option>Método de pago</option>
+                        <option>STP</option>
+                        <option>BBVA</option>
+                        <option value="Bancolombia">Bancolombia</option>
+                        <option value="Nequi">Nequi</option>
+                        <option value="Daviplata">Daviplata</option>
+                        <option>Dep. contabilidad S.A de C.V</option>
+                        <option>Banxico.org.mx/cep</option>
+                    </select>
+                    <span class="ml-1 text-[8px] text-slate-400">▼</span>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">Liga de pago</h3>
+                <p id="display-link" class="text-[10px] text-slate-400 font-mono truncate">0000000000</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-slate-50 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-1">
+                    <label class="text-sm text-slate-800 font-medium">Nombre</label>
+                    <input type="text" placeholder="Nombre" class="text-right text-sm outline-none text-slate-400 placeholder:text-slate-300 w-1/2">
+                </div>
+                <div class="flex justify-between items-center border-b border-slate-100 pb-1">
+                    <label class="text-sm text-slate-800 font-medium">Teléfono</label>
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm outline-none text-slate-400 placeholder:text-slate-300 w-1/2">
+                </div>
+            </div>
+
+            <button id="btn-generar" onclick="generateLink()" class="w-full bg-[#1d4ed8] hover:opacity-90 text-white font-bold py-4 rounded-2xl shadow-lg transition-theme active:scale-95 mt-4">
+                Confirmar y Generar Link
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function updateTheme() {
+            const select = document.getElementById('select-app');
+            const [id, colorLight, colorDark] = select.value.split('|');
+            
+            // Actualizar colores
+            document.getElementById('header-bg').style.backgroundColor = colorLight;
+            document.getElementById('monto-banner').style.backgroundColor = colorDark;
+            document.getElementById('btn-generar').style.backgroundColor = colorDark;
+
+            // Manejo de Logo
+            const logoImg = document.getElementById('app-logo');
+            const placeholder = document.getElementById('logo-placeholder');
+            
+            if(id === "default") {
+                logoImg.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+            } else {
+                placeholder.classList.add('hidden');
+                logoImg.classList.remove('hidden');
+                // URL de ejemplo para logos
+                if(id === "nu") logoImg.src = "https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png";
+                else logoImg.src = `https://logo.clearbit.com/${id}.com`; 
+            }
+        }
+
+        function syncMonto() {
+            const val = document.getElementById('input-monto').value || "0.00";
+            document.getElementById('display-importe').innerText = "$" + val;
+        }
+
+        function generateLink() {
+            const hash = Math.random().toString(36).substring(2, 12).toUpperCase();
+            document.getElementById('display-link').innerText = "https://pago-seguro.mx/" + hash;
+            alert("¡Liga generada y copiada!");
+        }
+    </script>
+</body>
+</html>
