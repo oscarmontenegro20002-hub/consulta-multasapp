@@ -8,14 +8,23 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; }
+        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; position: relative; }
         .timer-red { color: #ef4444; font-weight: 800; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        
+        /* Notificación de copiado */
+        #toast {
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #1e293b; color: white; padding: 10px 20px; border-radius: 12px;
+            font-size: 12px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="card-detalle shadow-2xl">
+        <div id="toast">¡Link copiado al portapapeles!</div>
+
         <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
             <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
             <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase tracking-tight">PRODUCTO</h1>
@@ -54,8 +63,11 @@
                 <p class="text-[10px] italic text-blue-400">Referencia: Pago de Multa</p>
             </div>
 
-            <button onclick="enviarWhatsApp()" class="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold py-5 rounded-[1.5rem] shadow-lg shadow-green-500/30 uppercase text-xs tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2">
-                Confirmar Pago vía WhatsApp
+            <button onclick="copiarLink()" class="w-full bg-[#1e293b] hover:bg-[#334155] text-white font-bold py-5 rounded-[1.5rem] shadow-lg uppercase text-xs tracking-widest transition-all active:scale-95 flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+                Copiar Link de Pago
             </button>
         </div>
     </div>
@@ -64,7 +76,6 @@
         const params = new URLSearchParams(window.location.search);
         const monto = params.get('monto') || "0.00";
         const nombre = params.get('nombre') || "Cliente";
-        const tel = params.get('tel') || "";
         const fecha = params.get('fecha') || "---";
         const producto = params.get('prod') || "PRESTAMO";
         let clabe = params.get('clabe') || "000000000000000000";
@@ -85,34 +96,27 @@
             label.innerText = "TRANSFERENCIA BBVA (SPEI)";
         }
 
-        // LÓGICA DEL CRONÓMETRO (30 MINUTOS)
-        let tiempo = 30 * 60; // 30 minutos en segundos
+        // Cronómetro
+        let tiempo = 30 * 60;
         const timerDisplay = document.getElementById('timer');
-
         const countdown = setInterval(() => {
             let minutos = Math.floor(tiempo / 60);
             let segundos = tiempo % 60;
-
             segundos = segundos < 10 ? '0' + segundos : segundos;
             minutos = minutos < 10 ? '0' + minutos : minutos;
-
             timerDisplay.innerText = `${minutos}:${segundos}`;
-
-            if (tiempo <= 0) {
-                clearInterval(countdown);
-                timerDisplay.innerText = "EXPIRADO";
-                // Aquí podrías sumar los 500 al monto visualmente si quisieras
-            } else {
-                tiempo--;
-            }
+            if (tiempo <= 0) { clearInterval(countdown); timerDisplay.innerText = "EXPIRADO"; } else { tiempo--; }
         }, 1000);
 
-        function enviarWhatsApp() {
-            const mensaje = `Hola, mi nombre es ${nombre}. Adjunto mi comprobante de pago de ${producto} por la cantidad de $${monto}.`;
-            const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
-            window.location.href = url;
+        // FUNCIÓN PARA COPIAR EL LINK
+        function copiarLink() {
+            const currentUrl = window.location.href;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.opacity = "1";
+                setTimeout(() => { toast.style.opacity = "0"; }, 2000);
+            });
         }
     </script>
 </body>
 </html>
-
