@@ -3,139 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador Dinámico de Pagos</title>
+    <title>Generador de Plantilla Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        select { cursor: pointer; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; transition: background 0.5s ease; }
+        .card-shadow { box-shadow: 0 25px 60px rgba(0,0,0,0.4); }
+        select { appearance: none; cursor: pointer; background: transparent; }
+        .transition-all-custom { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <div class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl items-start justify-center">
+    <div class="w-full max-w-[420px] bg-white rounded-[3rem] card-shadow overflow-hidden text-slate-800 transition-all-custom">
         
-        <div class="w-full max-w-[400px] bg-white rounded-[3rem] shadow-2xl overflow-hidden text-slate-800">
-            <div class="bg-[#7dd3fc] p-8 pb-12 text-center relative">
-                <div class="w-20 h-20 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-sm overflow-hidden p-2">
-                    <img id="view-logo" src="https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png" class="max-w-full max-h-full object-contain">
-                </div>
-                <p id="view-app-label" class="text-[11px] font-bold text-slate-600 bg-white/50 inline-block px-3 py-1 rounded-full mb-4 uppercase tracking-tighter">Prestamos Nu</p>
-                
-                <div class="absolute -bottom-8 left-6 right-6 bg-[#1d4ed8] rounded-2xl p-5 shadow-xl">
-                    <p class="text-blue-200 text-[10px] uppercase font-bold tracking-widest mb-1">Monto de Préstamo</p>
-                    <h2 id="view-monto" class="text-white text-4xl font-bold">$0.00</h2>
-                </div>
+        <div id="header-bg" class="bg-[#7dd3fc] p-8 pb-16 text-center relative transition-all-custom">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-md overflow-hidden p-2">
+                <img id="view-logo" src="" class="hidden max-w-full max-h-full object-contain">
+                <span id="display-logo-text" class="text-slate-300 font-bold text-xs">LOGO</span>
             </div>
-
-            <div class="h-12"></div>
-
-            <div class="p-8 space-y-4">
-                <div class="flex justify-between border-b border-slate-100 pb-2">
-                    <span class="text-sm text-slate-500">Subproducto</span>
-                    <span id="view-subproducto" class="text-sm font-bold text-slate-800">Multa ▼</span>
-                </div>
-                <div class="flex justify-between border-b border-slate-100 pb-2">
-                    <span class="text-sm text-slate-500">Importe a Pagar</span>
-                    <span id="view-importe" class="text-sm font-bold text-slate-800">$0.00</span>
-                </div>
-                <div class="flex justify-between border-b border-slate-100 pb-2">
-                    <span class="text-sm text-slate-500">Vencimiento</span>
-                    <span id="view-fecha" class="text-sm font-bold text-blue-600">dd/mm/aaaa</span>
-                </div>
-
-                <div class="bg-slate-50 rounded-[2.5rem] p-6 text-center border border-slate-100 mt-4">
-                    <h3 class="text-xl font-extrabold text-[#1e293b] mb-1">Liga de pago</h3>
-                    <p id="view-link" class="text-[10px] text-slate-400 font-mono truncate">0000000000</p>
-                </div>
-
-                <div class="pt-2 text-center">
-                    <p id="view-nombre" class="text-sm font-medium text-slate-400">Nombre del cliente</p>
-                </div>
-            </div>
-        </div>
-
-        <aside class="w-full lg:w-80 space-y-4">
-            <div class="glass p-6 rounded-[2.5rem] space-y-5">
-                <h3 class="text-xs font-bold uppercase text-slate-400 tracking-widest">Configuración</h3>
-                
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Seleccionar Aplicación</label>
-                    <select id="input-app" onchange="actualizar()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
-                        <option value="Prestamos Nu|https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png">Prestamos Nu</option>
-                        <option value="Prestamos Rápidos|https://cdn-icons-png.flaticon.com/512/3135/3135706.png">Prestamos Rápidos</option>
-                        <option value="DiDa Prestamos|https://didaglobal.com/favicon.ico">DiDa Prestamos</option>
-                        <option value="Kueski|https://kueski.com/favicon.ico">Kueski Pay</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Subproducto</label>
-                    <select id="input-sub" onchange="actualizar()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
-                        <option value="Multa">Multa</option>
-                        <option value="Recargo">Recargo</option>
-                        <option value="Intereses">Intereses</option>
-                        <option value="Bloqueo de WhatsApp">Bloqueo de WhatsApp</option>
-                        <option value="Paz y Salvo">Paz y Salvo</option>
-                        <option value="Evasivo de pago">Evasivo de pago</option>
-                        <option value="Credito">Credito</option>
-                        <option value="Cooperacion">Cooperacion</option>
-                        <option value="Incumplimiento">Incumplimiento</option>
-                        <option value="Abono">Abono</option>
-                        <option value="Prestamo">Prestamo</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Monto</label>
-                    <input type="number" id="input-monto" oninput="actualizar()" placeholder="0.00" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
-                </div>
-
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-bold block mb-2">Fecha</label>
-                    <input type="date" id="input-fecha" oninput="actualizar()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
-                </div>
-
-                <button onclick="generar()" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-lg transition-all active:scale-95">
-                    Generar Liga
-                </button>
-            </div>
-        </aside>
-
-    </div>
-
-    <script>
-        function actualizar() {
-            // App y Logo
-            const appSel = document.getElementById('input-app').value.split('|');
-            document.getElementById('view-app-label').innerText = appSel[0];
-            document.getElementById('view-logo').src = appSel[1];
-
-            // Subproducto
-            const sub = document.getElementById('input-sub').value;
-            document.getElementById('view-subproducto').innerText = sub + " ▼";
-
-            // Monto e Importe
-            const monto = document.getElementById('input-monto').value || "0.00";
-            document.getElementById('view-monto').innerText = "$" + monto;
-            document.getElementById('view-importe').innerText = "$" + monto;
-
-            // Fecha
-            const fecha = document.getElementById('input-fecha').value;
-            if(fecha) {
-                const [y, m, d] = fecha.split('-');
-                document.getElementById('view-fecha').innerText = `${d}/${m}/${y}`;
-            }
-        }
-
-        function generar() {
-            const hash = Math.random().toString(36).substring(7).toUpperCase();
-            const link = "https://pago-seguro.mx/" + hash;
-            document.getElementById('view-link').innerText = link;
-            navigator.clipboard.writeText(link);
-            alert("Liga copiada: " + link);
-        }
-    </script>
-</body>
-</html>
+            <button class="bg-white/80 backdrop-blur-sm text-[10px] font-bold px-4 py-1.5 rounded-full text-slate-600 mb
