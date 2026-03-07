@@ -3,122 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Ligas Pro</title>
+    <title>Generador de Ligas Pro v3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: #1e293b; }
-        .main-card { background: white; border-radius: 3rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        .input-field { width: 100%; border-bottom: 2px solid #f1f5f9; padding: 12px 0; outline: none; transition: 0.3s; font-weight: 600; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: #1e293b; }
+        .main-card { background: white; border-radius: 3rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5); width: 100%; max-width: 420px; }
+        .input-field { width: 100%; border-bottom: 2px solid #f1f5f9; padding: 10px 0; outline: none; transition: 0.3s; font-weight: 600; font-size: 14px; }
         .input-field:focus { border-color: #3b82f6; }
-        select { cursor: pointer; appearance: none; }
+        .label-mini { text-transform: uppercase; font-size: 10px; font-weight: 800; color: #94a3b8; letter-spacing: 0.05em; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
     <div class="main-card overflow-hidden">
-        <div id="header-color" class="p-10 pb-20 text-center relative transition-all duration-500 bg-slate-800">
+        <div id="header-color" class="p-8 pb-20 text-center relative transition-all duration-500 bg-[#0d9488]">
             
-            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-xl p-4">
-                <div id="icon-target" class="w-full h-full text-slate-400">
-                    </div>
+            <div class="w-24 h-24 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-xl overflow-hidden">
+                <img id="logo-img" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
 
-            <div class="relative inline-block w-full">
-                <select id="app-selector" onchange="updateUI()" class="w-full bg-white/20 border border-white/30 text-white rounded-2xl px-4 py-3 font-bold text-sm outline-none backdrop-blur-md">
-                    <option value="nu|#820ad1" class="text-slate-800">Préstamos Nu</option>
-                    <option value="tala|#0d9488" class="text-slate-800">Tala Préstamos</option>
-                    <option value="dida|#2563eb" class="text-slate-800">DiDa Préstamos</option>
-                    <option value="worldmox|#0284c7" class="text-slate-800">WorldmoxPro Cash</option>
-                    <option value="movil|#7c3aed" class="text-slate-800">Movil Cash</option>
-                </select>
-            </div>
+            <select id="app-selector" onchange="updateUI()" class="w-full bg-white/20 border border-white/30 text-white rounded-2xl px-4 py-3 font-bold text-sm outline-none backdrop-blur-md cursor-pointer">
+                <option value="tala|#0d9488" class="text-slate-800">Tala Préstamos</option>
+                <option value="nu|#820ad1" class="text-slate-800">Préstamos Nu</option>
+                <option value="dida|#2563eb" class="text-slate-800">DiDa Préstamos</option>
+                <option value="worldmox|#0284c7" class="text-slate-800">WorldmoxPro Cash</option>
+                <option value="movil|#7c3aed" class="text-slate-800">Movil Cash</option>
+            </select>
 
-            <div class="absolute -bottom-10 left-8 right-8 bg-white rounded-[2rem] p-6 shadow-2xl text-left border border-slate-50">
-                <p class="text-[10px] uppercase font-extrabold text-slate-400 tracking-widest mb-1">Monto a pagar</p>
+            <div class="absolute -bottom-10 left-8 right-8 bg-white rounded-[2rem] p-6 shadow-2xl border border-slate-50">
+                <p class="label-mini mb-1">Monto de Pago</p>
                 <div class="flex items-center">
-                    <span class="text-3xl font-extrabold text-slate-800 mr-1">$</span>
-                    <input type="number" id="monto-input" oninput="syncMonto()" placeholder="0.00" class="text-3xl font-extrabold text-slate-800 w-full outline-none placeholder:text-slate-200">
+                    <span class="text-3xl font-black text-slate-800 mr-1">$</span>
+                    <input type="number" id="monto-input" oninput="syncData()" placeholder="0.00" class="text-3xl font-black text-slate-800 w-full outline-none placeholder:text-slate-100">
                 </div>
             </div>
         </div>
 
-        <div class="h-16"></div>
+        <div class="h-14"></div>
 
-        <div class="p-10 space-y-6">
-            <div class="flex justify-between items-center text-sm border-b border-slate-50 pb-2">
-                <span class="text-slate-400 font-bold uppercase text-[10px]">Referencia</span>
-                <span id="ref-display" class="font-mono font-bold text-blue-600">---</span>
+        <div class="p-10 space-y-5">
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="label-mini">Vencimiento</label>
+                    <input type="date" id="fecha-venc" onchange="calcularDias()" class="input-field text-blue-600">
+                </div>
+                <div>
+                    <label class="label-mini">Días restantes</label>
+                    <div id="dias-display" class="pt-2 text-lg font-black text-slate-700">0</div>
+                </div>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-4 pt-2">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase">Concepto</label>
+                    <label class="label-mini">Subproducto</label>
                     <select class="input-field">
+                        <option>Multa</option>
+                        <option>Recargo</option>
                         <option>Liquidación Total</option>
-                        <option>Multa por Atraso</option>
-                        <option>Pago Parcial</option>
-                        <option>Extensión de Plazo</option>
                     </select>
                 </div>
-                
-                <input type="text" id="nombre-cliente" placeholder="Nombre del Cliente" class="input-field">
-                <input type="text" id="tel-cliente" placeholder="WhatsApp / Teléfono" class="input-field">
-            </div>
-
-            <button onclick="generateLink()" id="main-btn" class="w-full py-5 rounded-2xl text-white font-extrabold text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all bg-slate-800 mt-4">
-                Generar Liga de Pago
-            </button>
-            
-            <p id="copy-msg" class="text-center text-[10px] text-green-500 font-bold opacity-0 transition-opacity">¡Copiado al portapapeles!</p>
-        </div>
-    </div>
-
-    <script>
-        // Íconos SVG internos (No fallan nunca)
-        const icons = {
-            'nu': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>`,
-            'tala': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45l8.15 13.55H3.85L12 5.45zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>`,
-            'dida': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`,
-            'worldmox': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
-            'movil': `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM7 19V5h10v14H7z"/></svg>`
-        };
-
-        function updateUI() {
-            const selector = document.getElementById('app-selector');
-            const [id, color] = selector.value.split('|');
-            
-            document.getElementById('header-color').style.backgroundColor = color;
-            document.getElementById('main-btn').style.backgroundColor = color;
-            document.getElementById('icon-target').innerHTML = icons[id];
-            document.getElementById('icon-target').style.color = color;
-        }
-
-        function syncMonto() {
-            const val = document.getElementById('monto-input').value || "---";
-            document.getElementById('ref-display').innerText = val !== "---" ? "$" + val : "---";
-        }
-
-        function generateLink() {
-            const cliente = document.getElementById('nombre-cliente').value || "Cliente";
-            const monto = document.getElementById('monto-input').value || "0";
-            const randomID = Math.random().toString(36).substring(7).toUpperCase();
-            
-            const finalLink = `https://pago.mx/pay?ref=${randomID}&amt=${monto}`;
-            
-            // Copiar al portapapeles
-            navigator.clipboard.writeText(finalLink);
-            
-            // Efecto visual
-            const msg = document.getElementById('copy-msg');
-            msg.opacity = "1";
-            setTimeout(() => msg.opacity = "0", 2000);
-            
-            alert(`✅ Enlace Generado para ${cliente}\n\n${finalLink}`);
-        }
-
-        // Inicializar
-        updateUI();
-    </script>
-</body>
-</html>
