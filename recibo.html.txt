@@ -1,0 +1,28 @@
+<div style="text-align: center; margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+    <button id="btn-whatsapp" style="background: #25D366; color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; font-weight: bold; width: 100%;">
+        📱 Enviar por WhatsApp
+    </button>
+    <button onclick="window.print()" style="background: #149183; color: white; border: none; padding: 12px; border-radius: 50px; cursor: pointer; width: 100%; opacity: 0.8;">
+        🖨️ Imprimir Ticket
+    </button>
+</div>
+
+<script>
+    // Lógica para copiar y enviar
+    document.getElementById('btn-whatsapp').onclick = function() {
+        const params = new URLSearchParams(window.location.search);
+        const texto = `*RESUMEN DE PAGO - TALA*\n\n` +
+                      `👤 *Cliente:* ${params.get('nombre')}\n` +
+                      `💰 *Monto:* $${params.get('monto')}\n` +
+                      `📅 *Vence:* ${params.get('fecha')}\n` +
+                      `💳 *CLABE (STP):* ${params.get('clabe')}\n\n` +
+                      `Favor de enviar comprobante una vez realizado el pago.`;
+        
+        // Copia al portapapeles automáticamente
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("Detalles copiados. Abriendo WhatsApp...");
+            const tel = params.get('tel') || "";
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(texto)}`, '_blank');
+        });
+    };
+</script>
