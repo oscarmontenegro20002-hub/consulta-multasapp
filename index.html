@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas Pro</title>
+    <title>Panel Administrativo Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -15,34 +15,37 @@
             align-items: center; 
             justify-content: center; 
             min-height: 100vh; 
-            padding: 20px; 
-            background-color: #0b1120; /* Fondo oscuro por defecto */
+            background-color: #0b1120;
+            overflow-x: hidden;
         }
 
-        /* --- ESTILOS DE LOGIN (CON COLOR TORTILLA) --- */
+        /* --- FONDO DE VIDEO DINÁMICO (RESTABLECIDO) --- */
+        #video-viewport {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden; background-color: #0b1120;
+        }
+        #bg-video {
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+        }
+
+        /* --- ESTILOS DE LOGIN (MANTENIDOS) --- */
         #login-screen { 
-            position: fixed; inset: 0; 
-            display: flex; align-items: center; justify-content: center; 
-            z-index: 1000; 
-            background-color: #9A7B4F; /* COLOR TORTILLA (#9A7B4F) */
+            position: relative; z-index: 10; width: 100%; 
+            display: flex; justify-content: center; padding: 20px; 
         }
-
         .login-card { 
-            width: 100%; 
-            max-width: 380px; 
-            background: white; 
-            padding: 2.5rem; 
-            border-radius: 3rem; 
-            text-align: center; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
-        }
-
-        .error-msg { 
-            color: #ef4444; 
-            font-size: 12px; 
-            font-weight: 600; 
-            margin-top: 10px; 
-            display: none; 
+            width: 100%; max-width: 380px; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 2rem; border-radius: 2.5rem; text-align: center; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         /* --- GENERADOR (DISEÑO INTACTO Y BLINDADO) --- */
@@ -56,6 +59,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
             position: relative; 
             z-index: 10; 
+            margin: 10px; 
         }
         
         .monto-box { 
@@ -76,41 +80,37 @@
             line-height: 1; 
         }
 
-        select { appearance: none; cursor: pointer; }
+        input[type="text"], input[type="password"], input[type="number"], select {
+            font-size: 16px !important;
+        }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-card shadow-2xl">
-            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-            </div>
-            
-            <h2 class="text-2xl font-bold text-slate-800 mb-2">Acceso Privado</h2>
-            <p class="text-slate-400 text-sm mb-8 font-medium">Ingresa tus credenciales para acceder</p>
-            
-            <div class="space-y-4">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
-                <div class="relative">
-                    <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
-                    <button onclick="togglePass()" class="absolute right-4 top-3.5 text-slate-300 hover:text-blue-500">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                    </button>
-                </div>
+    <div id="video-viewport">
+        <video id="bg-video" autoplay loop muted playsinline preload="auto">
+            <source src="https://cdn.pixabay.com/video/2022/04/10/113368-697525287_tiny.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
 
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+            </div>
+            <h2 class="text-xl font-bold text-slate-800 mb-1">Bienvenido</h2>
+            <p class="text-slate-500 text-xs mb-6 font-medium">Acceso Privado Panel Administrativo Pro</p>
+            <div class="space-y-3">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-blue-500 font-medium">
+                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:border-blue-500 font-medium">
                 <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
-                
-                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all mt-4 uppercase tracking-wider text-sm">
-                    Entrar
-                </button>
+                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all mt-2 uppercase text-xs tracking-widest">Entrar</button>
             </div>
         </div>
     </div>
 
-    <div id="main-app" class="card-container">
+    <div id="main-app">
         <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4 transition-all duration-500">
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
@@ -187,7 +187,7 @@
     </div>
 
     <script>
-        // LOGIN CON FONDO TORTILLA
+        // --- LOGICA LOGIN ---
         function acceder() {
             if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
                 document.getElementById('login-screen').style.display = 'none';
@@ -200,17 +200,7 @@
             }
         }
 
-        // Botón Ojo Contraseña
-        function togglePass() {
-            const passInput = document.getElementById('pass');
-            if (passInput.type === "password") {
-                passInput.type = "text";
-            } else {
-                passInput.type = "password";
-            }
-        }
-
-        // GENERADOR LOGIC (MANTENIDO INTACTO)
+        // --- LOGICA GENERADOR (SIN CAMBIOS) ---
         const logos = {'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png','nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png','dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png','worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png','movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'};
         
         function updateApp() {
@@ -254,6 +244,14 @@
 
         // Inicializar fecha de hoy
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
+        
+        // Forzar reproducción en móviles al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            const v = document.getElementById('bg-video');
+            v.play().catch(() => {
+                console.log("Autoplay bloqueado, esperando interacción");
+            });
+        });
     </script>
 </body>
 </html>
