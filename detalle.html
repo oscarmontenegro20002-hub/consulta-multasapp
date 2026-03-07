@@ -2,67 +2,79 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumen de Pago</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Orden de Pago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b1120; }
+        body { font-family: 'Inter', sans-serif; background-color: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card-detalle { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; shadow-xl; }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white w-full max-w-[440px] rounded-[2.5rem] overflow-hidden shadow-2xl">
-        <div id="header-color" class="bg-[#14b8a6] pt-12 pb-8 text-center text-white">
-            <div class="text-[10px] font-bold opacity-80 uppercase tracking-[0.3em] mb-2">Orden de Pago</div>
-            <h2 id="res-prod" class="text-2xl font-bold uppercase tracking-tight">PRODUCTO</h2>
+<body>
+
+    <div class="card-detalle shadow-2xl">
+        <div id="header-color" class="bg-[#14b8a6] text-white pt-10 pb-8 text-center px-6">
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Orden de Pago</span>
+            <h1 id="display-producto" class="text-3xl font-black mt-2 uppercase tracking-tight">PRODUCTO</h1>
         </div>
-        
-        <div class="p-8 space-y-6">
-            <div class="text-center bg-slate-50 py-6 rounded-[2rem] border border-slate-100">
-                <span class="text-[11px] font-bold text-slate-400 uppercase">Monto Total a Pagar</span>
-                <div id="res-mon" class="text-4xl font-bold text-[#0d9488] mt-1"></div>
+
+        <div class="p-8 space-y-8">
+            <div class="bg-slate-50 rounded-[2rem] p-8 text-center border border-slate-100">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Monto Total a Pagar</span>
+                <div class="text-4xl font-black text-[#0d9488]" id="display-monto">$0.00</div>
             </div>
 
-            <div class="space-y-4 px-2">
+            <div class="space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <span class="text-[11px] font-bold text-slate-400 uppercase">Nombre del Cliente</span>
-                    <span id="res-nom" class="text-sm font-bold text-slate-800"></span>
+                    <span id="display-nombre" class="text-sm font-bold text-slate-800">Cargando...</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha de Vencimiento</span>
-                    <span id="res-fec" class="text-sm font-bold text-slate-800"></span>
+                    <span id="display-fecha" class="text-sm font-bold text-slate-800">00/00/0000</span>
                 </div>
             </div>
 
-            <div class="bg-blue-50/50 p-6 rounded-[2rem] text-center border border-blue-100">
-                <p class="text-[10px] font-bold text-blue-500 uppercase mb-2">Transferencia SPEI (BBVA)</p>
-                <p class="text-blue-700 font-bold text-xl tracking-wider mb-2">703010052250010635</p>
-                <p class="text-[10px] text-blue-400 font-medium italic">Referencia: Concepto de pago</p>
+            <div class="bg-blue-50/50 rounded-[2rem] p-6 border border-blue-100 text-center space-y-3">
+                <span id="display-banco-label" class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block">TRANSFERENCIA SPEI</span>
+                <div id="display-clabe" class="text-xl font-black text-blue-700 tracking-wider">000000000000000000</div>
+                <p class="text-[10px] italic text-blue-400">Referencia: Concepto de pago</p>
             </div>
 
-            <button onclick="enviarConfirmacionWA()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-[1.5rem] shadow-xl hover:brightness-110 active:scale-95 transition-all uppercase text-xs tracking-widest">
+            <button onclick="enviarWhatsApp()" class="w-full bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold py-5 rounded-[1.5rem] shadow-lg shadow-green-500/30 uppercase text-xs tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                 Confirmar Pago vía WhatsApp
             </button>
 
-            <p class="text-center text-[10px] text-slate-400 uppercase tracking-widest leading-relaxed">
-                Una vez realizado el depósito, favor de enviar el comprobante.
-            </p>
+            <p class="text-center text-[10px] text-slate-400 font-medium pb-4">Una vez realizado el depósito, favor de enviar el comprobante.</p>
         </div>
     </div>
 
     <script>
-        // Extraer datos de la URL
+        // LEER LOS DATOS DE LA URL
         const params = new URLSearchParams(window.location.search);
-        
-        document.getElementById('res-nom').innerText = params.get('nombre') || 'No especificado';
-        document.getElementById('res-mon').innerText = '$' + (params.get('monto') || '0.00');
-        document.getElementById('res-fec').innerText = params.get('fecha') || 'Hoy';
-        document.getElementById('res-prod').innerText = params.get('prod') || 'PRÉSTAMO';
+        const monto = params.get('monto') || "0.00";
+        const nombre = params.get('nombre') || "Cliente";
+        const tel = params.get('tel') || "";
+        const fecha = params.get('fecha') || "---";
+        const producto = params.get('prod') || "PRESTAMO";
+        const clabe = params.get('clabe') || "No disponible";
+        const banco = params.get('banco') || "SPEI";
 
-        function enviarConfirmacionWA() {
-            const mensaje = `*CONFIRMACIÓN DE PAGO*\n\n✅ *Cliente:* ${params.get('nombre')}\n💰 *Monto:* $${params.get('monto')}\n📅 *Vencimiento:* ${params.get('fecha')}\n🏦 *Banco:* BBVA\n💳 *CLABE:* 703010052250010635\n\n_Adjunto mi comprobante de pago._`;
-            const telefono = params.get('tel') || '';
-            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        // PONER LOS DATOS EN LA PANTALLA
+        document.getElementById('display-monto').innerText = "$" + parseFloat(monto).toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('display-nombre').innerText = nombre;
+        document.getElementById('display-fecha').innerText = fecha;
+        document.getElementById('display-producto').innerText = producto;
+        document.getElementById('display-clabe').innerText = clabe;
+        document.getElementById('display-banco-label').innerText = `TRANSFERENCIA SPEI (${banco})`;
+
+        // FUNCIÓN DEL BOTÓN DE WHATSAPP
+        function enviarWhatsApp() {
+            const mensaje = `Hola, mi nombre es ${nombre}. Adjunto mi comprobante de pago de ${producto} por la cantidad de $${monto}.`;
+            const url = `https://wa.me/52${tel}?text=${encodeURIComponent(mensaje)}`;
+            window.location.href = url;
         }
     </script>
 </body>
