@@ -9,14 +9,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #0b1120; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .card-container { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        
-        /* Ajuste de Monto para que NO opaque nada */
         .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; position: relative; }
         .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; line-height: 1; }
-        
         #main-app { display: none; }
         #login-screen { position: fixed; inset: 0; background: #0b1120; display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        
         select { appearance: none; cursor: pointer; }
     </style>
 </head>
@@ -65,11 +61,11 @@
                 <span class="text-[11px] font-bold text-slate-400 uppercase">Importe</span>
                 <span id="res-monto" class="text-sm font-bold text-slate-800">$0.00</span>
             </div>
-            <div class="flex justify-between items-center border-b border-slate-50 pb-2">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                 <span class="text-[11px] font-bold text-slate-400 uppercase">Fecha Vencimiento</span>
                 <input type="date" id="f-venc" onchange="dias()" class="text-sm font-bold text-slate-800 outline-none">
             </div>
-            <div class="flex justify-between items-center border-b border-slate-50 pb-2">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                 <span class="text-[11px] font-bold text-slate-400 uppercase">Días Vencimiento</span>
                 <span id="res-dias" class="text-sm font-bold text-slate-800">0</span>
             </div>
@@ -95,15 +91,15 @@
             <div class="space-y-4 pt-2">
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre</label>
-                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
             </div>
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 hover:brightness-110 active:scale-95 transition-all">
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">
                 Confirmar y Generar Link
             </button>
         </div>
@@ -141,15 +137,30 @@
         function dias() {
             let f = document.getElementById('f-venc').value;
             if(!f) return;
-            let hoy = new Date(); hoy.setHours(0,0,0,0);
-            let v = new Date(f + 'T00:00:00');
-            let d = Math.ceil((v - hoy) / (1000 * 60 * 60 * 24));
-            document.getElementById('res-dias').innerText = d;
-            document.getElementById('res-dias').style.color = d < 0 ? "#ef4444" : "#1e293b";
+            
+            // LÓGICA DE DÍAS CORREGIDA
+            let hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            let venc = new Date(f + 'T00:00:00');
+            
+            // Cálculo exacto
+            let diffTime = venc.getTime() - hoy.getTime();
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const display = document.getElementById('res-dias');
+            display.innerText = diffDays;
+            
+            // Si es negativo, ponerlo en rojo
+            if (diffDays < 0) {
+                display.style.color = "#ef4444"; // Rojo
+            } else {
+                display.style.color = "#1e293b"; // Color normal
+            }
         }
 
         function confirmar() { alert("✅ Liga Generada Correctamente"); }
 
+        // Inicializar fecha
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
