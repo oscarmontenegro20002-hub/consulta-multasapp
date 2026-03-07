@@ -18,6 +18,7 @@
             min-height: 100vh; 
         }
         
+        /* FONDO ESTILIZADO (Usando la imagen de luces doradas) */
         #login-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -33,6 +34,7 @@
             100% { transform: scale(1.1); }
         }
 
+        /* LOGIN CARD CON EFECTO CRISTAL */
         .login-card { 
             width: 100%; 
             max-width: 400px; 
@@ -45,6 +47,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+        /* GENERADOR (TU DISEÑO ORIGINAL) */
         #main-app { display: none; }
         .card-container { 
             width: 100%; 
@@ -73,13 +76,15 @@
                 </svg>
             </div>
             <h2 class="text-3xl font-bold text-slate-800 mb-2">Bienvenido</h2>
-            <p class="text-slate-500 font-medium mb-10">Ingresa tus credenciales</p>
+            <p class="text-slate-500 font-medium mb-10">Ingresa tus credenciales para acceder</p>
             
             <div class="space-y-5">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 transition-all font-medium">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
+                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
+                
                 <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
-                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
+                
+                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-600/20 active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
                     Entrar al Sistema
                 </button>
             </div>
@@ -127,19 +132,30 @@
                 <span id="res-dias" class="text-sm font-bold text-slate-800">0</span>
             </div>
 
-            <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100 text-center">
-                <span class="text-[10px] font-bold text-slate-400 uppercase block">Método y CLABE</span>
-                <div class="text-sm font-bold text-blue-600">BBVA - 703010052250010635</div>
+            <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                        <option value="STP">STP</option>
+                        <option value="BBVA">BBVA</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
+                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                        <option value="703010052250010635">703010052250010635</option>
+                    </select>
+                </div>
             </div>
 
             <div class="space-y-4 pt-2">
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre del cliente</label>
-                    <input type="text" id="cliente-nombre" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" id="cliente-tel" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
                 </div>
             </div>
 
@@ -188,29 +204,8 @@
             d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
         }
 
-        function confirmar() {
-            cfunction confirmar() {
-    // 1. Captura el monto y la fecha que ya tienen ID
-    const monto = document.getElementById('input-monto').value || "0.00";
-    const fecha = document.getElementById('f-venc').value || "";
-    
-    // 2. Captura el nombre y el teléfono por su orden de aparición (inputs de texto)
-    // El primero es el usuario del login, por eso empezamos en el índice 1 y 2
-    const inputs = document.getElementsByTagName('input');
-    const nombre = inputs[2].value || "Cliente"; // Input del nombre
-    const tel = inputs[3].value || "";           // Input del teléfono
-
-    // 3. Captura el producto seleccionado
-    const sel = document.getElementById('product-select');
-    const producto = sel.options[sel.selectedIndex].text;
-
-    // 4. Crea la dirección URL con los datos
-    const url = `detalle.html?monto=${encodeURIComponent(monto)}&nombre=${encodeURIComponent(nombre)}&tel=${encodeURIComponent(tel)}&fecha=${encodeURIComponent(fecha)}&prod=${encodeURIComponent(producto)}`;
-
-    // 5. Redirige a la nueva página (esto evita que el navegador bloquee la ventana)
-    window.location.href = url;
-}
+        function confirmar() { alert("✅ Liga Generada Correctamente"); }
+        document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
 </html>
-
