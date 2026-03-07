@@ -18,15 +18,19 @@
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
+            
             <div class="px-8 mb-4">
-                <select id="prod" onchange="updateUI()" style="background-color: white !important; color: black !important;" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none appearance-none">
-                    <option value="tala|#14b8a6|#0d9488" style="background: white; color: black;">Tala Préstamos</option>
-                    <option value="nu|#820ad1|#581c87" style="background: white; color: black;">Préstamos NU</option>
-                    <option value="mercado|#00aae7|#009ee3" style="background: white; color: black;">Mercado Crédito</option>
-                    <option value="kueski|#4b2c92|#3a1f75" style="background: white; color: black;">Kueski</option>
-                    <option value="dida|#2563eb|#1d4ed8" style="background: white; color: black;">DidaPréstamos</option>
+                <select id="prod" onchange="updateUI()" 
+                    style="background-color: white !important; color: black !important; appearance: none !important; -webkit-appearance: none !important; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;" 
+                    class="w-full border-none rounded-xl px-4 py-3 font-bold text-center outline-none shadow-md">
+                    <option value="tala|#14b8a6|#0d9488" style="background-color: white !important; color: black !important;">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87" style="background-color: white !important; color: black !important;">Préstamos NU</option>
+                    <option value="mercado|#00aae7|#009ee3" style="background-color: white !important; color: black !important;">Mercado Crédito</option>
+                    <option value="kueski|#4b2c92|#3a1f75" style="background-color: white !important; color: black !important;">Kueski</option>
+                    <option value="dida|#2563eb|#1d4ed8" style="background-color: white !important; color: black !important;">DidaPréstamos</option>
                 </select>
-                </div>
+            </div>
+
             <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white">
                 <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                 <div class="flex items-center text-4xl font-black">
@@ -50,12 +54,12 @@
 
             <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                 <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none">
+                <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
                     <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
                     <option value="BBVA">BBVA</option>
                 </select>
                 <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none">
+                <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none bg-white">
                     <option value="703010052250010635">703010052250010635</option>
                 </select>
             </div>
@@ -67,7 +71,9 @@
 
     <script>
         document.getElementById('fecha').valueAsDate = new Date();
-        document.getElementById('monto').addEventListener('input', (e) => { document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); });
+        document.getElementById('monto').addEventListener('input', (e) => { 
+            document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
+        });
 
         function calcDias() {
             const f = new Date(document.getElementById('fecha').value);
@@ -88,7 +94,8 @@
         }
 
         function updateUI() {
-            const [id, c1, c2] = document.getElementById('prod').value.split('|');
+            const val = document.getElementById('prod').value;
+            const [id, c1, c2] = val.split('|');
             document.getElementById('header-bg').style.backgroundColor = c1;
             document.getElementById('monto-bg').style.backgroundColor = c2;
             document.getElementById('btn').style.backgroundColor = c2;
