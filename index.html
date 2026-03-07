@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador de Ligas</title>
+    <title>Generador de Ligas Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -11,45 +11,43 @@
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
-            background-color: #0b1120; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             min-height: 100vh; 
-        }
-        
-        /* FONDO ESTILIZADO (Usando la imagen de luces doradas) */
-        #login-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: url('https://img.freepik.com/foto-gratis/fondo-luces-bokeh-dorado-abstracto_23-2148413465.jpg') no-repeat center center;
-            background-size: cover;
-            filter: brightness(0.5);
-            animation: pulseBg 10s infinite alternate;
+            padding: 20px; 
+            background-color: #0b1120; /* Fondo oscuro por defecto */
         }
 
-        @keyframes pulseBg {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+        /* --- ESTILOS DE LOGIN (CON COLOR TORTILLA) --- */
+        #login-screen { 
+            position: fixed; inset: 0; 
+            display: flex; align-items: center; justify-content: center; 
+            z-index: 1000; 
+            background-color: #9A7B4F; /* COLOR TORTILLA (#9A7B4F) */
         }
 
-        /* LOGIN CARD CON EFECTO CRISTAL */
         .login-card { 
             width: 100%; 
-            max-width: 400px; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(15px);
-            padding: 3rem 2.5rem; 
+            max-width: 380px; 
+            background: white; 
+            padding: 2.5rem; 
             border-radius: 3rem; 
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
         }
 
-        /* GENERADOR (TU DISEÑO ORIGINAL) */
-        #main-app { display: none; }
-        .card-container { 
+        .error-msg { 
+            color: #ef4444; 
+            font-size: 12px; 
+            font-weight: 600; 
+            margin-top: 10px; 
+            display: none; 
+        }
+
+        /* --- GENERADOR (DISEÑO INTACTO Y BLINDADO) --- */
+        #main-app { 
+            display: none; 
             width: 100%; 
             max-width: 440px; 
             background: white; 
@@ -59,43 +57,65 @@
             position: relative; 
             z-index: 10; 
         }
-        .monto-box { border-radius: 1.5rem; padding: 1rem 1.5rem; margin: 1rem 1.5rem 0 1.5rem; position: relative; }
-        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.2rem; line-height: 1; }
-        .error-msg { color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; }
+        
+        .monto-box { 
+            border-radius: 1.5rem; 
+            padding: 1rem 1.5rem; 
+            margin: 1rem 1.5rem 0 1.5rem; 
+            position: relative; 
+        }
+        
+        .input-monto { 
+            background: transparent; 
+            border: none; 
+            outline: none; 
+            width: 100%; 
+            color: white; 
+            font-weight: 700; 
+            font-size: 2.2rem; 
+            line-height: 1; 
+        }
+
+        select { appearance: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="login-bg"></div>
-
-    <div id="login-screen" class="px-4 w-full flex justify-center">
-        <div class="login-card">
-            <div class="w-20 h-20 bg-blue-600 text-white rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div id="login-screen">
+        <div class="login-card shadow-2xl">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
             </div>
-            <h2 class="text-3xl font-bold text-slate-800 mb-2">Bienvenido</h2>
-            <p class="text-slate-500 font-medium mb-10">Ingresa tus credenciales para acceder</p>
             
-            <div class="space-y-5">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-2xl border border-slate-200 bg-white/50 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium">
-                
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Acceso Privado</h2>
+            <p class="text-slate-400 text-sm mb-8 font-medium">Ingresa tus credenciales para acceder</p>
+            
+            <div class="space-y-4">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
+                <div class="relative">
+                    <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-3 rounded-2xl border border-slate-100 bg-slate-50 outline-none focus:border-blue-500 font-medium">
+                    <button onclick="togglePass()" class="absolute right-4 top-3.5 text-slate-300 hover:text-blue-500">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    </button>
+                </div>
+
                 <div id="login-error" class="error-msg text-center">Usuario o contraseña incorrectos</div>
                 
-                <button onclick="acceder()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-600/20 active:scale-95 transition-all mt-4 uppercase tracking-widest text-sm">
-                    Entrar al Sistema
+                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all mt-4 uppercase tracking-wider text-sm">
+                    Entrar
                 </button>
             </div>
         </div>
     </div>
 
     <div id="main-app" class="card-container">
-        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4">
+        <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4 transition-all duration-500">
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
+
             <div class="px-6 mb-2">
                 <select id="product-select" onchange="updateApp()" class="w-full bg-white/20 text-white border-none rounded-xl px-4 py-2 text-sm font-bold text-center outline-none backdrop-blur-md">
                     <option value="tala|#14b8a6|#0d9488" class="text-black">Tala Préstamos</option>
@@ -105,6 +125,7 @@
                     <option value="movil|#8b5cf6|#6d28d9" class="text-black">Movil Cash</option>
                 </select>
             </div>
+            
             <div id="monto-card-bg" class="monto-box bg-[#0d9488] text-white shadow-lg">
                 <span class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Monto de Pago</span>
                 <div class="flex items-center mt-1">
@@ -135,14 +156,14 @@
             <div class="bg-slate-50 rounded-[2rem] p-5 space-y-4 border border-slate-100">
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Método de pago</span>
-                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
+                    <select id="m-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center outline-none">
                         <option value="STP">STP</option>
                         <option value="BBVA">BBVA</option>
                     </select>
                 </div>
                 <div class="text-center">
                     <span class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Liga de pago</span>
-                    <select class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
+                    <select id="l-pago" class="w-full bg-white border border-slate-200 rounded-xl py-2.5 text-sm font-bold text-center text-blue-600 outline-none">
                         <option value="703010052250010635">703010052250010635</option>
                     </select>
                 </div>
@@ -150,27 +171,28 @@
 
             <div class="space-y-4 pt-2">
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre del cliente</label>
-                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase">Nombre</label>
+                    <input type="text" placeholder="Nombre" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
                 <div class="border-b border-slate-200 flex justify-between items-end pb-1">
                     <label class="text-[11px] font-bold text-slate-400 uppercase">Teléfono</label>
-                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3">
+                    <input type="text" placeholder="Teléfono" class="text-right text-sm font-bold outline-none w-2/3 placeholder:text-slate-300">
                 </div>
             </div>
 
-            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">GENERAR LINK</button>
+            <button onclick="confirmar()" id="btn-main" class="w-full bg-[#0d9488] text-white font-bold py-5 rounded-[1.5rem] shadow-xl uppercase text-xs tracking-widest mt-2 transition-all active:scale-95">
+                Confirmar y Generar Link
+            </button>
         </div>
     </div>
 
     <script>
+        // LOGIN CON FONDO TORTILLA
         function acceder() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u === "admin" && p === "123") {
+            if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
                 document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('login-bg').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
+                // Asegurar que el cálculo de días se dispare al entrar
                 dias();
             } else {
                 document.getElementById('login-error').style.display = 'block';
@@ -178,6 +200,17 @@
             }
         }
 
+        // Botón Ojo Contraseña
+        function togglePass() {
+            const passInput = document.getElementById('pass');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+            } else {
+                passInput.type = "password";
+            }
+        }
+
+        // GENERADOR LOGIC (MANTENIDO INTACTO)
         const logos = {'tala': 'https://i.ibb.co/qF6Vvqy/tala-te-presta.png','nu': 'https://i.ibb.co/Lzf7vYn/image-45ecfc.png','dida': 'https://i.ibb.co/BccC9Rz/image-46429b.png','worldmox': 'https://i.ibb.co/VvzM47m/image-45e8a1.png','movil': 'https://i.ibb.co/vY8N9zX/image-45e4a2.png'};
         
         function updateApp() {
@@ -196,15 +229,30 @@
         function dias() {
             let f = document.getElementById('f-venc').value;
             if(!f) return;
-            let hoy = new Date(); hoy.setHours(0,0,0,0);
+            
+            // LÓGICA DE DÍAS CORREGIDA Y BLINDADA
+            let hoy = new Date();
+            hoy.setHours(0,0,0,0);
             let venc = new Date(f + 'T00:00:00');
-            let diffDays = Math.ceil((venc.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
-            const d = document.getElementById('res-dias');
-            d.innerText = diffDays;
-            d.style.color = diffDays < 0 ? "#ef4444" : "#1e293b";
+            
+            // Cálculo exacto
+            let diffTime = venc.getTime() - hoy.getTime();
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const display = document.getElementById('res-dias');
+            display.innerText = diffDays;
+            
+            // Si es negativo (vencido), ponerlo en rojo
+            if (diffDays < 0) {
+                display.style.color = "#ef4444"; // Rojo Tailwind
+            } else {
+                display.style.color = "#1e293b"; // Color normal Tailwind
+            }
         }
 
-        function confirmar() { alert("✅ Liga Generada Correctamente"); }
+        function confirmar() { alert("✅ Liga Generada"); }
+
+        // Inicializar fecha de hoy
         document.getElementById('f-venc').value = new Date().toISOString().split('T')[0];
     </script>
 </body>
