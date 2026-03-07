@@ -3,84 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Panel Administrativo</title>
+    <title>Generador de Ligas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         
         body { 
             font-family: 'Inter', sans-serif; 
-            margin: 0; background-color: #0b1120;
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 100vh;
+            margin: 0; 
+            background-color: #0b1120; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
         }
 
-        /* FONDO DINÁMICO REESTABLECIDO */
-        #video-viewport {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden; background-color: #0b1120;
-        }
-        #bg-video {
-            position: absolute; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-        .overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); 
+        /* FONDO DINÁMICO ORIGINAL */
+        #login-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: url('https://i.ibb.co/L9Yf8yv/image-433668.jpg') no-repeat center center;
+            background-size: cover;
         }
 
-        /* LOGIN ORIGINAL (image_432f05.png) */
-        #login-screen { position: relative; z-index: 10; width: 100%; display: flex; justify-content: center; }
+        /* LOGIN CARD ORIGINAL */
         .login-card { 
-            width: 90%; max-width: 400px; background: white; 
-            padding: 2.5rem; border-radius: 2.5rem; text-align: center; 
+            width: 100%; 
+            max-width: 400px; 
+            background: white; 
+            padding: 3rem 2.5rem; 
+            border-radius: 2.5rem; 
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* GENERADOR ORIGINAL (image_439725.png) */
-        #main-app { 
-            display: none; width: 100%; max-width: 440px; 
-            background: white; border-radius: 2.5rem; overflow: hidden; 
+        /* APP GENERADOR */
+        #main-app { display: none; }
+        .card-container { 
+            width: 100%; 
+            max-width: 440px; 
+            background: white; 
+            border-radius: 2.5rem; 
+            overflow: hidden; 
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
-            position: relative; z-index: 10;
         }
-        
         .monto-box { border-radius: 1.5rem; padding: 1.5rem; margin: 1rem 1.5rem 0 1.5rem; }
-        .input-monto { 
-            background: transparent; border: none; outline: none; 
-            width: 100%; color: white; font-weight: 700; 
-            font-size: 2.5rem; line-height: 1; 
-        }
+        .input-monto { background: transparent; border: none; outline: none; width: 100%; color: white; font-weight: 700; font-size: 2.5rem; line-height: 1; }
     </style>
 </head>
 <body>
 
-    <div id="video-viewport">
-        <video id="bg-video" autoplay loop muted playsinline preload="auto">
-            <source src="https://cdn.pixabay.com/video/2022/04/10/113368-697525287_tiny.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-    </div>
+    <div id="login-bg"></div>
 
-    <div id="login-screen">
+    <div id="login-screen" class="px-4 w-full flex justify-center">
         <div class="login-card">
-            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+            <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
             </div>
-            <h2 class="text-xl font-bold text-slate-800 mb-1">Bienvenido</h2>
-            <p class="text-slate-400 text-xs mb-8">Acceso Privado Panel Administrativo Pro</p>
+            <h2 class="text-2xl font-bold text-slate-800 mb-1">Bienvenido</h2>
+            <p class="text-slate-400 text-xs mb-10 font-medium">Acceso Privado Panel Administrativo Pro</p>
+            
             <div class="space-y-4">
-                <input type="text" id="user" placeholder="Usuario" class="w-full px-5 py-4 rounded-xl border border-slate-100 bg-slate-50 outline-none">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-5 py-4 rounded-xl border border-slate-100 bg-slate-50 outline-none">
+                <input type="text" id="user" placeholder="Usuario" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 outline-none font-medium">
+                <input type="password" id="pass" placeholder="Contraseña" class="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 outline-none font-medium">
+                
                 <div id="login-error" class="hidden text-red-500 text-xs font-bold">Usuario o contraseña incorrectos</div>
-                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg uppercase text-xs tracking-widest mt-2">Entrar</button>
+                
+                <button onclick="acceder()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all mt-4 uppercase tracking-widest text-xs">
+                    ENTRAR
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="main-app">
+    <div id="main-app" class="card-container">
         <div id="header-bg" class="bg-[#14b8a6] pt-8 pb-4">
             <div class="w-16 h-16 bg-white rounded-2xl mx-auto mb-6 flex items-center justify-center overflow-hidden border-2 border-white/20">
                 <img id="app-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
@@ -142,6 +141,7 @@
         function acceder() {
             if(document.getElementById('user').value === "admin" && document.getElementById('pass').value === "123") {
                 document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('login-bg').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
             } else {
                 document.getElementById('login-error').classList.remove('hidden');
