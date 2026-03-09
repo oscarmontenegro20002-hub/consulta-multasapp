@@ -12,13 +12,8 @@
         #bg-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
         .card { width: 90%; max-width: 420px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; margin: 20px 0; }
         video::-webkit-media-controls { display:none !important; }
-
-        /* Contenedor del Logo Dinámico */
-        .logo-box {
-            width: 70px; height: 70px; background: white; border-radius: 20px;
-            margin: 0 auto 15px auto; display: flex; align-items: center;
-            justify-content: center; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
+        
+        .logo-box { width: 70px; height: 70px; background: white; border-radius: 20px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
@@ -31,12 +26,12 @@
     </div>
 
     <div class="card">
-        <div id="header-color" style="background-color: #14b8a6; color: white; padding: 30px 20px; text-align: center; transition: background 0.5s;">
+        <div id="header-color" style="background-color: #14b8a6; color: white; padding: 35px 20px; text-align: center;">
             <div class="logo-box">
                 <img id="img-final" src="">
             </div>
             <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
-            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">CARGANDO...</h1>
+            <h1 id="txt-prod" style="font-size: 28px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
         </div>
 
         <div style="padding: 25px;">
@@ -48,15 +43,15 @@
             <div style="margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Nombre del Cliente</span>
-                    <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">-</span>
+                    <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">Cargando...</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Número de Teléfono</span>
-                    <span id="txt-tel" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
+                    <span id="txt-tel" style="font-size: 13px; font-weight: 900; color: #1e293b;">0000000000</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Fecha de Vencimiento</span>
-                    <span id="txt-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
+                    <span id="txt-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">2026-03-07</span>
                 </div>
             </div>
 
@@ -65,16 +60,22 @@
                     <span style="font-size: 9px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
                     <span id="timer" style="font-size: 22px; font-weight: 900; color: #ef4444;">29:51</span>
                 </div>
+                <p style="color: #ef4444; font-size: 9px; line-height: 1.3; font-weight: 600; margin: 8px 0 0 0;">
+                    * Al llegar a 0, se cobrarán <span style="font-weight: 900;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
+                </p>
             </div>
 
             <div onclick="copiarTexto('txt-clabe')" style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 30px; padding: 20px; text-align: center; cursor: pointer;">
                 <p id="txt-banco-label" style="font-size: 9px; font-weight: 800; color: #3b82f6; margin: 0; text-transform: uppercase;">TRANSFERENCIA (SPEI)</p>
                 <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin: 5px 0;">
-                    <span id="txt-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb;">-</span>
+                    <span id="txt-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb;">000000000000000000</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </div>
+                <p style="font-size: 10px; color: #93c5fd; font-style: italic; font-weight: 600; margin: 0;">Referencia: Pago de Multa</p>
             </div>
 
-            <button onclick="copiarEnlace()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; text-transform: uppercase;">
+            <button onclick="copiarEnlace()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 Copiar Link de Pago
             </button>
         </div>
@@ -83,30 +84,27 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         
-        // RECIBIR LOGO Y COLOR DESDE EL GENERADOR
-        const logoRecibido = urlParams.get('lg') || "https://i.ibb.co/qF6Vvqy/tala-te-presta.png";
-        const colorRecibido = "#820ad1"; // Color morado NU por defecto si se elige NU
+        // RECIBIR LOGO Y COLOR
+        const logoApp = urlParams.get('lg') || "https://i.ibb.co/qF6Vvqy/tala-te-presta.png";
+        document.getElementById('img-final').src = logoApp;
 
-        // APLICAR LOGO
-        document.getElementById('img-final').src = logoRecibido;
+        const prodNombre = urlParams.get('pr') || "TALA PRÉSTAMOS";
+        document.getElementById('txt-prod').innerText = prodNombre;
 
-        // APLICAR COLOR SI ES NU (O CUALQUIERA QUE ENVÍES)
-        // Nota: El generador envía el nombre. Si el nombre es NU, pintamos de morado.
-        const nombreApp = urlParams.get('pr') || "TALA PRÉSTAMOS";
-        if (nombreApp.includes("NU")) {
+        // Si es NU, aplicar morado
+        if(prodNombre.includes("NU")) {
             document.getElementById('header-color').style.backgroundColor = "#820ad1";
             document.getElementById('txt-monto').style.color = "#820ad1";
         }
 
-        document.getElementById('txt-prod').innerText = nombreApp;
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
         document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000";
-        document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-09";
+        document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "000000000000000000";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
-        // Lógica del Timer
+        // TIMER (SIN CAMBIOS)
         const start = parseInt(urlParams.get('s')) || Date.now();
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
