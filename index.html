@@ -7,31 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            background: linear-gradient(-45deg, #0b1120, #1e293b, #0d9488, #0b1120);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(-45deg, #0b1120, #1e293b, #0d9488, #0b1120); background-size: 400% 400%; animation: gradientMove 10s ease infinite; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
-        .input-monto::-webkit-inner-spin-button { display: none; }
-        
-        #prod { background-color: white !important; color: black !important; appearance: auto !important; -webkit-appearance: listbox !important; }
-        #prod option { background-color: white !important; color: black !important; }
-
         #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 2rem; }
         #main-content { display: none; width: 100%; }
     </style>
@@ -73,38 +51,28 @@
                     <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                     <div class="flex items-center text-4xl font-black">
                         <span>$</span>
-                        <input type="number" id="monto" value="0.00" step="0.01" class="input-monto bg-transparent border-none outline-none w-full text-white ml-1">
+                        <input type="number" id="monto" value="0.00" step="0.01" class="bg-transparent border-none outline-none w-full text-white ml-1">
                     </div>
                 </div>
             </div>
 
             <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
                 <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
-                <div class="flex justify-between border-b pb-2">
-                    <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
-                    <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold bg-white">
-                </div>
-                <div class="flex justify-between border-b pb-2">
-                    <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                    <span id="l-dias" class="font-black text-lg">0</span>
-                </div>
-
+                
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
                     <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
                         <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
                         <option value="BBVA">BBVA</option>
                     </select>
-                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago (CLABE)</span>
-                    <div class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white">722969010005687921</div>
                 </div>
 
                 <div class="space-y-2">
                     <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
-                    <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none">
+                    <input type="tel" id="tel" placeholder="Número del cliente" class="w-full border-b py-2 text-center outline-none">
                 </div>
 
-                <button onclick="generar()" id="btn" class="w-full bg-[#65a30d] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR LINK CORTO</button>
+                <button onclick="generar()" id="btn" class="w-full bg-[#65a30d] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR ORDEN</button>
             </div>
         </div>
     </div>
@@ -117,9 +85,7 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 updateUI();
-            } else { 
-                document.getElementById('error-msg').classList.remove('hidden'); 
-            }
+            } else { document.getElementById('error-msg').classList.remove('hidden'); }
         }
 
         function updateUI() {
@@ -130,31 +96,24 @@
             document.getElementById('img-previa').src = val[3];
         }
 
-        document.getElementById('fecha').valueAsDate = new Date();
-        document.getElementById('monto').addEventListener('input', (e) => { 
-            document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
-        });
-
-        function calcDias() {
-            const f = new Date(document.getElementById('fecha').value);
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
-            const diffTime = hoy - f;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias');
-            if (diffDays > 0) { el.innerText = diffDays; el.style.color = "#ef4444"; } 
-            else { el.innerText = "0"; el.style.color = "#1e293b"; }
-        }
-
         function generar() {
             const sel = document.getElementById('prod');
             const idProducto = sel.value.split('|')[0];
+            const banco = document.getElementById('metodo').value;
+            
+            // Lógica de CLABE según banco
+            let clabeFinal = "722969010005687921"; // Mercado Pago (Default)
+            if(banco === "BBVA") {
+                clabeFinal = "012180015094579916";
+            }
+
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
-                t: document.getElementById('tel').value || "0000000000",
-                f: document.getElementById('fecha').value,
+                t: document.getElementById('tel').value || "000",
                 v: idProducto,
+                b: banco,
+                c: clabeFinal, // Enviamos la clabe elegida
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
