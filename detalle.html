@@ -95,7 +95,7 @@
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "-";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
-        // LÓGICA DE COLORES
+        // LÓGICA DE COLORES POR PRODUCTO
         if(nombreProd.includes("NU")) {
             document.getElementById('header-color').style.backgroundColor = "#820ad1";
             document.getElementById('txt-monto').style.color = "#820ad1";
@@ -112,10 +112,14 @@
             document.getElementById('header-color').style.backgroundColor = "#1e293b";
             document.getElementById('txt-monto').style.color = "#1e293b";
         }
-        // COLOR PARA TALA CRÉDITO
         if(nombreProd.includes("Tala Crédito")) {
             document.getElementById('header-color').style.backgroundColor = "#06b6d4";
             document.getElementById('txt-monto').style.color = "#06b6d4";
+        }
+        // COLOR ESPECÍFICO PARA MOVIL CASH
+        if(nombreProd.includes("Movil Cash")) {
+            document.getElementById('header-color').style.backgroundColor = "#22c55e";
+            document.getElementById('txt-monto').style.color = "#22c55e";
         }
 
         const start = parseInt(urlParams.get('s')) || Date.now();
