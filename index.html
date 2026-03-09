@@ -148,13 +148,13 @@
 
         function generar() {
             const sel = document.getElementById('prod');
-            const idProducto = sel.value.split('|')[0]; // Solo mandamos el ID (ej: "movil")
+            const idProducto = sel.value.split('|')[0];
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 t: document.getElementById('tel').value || "0000000000",
                 f: document.getElementById('fecha').value,
-                v: idProducto, // Esto acorta el link drásticamente
+                v: idProducto,
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
