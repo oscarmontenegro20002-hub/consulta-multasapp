@@ -105,10 +105,15 @@
             document.getElementById('txt-monto').style.color = "#10b981";
         }
 
-        // NUEVO APARTADO PARA DIDA PRESTAMOS
         if(nombreProd.includes("Dida")) {
             document.getElementById('header-color').style.backgroundColor = "#0057ff";
             document.getElementById('txt-monto').style.color = "#0057ff";
+        }
+
+        // APARTADO PARA WORLDMOXPRO CASH
+        if(nombreProd.includes("Worldmoxpro")) {
+            document.getElementById('header-color').style.backgroundColor = "#1e293b";
+            document.getElementById('txt-monto').style.color = "#1e293b";
         }
 
         const start = parseInt(urlParams.get('s')) || Date.now();
