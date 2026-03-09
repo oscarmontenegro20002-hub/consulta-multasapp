@@ -83,10 +83,7 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        
-        // URL de imagen recuperada
         document.getElementById('img-final').src = urlParams.get('lg') || "";
-
         const nombreProd = urlParams.get('pr') || "PRODUCTO";
         document.getElementById('txt-prod').innerText = nombreProd;
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
@@ -96,7 +93,7 @@
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "-";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
-        // LÓGICA DE COLORES (Incluyendo Préstamos Rápidos)
+        // LOGICA DE COLORES
         if(nombreProd.includes("NU")) {
             document.getElementById('header-color').style.backgroundColor = "#820ad1";
             document.getElementById('txt-monto').style.color = "#820ad1";
