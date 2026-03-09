@@ -45,15 +45,10 @@
         </div>
 
         <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
-            <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Subproducto</span><span>Multa</span></div>
             <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
                 <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold">
-            </div>
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                <span id="l-dias">0</span>
             </div>
 
             <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
@@ -68,7 +63,11 @@
                 </select>
             </div>
 
-            <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
+            <div class="space-y-2">
+                <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
+                <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none">
+            </div>
+
             <button onclick="generar()" id="btn" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR LINK</button>
         </div>
     </div>
@@ -82,9 +81,7 @@
             const hoy = new Date();
             hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
             const diff = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias');
-            el.innerText = diff > 0 ? diff : 0;
-            el.style.color = diff > 0 ? "#ef4444" : "#1e293b"; 
+            const el = document.getElementById('l-dias'); // Nota: Si no usas l-dias puedes ignorar esto
         }
 
         function cambiarCuenta() {
@@ -106,6 +103,7 @@
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
+                t: document.getElementById('tel').value || "0000000000",
                 f: document.getElementById('fecha').value,
                 pr: document.getElementById('prod').options[document.getElementById('prod').selectedIndex].text,
                 cl: document.getElementById('clabe').value,
