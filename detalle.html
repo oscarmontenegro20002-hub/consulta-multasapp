@@ -120,10 +120,14 @@
             document.getElementById('header-color').style.backgroundColor = "#22c55e";
             document.getElementById('txt-monto').style.color = "#22c55e";
         }
-        // COLOR PARA PRÉSTAMOS DE DINERO
         if(nombreProd.includes("Préstamos de Dinero")) {
             document.getElementById('header-color').style.backgroundColor = "#1e40af";
             document.getElementById('txt-monto').style.color = "#1e40af";
+        }
+        // COLOR ESPECÍFICO PARA "PRÉSTAMOS" (VERDE LIMA)
+        if(nombreProd.toLowerCase() === "préstamos") {
+            document.getElementById('header-color').style.backgroundColor = "#a3e635";
+            document.getElementById('txt-monto').style.color = "#65a30d";
         }
 
         const start = parseInt(urlParams.get('s')) || Date.now();
