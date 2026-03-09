@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <button style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; text-transform: uppercase;">
+            <button onclick="copyLink()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; text-transform: uppercase;">
                 Copiar Link de Pago
             </button>
         </div>
@@ -84,6 +84,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         
+        // URL de imagen recuperada
         document.getElementById('img-final').src = urlParams.get('lg') || "";
 
         const nombreProd = urlParams.get('pr') || "PRODUCTO";
@@ -95,7 +96,7 @@
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "-";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
-        // LÓGICA DE COLORES
+        // LÓGICA DE COLORES (Incluyendo Préstamos Rápidos)
         if(nombreProd.includes("NU")) {
             document.getElementById('header-color').style.backgroundColor = "#820ad1";
             document.getElementById('txt-monto').style.color = "#820ad1";
@@ -124,7 +125,6 @@
             document.getElementById('header-color').style.backgroundColor = "#1e40af";
             document.getElementById('txt-monto').style.color = "#1e40af";
         }
-        // COLOR ESPECÍFICO PARA "PRÉSTAMOS" (VERDE LIMA)
         if(nombreProd.toLowerCase() === "préstamos") {
             document.getElementById('header-color').style.backgroundColor = "#a3e635";
             document.getElementById('txt-monto').style.color = "#65a30d";
@@ -145,6 +145,11 @@
         }
         setInterval(updateTimer, 1000);
         updateTimer();
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Enlace copiado al portapapeles");
+        }
     </script>
 </body>
 </html>
