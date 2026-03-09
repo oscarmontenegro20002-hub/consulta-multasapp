@@ -90,10 +90,12 @@
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
         document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000";
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "-";
-        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "-";
+        
+        // LA CLABE SE RECIBE DINÁMICAMENTE PERO EN INDEX ES SIEMPRE LA MISMA
+        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "722969010005687921";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
-        // LOGICA DE COLORES
+        // LÓGICA DE COLORES
         if(nombreProd.includes("NU")) {
             document.getElementById('header-color').style.backgroundColor = "#820ad1";
             document.getElementById('txt-monto').style.color = "#820ad1";
