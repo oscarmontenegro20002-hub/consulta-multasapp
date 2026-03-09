@@ -8,7 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
-        /* ESTO ES LO ÚNICO NUEVO: EL FONDO EN MOVIMIENTO */
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
@@ -16,6 +15,7 @@
             align-items: center; 
             justify-content: center; 
             min-height: 100vh; 
+            /* Fondo con movimiento suave */
             background: linear-gradient(-45deg, #0b1120, #1e293b, #0d9488, #0b1120);
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
@@ -27,7 +27,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* TODO LO DEMÁS ES TU DISEÑO ORIGINAL */
         .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
         .input-monto::-webkit-inner-spin-button { display: none; }
         
@@ -64,9 +63,11 @@
                         <option value="prestamos|#a3e635|#65a30d|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos</option>
                         <option value="dinero|#1e40af|#1d4ed8|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos de Dinero</option>
                         <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
-                        <option value="tala|#14b8a6|#0d9488|https://tala.co/pa/wp-content/uploads/sites/16/2025/10/tala-logo-white.svg">Tala Crédito</option>
+                        <option value="talacred|#06b6d4|#0891b2|https://tala.co/pa/wp-content/uploads/sites/16/2025/10/tala-logo-white.svg">Tala Crédito</option>
                         <option value="dida|#0057ff|#003eb3|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp">DidaPréstamos</option>
                         <option value="rapidos|#10b981|#059669|https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Google_Play_Icons_2022.svg/1200px-Google_Play_Icons_2022.svg.png">Préstamos rápidos</option>
+                        <option value="worldmox|#1e293b|#0f172a|https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s">Worldmoxpro cash</option>
+                        <option value="movil|#22c55e|#16a34a|https://play-lh.googleusercontent.com/s7I0yvyhwfecAh8wm8HvaPekT9197kfPQQKPvQ1QTkt2M-mmPaeqrdVUqoOiG6mv9r4=w480-h960-rw">Movil Cash</option>
                     </select>
                 </div>
                 <div id="monto-bg" class="bg-[#65a30d] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
