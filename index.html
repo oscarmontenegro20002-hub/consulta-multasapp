@@ -3,105 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador Oficial</title>
+    <title>Generador</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 15px; }
-        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        body { font-family: 'Inter', sans-serif; background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .input-monto::-webkit-inner-spin-button { display: none; }
         
-        /* Contenedor de lista de apps forzado */
-        .lista-apps {
-            max-height: 220px;
-            overflow-y: auto;
-            background: #f8fafc;
-            margin: 10px 20px;
-            padding: 10px;
-            border-radius: 15px;
-            border: 2px solid #e2e8f0;
-        }
-
-        /* Botones de apps - IMPOSIBLES DE OCULTAR */
-        .btn-app {
-            width: 100%;
-            margin-bottom: 8px;
-            padding: 14px;
-            border-radius: 12px;
-            background-color: #1e293b !important; /* Azul oscuro */
-            color: #ffffff !important; /* Texto blanco */
-            font-weight: 800;
-            font-size: 13px;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            display: block;
-            text-align: center;
-        }
-
-        .btn-app:active { background-color: #334155 !important; transform: scale(0.98); }
-        .active-app { border: 3px solid #14b8a6 !important; background-color: #0f172a !important; }
+        /* PARCHE DE VISIBILIDAD PARA EL SELECTOR */
+        #prod { background-color: white !important; color: black !important; appearance: auto !important; -webkit-appearance: listbox !important; }
+        #prod option { background-color: white !important; color: black !important; }
     </style>
 </head>
 <body>
     <div class="app-card">
-        <div id="header-bg" class="bg-[#1e293b] pt-8 pb-4 text-center text-white">
-            <h1 id="titulo-app" class="text-lg font-black uppercase tracking-tighter">Selecciona la App</h1>
-            <p class="text-[10px] opacity-70">DESLIZA Y TOCA UN NOMBRE</p>
+        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
+                <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
+            </div>
+            <div class="px-8 mb-4">
+                <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none">
+                    <option value="tala|#14b8a6|#0d9488">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87">Préstamos NU</option>
+                    <option value="dida|#2563eb|#1d4ed8">DidaPréstamos</option>
+                    <option value="rapidos|#10b981|#059669">Préstamos rápidos</option>
+                    <option value="worldmox|#6366f1|#4f46e5">WorldmoxPro GG</option>
+                    <option value="talacred|#06b6d4|#0891b2">Tala Crédito</option>
+                    <option value="movil|#f59e0b|#d97706">Movil Cash</option>
+                    <option value="dinero|#ec4899|#db2777">Préstamos de Dinero</option>
+                    <option value="prestamos|#64748b|#475569">Préstamos</option>
+                </select>
+            </div>
+            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white">
+                <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
+                <div class="flex items-center text-4xl font-black">
+                    <span>$</span>
+                    <input type="number" id="monto" value="0.00" step="0.01" class="input-monto bg-transparent border-none outline-none w-full text-white ml-1">
+                </div>
+            </div>
         </div>
 
-        <div class="lista-apps">
-            <button onclick="seleccionar('TALA PRÉSTAMOS', '#14b8a6', this)" class="btn-app">Tala Préstamos</button>
-            <button onclick="seleccionar('PRÉSTAMOS NU', '#820ad1', this)" class="btn-app">Préstamos NU</button>
-            <button onclick="seleccionar('DIDAPRÉSTAMOS', '#2563eb', this)" class="btn-app">DidaPréstamos</button>
-            <button onclick="seleccionar('PRÉSTAMOS RÁPIDOS', '#10b981', this)" class="btn-app">Préstamos Rápidos</button>
-            <button onclick="seleccionar('WORLDMOXPRO GG', '#6366f1', this)" class="btn-app">WorldmoxPro GG</button>
-            <button onclick="seleccionar('TALA CRÉDITO', '#0891b2', this)" class="btn-app">Tala Crédito</button>
-            <button onclick="seleccionar('MOVIL CASH', '#f59e0b', this)" class="btn-app">Movil Cash</button>
-            <button onclick="seleccionar('PRÉSTAMOS DE DINERO', '#db2777', this)" class="btn-app">Préstamos de Dinero</button>
-            <button onclick="seleccionar('PRÉSTAMOS', '#475569', this)" class="btn-app">Préstamos</button>
-        </div>
-
-        <div class="p-6 space-y-4">
-            <div class="bg-slate-50 p-4 rounded-2xl border">
-                <p class="text-[10px] font-bold text-slate-400 uppercase text-center">Monto</p>
-                <input type="number" id="monto" value="0.00" class="w-full bg-transparent text-3xl font-black text-center outline-none">
+        <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
+            <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Subproducto</span><span>Multa</span></div>
+            <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
+                <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold">
+            </div>
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
+                <span id="l-dias">0</span>
             </div>
 
-            <input type="text" id="nombre" placeholder="NOMBRE DEL CLIENTE" class="w-full border-b-2 py-2 text-center font-bold uppercase outline-none">
-            
-            <button onclick="generarLink()" id="btn-gen" class="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-black uppercase tracking-widest">
-                Generar Orden de Pago
-            </button>
+            <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
+                <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
+                <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
+                    <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
+                    <option value="BBVA">BBVA</option>
+                </select>
+                <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
+                <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none bg-white">
+                    <option value="703010052250010635">703010052250010635</option>
+                </select>
+            </div>
+
+            <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
+            <button onclick="generar()" id="btn" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR LINK</button>
         </div>
     </div>
 
     <script>
-        let appGlobal = "TALA PRÉSTAMOS";
-        let colorGlobal = "#1e293b";
+        document.getElementById('fecha').valueAsDate = new Date();
+        document.getElementById('monto').addEventListener('input', (e) => { document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); });
 
-        function seleccionar(nombre, color, btn) {
-            appGlobal = nombre;
-            colorGlobal = color;
-            document.getElementById('header-bg').style.backgroundColor = color;
-            document.getElementById('titulo-app').innerText = nombre;
-            document.getElementById('btn-gen').style.backgroundColor = color;
-            
-            // Quitar clase activa de otros
-            document.querySelectorAll('.btn-app').forEach(b => b.classList.remove('active-app'));
-            btn.classList.add('active-app');
+        function calcDias() {
+            const f = new Date(document.getElementById('fecha').value);
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
+            const diff = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
+            const el = document.getElementById('l-dias');
+            el.innerText = diff > 0 ? diff : 0;
+            el.style.color = diff > 0 ? "#ef4444" : "#1e293b"; 
         }
 
-        function generarLink() {
-            const data = new URLSearchParams({
+        function cambiarCuenta() {
+            const m = document.getElementById('metodo').value;
+            const c = document.getElementById('clabe');
+            c.innerHTML = "";
+            let n = (m === "BBVA") ? "012180015094579916" : "703010052250010635";
+            c.add(new Option(n, n));
+        }
+
+        function updateUI() {
+            const [id, c1, c2] = document.getElementById('prod').value.split('|');
+            document.getElementById('header-bg').style.backgroundColor = c1;
+            document.getElementById('monto-bg').style.backgroundColor = c2;
+            document.getElementById('btn').style.backgroundColor = c2;
+        }
+
+        function generar() {
+            const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
-                n: document.getElementById('nombre').value || "CLIENTE",
-                pr: appGlobal,
-                f: new Date().toISOString().split('T')[0],
-                cl: "703010052250010635",
-                b: "MERCADO PAGO",
+                n: document.getElementById('nom').value || "Cliente",
+                f: document.getElementById('fecha').value,
+                pr: document.getElementById('prod').options[document.getElementById('prod').selectedIndex].text,
+                cl: document.getElementById('clabe').value,
+                b: document.getElementById('metodo').value,
                 s: Date.now()
             });
-            window.location.href = `detalle.html?${data.toString()}`;
+            window.location.href = `detalle.html?${p.toString()}`;
         }
     </script>
 </body>
