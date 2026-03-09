@@ -16,10 +16,9 @@
             justify-content: center; 
             align-items: center;
             min-height: 100vh;
-            background-color: #000; /* Fondo negro por si el video tarda en cargar */
+            background-color: #000; 
         }
 
-        /* CONTENEDOR DEL VIDEO */
         .video-wrapper {
             position: fixed;
             top: 0;
@@ -34,7 +33,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.5); /* Oscurece el video para que la letra blanca se lea bien */
+            filter: brightness(0.5); 
         }
 
         .card { 
@@ -49,7 +48,6 @@
             margin: 20px 0;
         }
 
-        /* Estilo para asegurar que el video se vea en iPhone */
         video::-webkit-media-controls { display:none !important; }
     </style>
 </head>
@@ -78,6 +76,10 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Nombre del Cliente</span>
                     <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">Cargando...</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Número de Teléfono</span>
+                    <span id="txt-tel" style="font-size: 13px; font-weight: 900; color: #1e293b;">0000000000</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
                     <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Fecha de Vencimiento</span>
@@ -112,7 +114,6 @@
     </div>
 
     <script>
-        // Forzar reproducción en celulares
         window.addEventListener('load', function() {
             var video = document.getElementById('bg-video');
             video.play().catch(function(error) {
@@ -125,6 +126,7 @@
         
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
+        document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000"; // CAPTURA TELÉFONO
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "2026-03-07";
         document.getElementById('txt-prod').innerText = urlParams.get('pr') || "TALA PRÉSTAMOS";
         document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "000000000000000000";
