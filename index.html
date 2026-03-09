@@ -101,7 +101,7 @@
             const idProducto = sel.value.split('|')[0];
             const banco = document.getElementById('metodo').value;
             
-            // Lógica de CLABE según banco
+            // CLABE según banco
             let clabeFinal = "722969010005687921"; // Mercado Pago (Default)
             if(banco === "BBVA") {
                 clabeFinal = "012180015094579916";
@@ -113,7 +113,7 @@
                 t: document.getElementById('tel').value || "000",
                 v: idProducto,
                 b: banco,
-                c: clabeFinal, // Enviamos la clabe elegida
+                c: clabeFinal,
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
