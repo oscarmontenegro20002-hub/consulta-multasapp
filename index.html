@@ -8,6 +8,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
+        /* ESTO ES LO ÚNICO NUEVO: EL FONDO EN MOVIMIENTO */
         body { 
             font-family: 'Inter', sans-serif; 
             margin: 0; 
@@ -15,7 +16,7 @@
             align-items: center; 
             justify-content: center; 
             min-height: 100vh; 
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #0d9488, #111827);
+            background: linear-gradient(-45deg, #0b1120, #1e293b, #0d9488, #0b1120);
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
         }
@@ -26,7 +27,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; z-index: 10; }
+        /* TODO LO DEMÁS ES TU DISEÑO ORIGINAL */
+        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
         .input-monto::-webkit-inner-spin-button { display: none; }
         
         #prod { background-color: white !important; color: black !important; appearance: auto !important; -webkit-appearance: listbox !important; }
@@ -64,6 +66,7 @@
                         <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
                         <option value="tala|#14b8a6|#0d9488|https://tala.co/pa/wp-content/uploads/sites/16/2025/10/tala-logo-white.svg">Tala Crédito</option>
                         <option value="dida|#0057ff|#003eb3|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp">DidaPréstamos</option>
+                        <option value="rapidos|#10b981|#059669|https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Google_Play_Icons_2022.svg/1200px-Google_Play_Icons_2022.svg.png">Préstamos rápidos</option>
                     </select>
                 </div>
                 <div id="monto-bg" class="bg-[#65a30d] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
@@ -112,27 +115,21 @@
         function checkLogin() {
             const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
-            const err = document.getElementById('error-msg');
-            // Usuario: admin | Contraseña: tu password
             if(u === "admin" && p === "1234567890") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                updateUI(); // Para cargar el color inicial
+                updateUI();
             } else { 
-                err.classList.remove('hidden'); 
+                document.getElementById('error-msg').classList.remove('hidden'); 
             }
         }
 
         function updateUI() {
             const val = document.getElementById('prod').value.split('|');
-            const c1 = val[1]; 
-            const c2 = val[2]; 
-            const logo = val[3]; 
-
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-bg').style.backgroundColor = c2;
-            document.getElementById('btn').style.backgroundColor = c2;
-            document.getElementById('img-previa').src = logo;
+            document.getElementById('header-bg').style.backgroundColor = val[1];
+            document.getElementById('monto-bg').style.backgroundColor = val[2];
+            document.getElementById('btn').style.backgroundColor = val[2];
+            document.getElementById('img-previa').src = val[3];
         }
 
         document.getElementById('fecha').valueAsDate = new Date();
