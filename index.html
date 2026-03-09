@@ -3,161 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador Profesional</title>
+    <title>Acceso Agente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0b1120 url('https://consulta-multasapp.vercel.app/_next/static/media/bg-desktop.8463878b.jpg') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .input-monto::-webkit-inner-spin-button { display: none; }
         
-        #prod { background-color: white !important; color: black !important; appearance: auto !important; -webkit-appearance: listbox !important; }
-        #prod option { background-color: white !important; color: black !important; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            background: #000;
+        }
 
-        #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 2rem; }
-        #main-content { display: none; width: 100%; }
+        /* Contenedor del video de fondo */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4) blur(8px); /* Oscurece y desenfoca para que resalte el login */
+            transform: scale(1.1); /* Evita bordes blancos por el blur */
+        }
+
+        /* Efecto Glassmorphism para la tarjeta */
+        .app-card { 
+            width: 90%; 
+            max-width: 400px; 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);
+            border-radius: 2.5rem; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); 
+            z-index: 10;
+        }
+
+        .input-monto::-webkit-inner-spin-button { display: none; }
+        #main-content { display: none; width: 100%; height: 100vh; overflow-y: auto; background: white; position: absolute; top: 0; left: 0; z-index: 20; }
     </style>
 </head>
 <body>
 
-    <div class="app-card">
-        <div id="login-screen" class="space-y-6 py-12">
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2021/09/10/88133-603417743_large.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="app-card" id="login-container">
+        <div id="login-screen" class="space-y-6 py-12 px-8">
             <div class="text-center">
-                <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Acceso de Agente</h2>
-                <p class="text-xs text-slate-400 font-bold uppercase">Introduce tus credenciales</p>
+                <div class="w-16 h-16 bg-slate-900 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Panel Agente</h2>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Sistema de Generación</p>
             </div>
-            <div class="w-full space-y-4">
-                <input type="text" id="user" placeholder="Usuario" class="w-full border-b-2 py-3 px-4 outline-none font-bold text-center text-slate-700">
-                <input type="password" id="pass" placeholder="Contraseña" class="w-full border-b-2 py-3 px-4 outline-none font-bold text-center text-slate-700">
-                <button onclick="checkLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-black transition-all">Ingresar</button>
+            
+            <div class="space-y-4">
+                <div class="relative">
+                    <input type="text" id="user" placeholder="USUARIO" class="w-full border-b-2 border-slate-200 py-3 px-2 outline-none font-bold text-center text-slate-700 bg-transparent focus:border-slate-900 transition-colors uppercase">
+                </div>
+                <div class="relative">
+                    <input type="password" id="pass" placeholder="CONTRASEÑA" class="w-full border-b-2 border-slate-200 py-3 px-2 outline-none font-bold text-center text-slate-700 bg-transparent focus:border-slate-900 transition-colors">
+                </div>
+                <button onclick="checkLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-black transition-all shadow-lg active:scale-95">
+                    Entrar al Sistema
+                </button>
             </div>
-            <p id="error-msg" class="text-red-500 text-[10px] font-black uppercase hidden">Credenciales Incorrectas</p>
+            <p id="error-msg" class="text-red-500 text-[10px] font-black uppercase text-center hidden">Acceso Denegado</p>
         </div>
+    </div>
 
-        <div id="main-content">
-            <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center transition-colors duration-500">
-                <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
-                    <img id="img-previa" src="https://play-lh.googleusercontent.com/6aa4WobN_VoA7kl-RXhinH7ehv2N9m6tQP9I5kWXxjiVIdpaZqmxDLrR4yCc7gI1-rYmj_Jru2fXwUX0z2vz=w480-h960-rw" class="w-full h-full object-cover">
-                </div>
-                <div class="px-8 mb-4">
-                    <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none">
-                        <option value="tala|#14b8a6|#0d9488|https://play-lh.googleusercontent.com/6aa4WobN_VoA7kl-RXhinH7ehv2N9m6tQP9I5kWXxjiVIdpaZqmxDLrR4yCc7gI1-rYmj_Jru2fXwUX0z2vz=w480-h960-rw">Tala Préstamos</option>
-                        <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
-                        <option value="dida|#0057ff|#003eb3|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp">DidaPréstamos</option>
-                        <option value="rapidos|#10b981|#059669|https://play-lh.googleusercontent.com/70FoG9FpL4u0tyNe8ajAcXSuIBJBDIT3TibbvDil7KtTVq8ECDF--St7uZVHXrxwPw=w480-h960-rw">Préstamos rápidos</option>
-                        <option value="worldmox|#1e293b|#0f172a|https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s">Worldmoxpro cash</option>
-                        <option value="talacred|#06b6d4|#0891b2|https://tala.co/pa/wp-content/uploads/sites/16/2025/10/tala-logo-white.svg">Tala Crédito</option>
-                        <option value="movil|#22c55e|#16a34a|https://play-lh.googleusercontent.com/s7I0yvyhwfecAh8wm8HvaPekT9197kfPQQKPvQ1QTkt2M-mmPaeqrdVUqoOiG6mv9r4=w480-h960-rw">Movil Cash</option>
-                        <option value="dinero|#1e40af|#1d4ed8|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos de Dinero</option>
-                        
-                        <option value="prestamos|#a3e635|#65a30d|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos</option>
-                    </select>
-                </div>
-                <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
-                    <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
-                    <div class="flex items-center text-4xl font-black">
-                        <span>$</span>
-                        <input type="number" id="monto" value="0.00" step="0.01" class="input-monto bg-transparent border-none outline-none w-full text-white ml-1">
-                    </div>
-                </div>
+    <div id="main-content">
+        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center transition-colors duration-500">
+            <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
+                <img id="img-previa" src="https://play-lh.googleusercontent.com/6aa4WobN_VoA7kl-RXhinH7ehv2N9m6tQP9I5kWXxjiVIdpaZqmxDLrR4yCc7gI1-rYmj_Jru2fXwUX0z2vz=w480-h960-rw" class="w-full h-full object-cover">
             </div>
-
-            <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
-                <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
-                <div class="flex justify-between border-b pb-2">
-                    <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
-                    <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold">
-                </div>
-                <div class="flex justify-between border-b pb-2">
-                    <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                    <span id="l-dias" class="font-black text-lg">0</span>
-                </div>
-
-                <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
-                    <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
-                        <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
-                        <option value="BBVA">BBVA</option>
-                    </select>
-                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none bg-white">
-                        <option value="703010052250010635">703010052250010635</option>
-                    </select>
-                </div>
-
-                <div class="space-y-2">
-                    <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
-                    <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none">
-                </div>
-
-                <button onclick="generar()" id="btn" class="w-full bg-[#0d9488] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR LINK</button>
+            <div class="px-8 mb-4">
+                <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none bg-white">
+                    <option value="tala|#14b8a6|#0d9488|https://play-lh.googleusercontent.com/6aa4WobN_VoA7kl-RXhinH7ehv2N9m6tQP9I5kWXxjiVIdpaZqmxDLrR4yCc7gI1-rYmj_Jru2fXwUX0z2vz=w480-h960-rw">Tala Préstamos</option>
+                    <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
+                    <option value="dida|#0057ff|#003eb3|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp">DidaPréstamos</option>
+                    <option value="rapidos|#10b981|#059669|https://play-lh.googleusercontent.com/70FoG9FpL4u0tyNe8ajAcXSuIBJBDIT3TibbvDil7KtTVq8ECDF--St7uZVHXrxwPw=w480-h960-rw">Préstamos rápidos</option>
+                    <option value="movil|#22c55e|#16a34a|https://play-lh.googleusercontent.com/s7I0yvyhwfecAh8wm8HvaPekT9197kfPQQKPvQ1QTkt2M-mmPaeqrdVUqoOiG6mv9r4=w480-h960-rw">Movil Cash</option>
+                    <option value="dinero|#1e40af|#1d4ed8|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos de Dinero</option>
+                    <option value="prestamos|#a3e635|#65a30d|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos</option>
+                </select>
             </div>
-        </div>
+            </div>
     </div>
 
     <script>
         function checkLogin() {
             const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
-            const err = document.getElementById('error-msg');
             if(u === "admin" && p === "1234567890") {
-                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('login-container').style.display = 'none';
+                document.querySelector('.video-bg').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-            } else { err.classList.remove('hidden'); }
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+            }
         }
-
-        function updateUI() {
-            const val = document.getElementById('prod').value.split('|');
-            const c1 = val[1]; 
-            const c2 = val[2]; 
-            const logo = val[3]; 
-
-            document.getElementById('header-bg').style.backgroundColor = c1;
-            document.getElementById('monto-bg').style.backgroundColor = c2;
-            document.getElementById('btn').style.backgroundColor = c2;
-            document.getElementById('img-previa').src = logo;
-        }
-
-        document.getElementById('fecha').valueAsDate = new Date();
-        document.getElementById('monto').addEventListener('input', (e) => { 
-            document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
-        });
-
-        function calcDias() {
-            const f = new Date(document.getElementById('fecha').value);
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
-            const diffTime = hoy - f;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias');
-            if (diffDays > 0) { el.innerText = diffDays; el.style.color = "#ef4444"; } 
-            else { el.innerText = "0"; el.style.color = "#1e293b"; }
-        }
-
-        function cambiarCuenta() {
-            const m = document.getElementById('metodo').value;
-            const c = document.getElementById('clabe');
-            c.innerHTML = "";
-            let n = (m === "BBVA") ? "012180015094579916" : "703010052250010635";
-            c.add(new Option(n, n));
-        }
-
-        function generar() {
-            const sel = document.getElementById('prod');
-            const val = sel.value.split('|');
-            const p = new URLSearchParams({
-                m: document.getElementById('monto').value,
-                n: document.getElementById('nom').value || "Cliente",
-                t: document.getElementById('tel').value || "0000000000",
-                f: document.getElementById('fecha').value,
-                pr: sel.options[sel.selectedIndex].text,
-                cl: document.getElementById('clabe').value,
-                b: document.getElementById('metodo').value,
-                lg: val[3],
-                s: Date.now()
-            });
-            window.location.href = `detalle.html?${p.toString()}`;
-        }
+        // ... (resto de tus funciones updateUI, calcDias, generar que ya tienes)
     </script>
 </body>
 </html>
