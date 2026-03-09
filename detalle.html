@@ -11,132 +11,80 @@
         .video-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
         #bg-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
         .card { width: 90%; max-width: 420px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; margin: 20px 0; }
-        
-        .logo-container {
-            width: 70px; height: 70px; background: white; border-radius: 20px;
-            margin: 0 auto 15px auto; display: flex; align-items: center;
-            justify-content: center; overflow: hidden;
-        }
+        .logo-container { width: 70px; height: 70px; background: white; border-radius: 20px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .logo-container img { width: 80%; height: 80%; object-fit: contain; }
     </style>
 </head>
 <body>
-
-    <div class="video-wrapper">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4">
-        </video>
-    </div>
-
+    <div class="video-wrapper"><video autoplay muted loop playsinline id="bg-video"><source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4"></video></div>
     <div class="card">
-        <div id="header-color" style="background-color: #14b8a6; color: white; padding: 30px 20px; text-align: center;">
-            <div class="logo-container">
-                <img id="img-final" src="">
-            </div>
-            <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
-            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">Cargando...</h1>
+        <div id="header-color" style="padding: 30px 20px; text-align: center; color: white;">
+            <div class="logo-container"><img id="img-final" src=""></div>
+            <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">Orden de Pago</p>
+            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; text-transform: uppercase;">Cargando...</h1>
         </div>
-
         <div style="padding: 25px;">
             <div style="background-color: #f9fafb; border-radius: 35px; padding: 25px 15px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 20px;">
-                <p style="font-size: 9px; font-weight: 800; color: #9ca3af; margin: 0; text-transform: uppercase;">Monto Total a Pagar</p>
-                <h2 id="txt-monto" style="font-size: 48px; font-weight: 900; color: #0d9488; margin: 5px 0 0 0;">$0.00</h2>
+                <p style="font-size: 9px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Monto Total a Pagar</p>
+                <h2 id="txt-monto" style="font-size: 48px; font-weight: 900;">$0.00</h2>
             </div>
-
             <div style="margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Nombre del Cliente</span>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Cliente</span>
                     <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">-</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Número de Teléfono</span>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Teléfono</span>
                     <span id="txt-tel" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
-                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Fecha de Vencimiento</span>
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Vencimiento</span>
                     <span id="txt-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
                 </div>
             </div>
-
-            <div style="background-color: #fff1f1; border: 1px solid #fee2e2; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+            <div style="background-color: #fff1f1; border-radius: 15px; padding: 15px; margin-bottom: 20px; border: 1px solid #fee2e2;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span id="timer-label" style="font-size: 9px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
-                    <span id="timer" style="font-size: 22px; font-weight: 900; color: #ef4444;">14:51</span>
-                </div>
-                <p id="timer-msg" style="color: #ef4444; font-size: 9px; line-height: 1.3; font-weight: 600; margin: 8px 0 0 0;">
-                    * Al llegar a 0, se cobrarán <span style="font-weight: 900;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
-                </p>
-            </div>
-
-            <div style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 30px; padding: 20px; text-align: center;">
-                <p id="txt-banco-label" style="font-size: 9px; font-weight: 800; color: #3b82f6; margin: 0; text-transform: uppercase;">TRANSFERENCIA (SPEI)</p>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin: 5px 0;">
-                    <span id="txt-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb;">-</span>
+                    <span style="font-size: 9px; font-weight: 800; color: #ef4444; text-transform: uppercase;">Expira en:</span>
+                    <span id="timer" style="font-size: 22px; font-weight: 900; color: #ef4444;">15:00</span>
                 </div>
             </div>
-
-            <button onclick="copyLink()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; text-transform: uppercase;">
-                Copiar Link de Pago
-            </button>
+            <div style="background-color: #f0f7ff; border-radius: 30px; padding: 20px; text-align: center; border: 1px solid #e0f2fe;">
+                <p style="font-size: 9px; font-weight: 800; color: #3b82f6; text-transform: uppercase;">TRANSFERENCIA (SPEI)</p>
+                <span style="font-size: 20px; font-weight: 900; color: #2563eb;">722969010005687921</span>
+            </div>
+            <button onclick="copyLink()" style="width: 100%; background: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; border: none; margin-top: 20px; text-transform: uppercase;">Copiar Link</button>
         </div>
     </div>
 
     <script>
+        const config = {
+            'prestamos': { n: 'Préstamos', c: '#a3e635', mc: '#65a30d', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
+            'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', mc: '#1e40af', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
+            'nu': { n: 'Préstamos NU', c: '#820ad1', mc: '#820ad1', l: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
+            'talacred': { n: 'Tala Crédito', c: '#06b6d4', mc: '#06b6d4', l: 'https://pbs.twimg.com/profile_images/1604930218606600199/95CGdKAG_400x400.png' },
+            'dida': { n: 'DidaPréstamos', c: '#0057ff', mc: '#0057ff', l: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp' },
+            'rapidos': { n: 'Préstamos rápidos', c: '#10b981', mc: '#10b981', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp' },
+            'worldmox': { n: 'Worldmoxpro cash', c: '#1e293b', mc: '#1e293b', l: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s' },
+            'movil': { n: 'Movil Cash', c: '#22c55e', mc: '#22c55e', l: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' }
+        };
+
         const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('img-final').src = urlParams.get('lg') || "";
-        const nombreProd = urlParams.get('pr') || "PRODUCTO";
-        document.getElementById('txt-prod').innerText = nombreProd;
+        const prodId = urlParams.get('v') || 'prestamos';
+        const item = config[prodId] || config['prestamos'];
+
+        document.getElementById('header-color').style.backgroundColor = item.c;
+        document.getElementById('img-final').src = item.l;
+        document.getElementById('txt-prod').innerText = item.n;
+        document.getElementById('txt-monto').style.color = item.mc;
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
         document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000";
         document.getElementById('txt-fec').innerText = urlParams.get('f') || "-";
-        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "722969010005687921";
-        document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
-
-        // LÓGICA DE COLORES
-        if(nombreProd.includes("NU")) {
-            document.getElementById('header-color').style.backgroundColor = "#820ad1";
-            document.getElementById('txt-monto').style.color = "#820ad1";
-        }
-        if(nombreProd.includes("rápidos")) {
-            document.getElementById('header-color').style.backgroundColor = "#10b981";
-            document.getElementById('txt-monto').style.color = "#10b981";
-        }
-        if(nombreProd.includes("Dida")) {
-            document.getElementById('header-color').style.backgroundColor = "#0057ff";
-            document.getElementById('txt-monto').style.color = "#0057ff";
-        }
-        if(nombreProd.includes("Worldmoxpro")) {
-            document.getElementById('header-color').style.backgroundColor = "#1e293b";
-            document.getElementById('txt-monto').style.color = "#1e293b";
-        }
-        if(nombreProd.includes("Tala Crédito")) {
-            document.getElementById('header-color').style.backgroundColor = "#06b6d4";
-            document.getElementById('txt-monto').style.color = "#06b6d4";
-        }
-        if(nombreProd.includes("Movil Cash")) {
-            document.getElementById('header-color').style.backgroundColor = "#22c55e";
-            document.getElementById('txt-monto').style.color = "#22c55e";
-        }
-        if(nombreProd.includes("Préstamos de Dinero")) {
-            document.getElementById('header-color').style.backgroundColor = "#1e40af";
-            document.getElementById('txt-monto').style.color = "#1e40af";
-        }
-        if(nombreProd.toLowerCase() === "préstamos") {
-            document.getElementById('header-color').style.backgroundColor = "#a3e635";
-            document.getElementById('txt-monto').style.color = "#65a30d";
-        }
 
         const start = parseInt(urlParams.get('s')) || Date.now();
         function updateTimer() {
-            // CAMBIADO A 15 MINUTOS (15 * 60 * 1000)
             const diff = (15 * 60 * 1000) - (Date.now() - start);
-            if (diff <= 0) { 
-                document.getElementById('timer').innerText = "00:00"; 
-                document.getElementById('timer-label').innerText = "LIGA EXPIRADA:";
-                document.getElementById('timer-msg').innerHTML = "<span style='font-weight: 900;'>SE HAN APLICADO $500.00 PESOS ADICIONALES</span> POR CONCEPTO DE VENCIMIENTO DE LIGA DE PAGO.";
-                return; 
-            }
+            if (diff <= 0) { document.getElementById('timer').innerText = "00:00"; return; }
             const m = Math.floor(diff / 60000);
             const s = Math.floor((diff % 60000) / 1000);
             document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
@@ -146,7 +94,7 @@
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Enlace copiado al portapapeles");
+            alert("Enlace copiado");
         }
     </script>
 </body>
