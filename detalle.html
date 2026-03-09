@@ -100,10 +100,15 @@
             document.getElementById('txt-monto').style.color = "#820ad1";
         }
 
-        // APARTADO AÑADIDO PARA COLOR VERDE
         if(nombreProd.includes("rápidos")) {
             document.getElementById('header-color').style.backgroundColor = "#10b981";
             document.getElementById('txt-monto').style.color = "#10b981";
+        }
+
+        // NUEVO APARTADO PARA DIDA PRESTAMOS
+        if(nombreProd.includes("Dida")) {
+            document.getElementById('header-color').style.backgroundColor = "#0057ff";
+            document.getElementById('txt-monto').style.color = "#0057ff";
         }
 
         const start = parseInt(urlParams.get('s')) || Date.now();
