@@ -42,7 +42,7 @@
                 <div class="px-8 mb-4">
                     <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none">
                         <option value="tala|#14b8a6|#0d9488|https://i.ibb.co/qF6Vvqy/tala-te-presta.png">Tala Préstamos</option>
-                        <option value="nu|#820ad1|#581c87|https://tu-link-aqui.com/nu.png">Préstamos NU</option>
+                        <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
                         <option value="dida|#2563eb|#1d4ed8|https://vantevo.io/blog/images/didi-logo.png">DidaPréstamos</option>
                         <option value="rapidos|#10b981|#059669|https://cdn-icons-png.flaticon.com/512/2168/2168816.png">Préstamos rápidos</option>
                         <option value="worldmox|#6366f1|#4f46e5|https://cdn-icons-png.flaticon.com/512/825/825590.png">WorldmoxPro GG</option>
@@ -114,7 +114,6 @@
             document.getElementById('header-bg').style.backgroundColor = c1;
             document.getElementById('monto-bg').style.backgroundColor = c2;
             document.getElementById('btn').style.backgroundColor = c2;
-            // Cambia la imagen previa al seleccionar
             document.getElementById('img-previa').src = logo;
         }
 
@@ -153,7 +152,7 @@
                 pr: sel.options[sel.selectedIndex].text,
                 cl: document.getElementById('clabe').value,
                 b: document.getElementById('metodo').value,
-                lg: val[3], // Envía el logo a detalle.html
+                lg: val[3],
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
