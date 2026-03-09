@@ -91,13 +91,13 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" onchange="cambiarCuenta()" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
+                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
                         <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
                         <option value="BBVA">BBVA</option>
                     </select>
-                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
+                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago (CLABE)</span>
                     <select id="clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 outline-none bg-white">
-                        <option value="703010052250010635">722969010005687921</option>
+                        <option value="722969010005687921">722969010005687921</option>
                     </select>
                 </div>
 
@@ -148,14 +148,6 @@
             else { el.innerText = "0"; el.style.color = "#1e293b"; }
         }
 
-        function cambiarCuenta() {
-            const m = document.getElementById('metodo').value;
-            const c = document.getElementById('clabe');
-            c.innerHTML = "";
-            let n = (m === "BBVA") ? "012180015094579916" : "703010052250010635";
-            c.add(new Option(n, n));
-        }
-
         function generar() {
             const sel = document.getElementById('prod');
             const val = sel.value.split('|');
@@ -175,4 +167,3 @@
     </script>
 </body>
 </html>
-
