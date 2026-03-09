@@ -71,15 +71,17 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white">
+                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black">
                         <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
                         <option value="BBVA">BBVA</option>
                     </select>
+                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
+                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black">722969010005687921</div>
                 </div>
 
                 <div class="space-y-2">
-                    <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase">
-                    <input type="tel" id="tel" placeholder="Número del cliente" class="w-full border-b py-2 text-center outline-none">
+                    <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase font-bold">
+                    <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none font-bold">
                 </div>
 
                 <button onclick="generar()" id="btn" class="w-full bg-[#65a30d] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR ORDEN</button>
@@ -106,7 +108,16 @@
             document.getElementById('img-previa').src = val[3];
         }
 
-        // Lógica de fecha actual y cálculo de días
+        function updateClabe() {
+            const banco = document.getElementById('metodo').value;
+            const display = document.getElementById('display-clabe');
+            if(banco === "BBVA") {
+                display.innerText = "012180015094579916";
+            } else {
+                display.innerText = "722969010005687921";
+            }
+        }
+
         document.getElementById('fecha').valueAsDate = new Date();
         document.getElementById('monto').addEventListener('input', (e) => { 
             document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
@@ -127,21 +138,16 @@
             const sel = document.getElementById('prod');
             const idProducto = sel.value.split('|')[0];
             const banco = document.getElementById('metodo').value;
-            
-            // Única modificación: CLABE BBVA
-            let clabeFinal = "722969010005687921"; 
-            if(banco === "BBVA") {
-                clabeFinal = "012180015094579916";
-            }
+            const clabe = document.getElementById('display-clabe').innerText;
 
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
-                t: document.getElementById('tel').value || "000",
+                t: document.getElementById('tel').value || "0000000000",
                 v: idProducto,
                 b: banco,
-                c: clabeFinal,
-                f: document.getElementById('fecha').value, // Se vuelve a enviar la fecha
+                c: clabe,
+                f: document.getElementById('fecha').value,
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
