@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador</title>
+    <title>Generador Profesional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="app-card">
-        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center">
+        <div id="header-bg" class="bg-[#14b8a6] pt-10 pb-4 text-center transition-colors duration-500">
             <div class="w-20 h-20 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden border-4 border-white/20">
                 <img src="https://i.ibb.co/qF6Vvqy/tala-te-presta.png" class="w-full h-full object-cover">
             </div>
@@ -35,7 +35,7 @@
                     <option value="prestamos|#64748b|#475569">Préstamos</option>
                 </select>
             </div>
-            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white">
+            <div id="monto-bg" class="bg-[#0d9488] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
                 <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                 <div class="flex items-center text-4xl font-black">
                     <span>$</span>
@@ -46,9 +46,15 @@
 
         <div class="p-6 space-y-4 text-sm font-bold text-slate-800">
             <div class="flex justify-between border-b pb-2"><span class="text-gray-400 uppercase text-[10px]">Importe</span><span id="l-monto">$0.00</span></div>
+            
             <div class="flex justify-between border-b pb-2">
                 <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
                 <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold">
+            </div>
+
+            <div class="flex justify-between border-b pb-2">
+                <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
+                <span id="l-dias" class="font-black text-lg">0</span>
             </div>
 
             <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
@@ -74,14 +80,29 @@
 
     <script>
         document.getElementById('fecha').valueAsDate = new Date();
-        document.getElementById('monto').addEventListener('input', (e) => { document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); });
+        document.getElementById('monto').addEventListener('input', (e) => { 
+            document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
+        });
 
+        // LÓGICA DE DÍAS RESTAURADA
         function calcDias() {
             const f = new Date(document.getElementById('fecha').value);
             const hoy = new Date();
             hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
-            const diff = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias'); // Nota: Si no usas l-dias puedes ignorar esto
+            
+            // Si la fecha es pasada, calcula cuántos días han pasado (Vencimiento)
+            const diffTime = hoy - f;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const el = document.getElementById('l-dias');
+            
+            if (diffDays > 0) {
+                el.innerText = diffDays;
+                el.style.color = "#ef4444"; // ROJO SI ESTÁ VENCIDO
+            } else {
+                el.innerText = "0";
+                el.style.color = "#1e293b"; // NORMAL SI ES HOY O FUTURO
+            }
         }
 
         function cambiarCuenta() {
@@ -108,6 +129,7 @@
                 pr: document.getElementById('prod').options[document.getElementById('prod').selectedIndex].text,
                 cl: document.getElementById('clabe').value,
                 b: document.getElementById('metodo').value,
+                d: document.getElementById('l-dias').innerText, // También enviamos los días de atraso
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
