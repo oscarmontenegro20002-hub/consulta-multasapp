@@ -14,7 +14,6 @@
         #prod { background-color: white !important; color: black !important; appearance: auto !important; -webkit-appearance: listbox !important; }
         #prod option { background-color: white !important; color: black !important; }
 
-        /* Estilo para el Login */
         #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 2rem; }
         #main-content { display: none; width: 100%; }
     </style>
@@ -28,7 +27,7 @@
                 <p class="text-xs text-slate-400 font-bold uppercase">Introduce tus credenciales</p>
             </div>
             <div class="w-full space-y-4">
-                <input type="text" id="user" placeholder="Usuario" class="w-full border-b-2 py-3 px-4 outline-none font-bold text-center uppercase text-slate-700">
+                <input type="text" id="user" placeholder="Usuario" class="w-full border-b-2 py-3 px-4 outline-none font-bold text-center text-slate-700">
                 <input type="password" id="pass" placeholder="Contraseña" class="w-full border-b-2 py-3 px-4 outline-none font-bold text-center text-slate-700">
                 <button onclick="checkLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-black transition-all">Ingresar</button>
             </div>
@@ -96,13 +95,12 @@
     </div>
 
     <script>
-        // Lógica de Inicio de Sesión
         function checkLogin() {
-            const u = document.getElementById('user').value;
+            const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
             const err = document.getElementById('error-msg');
 
-            if(u === "Admin" && p === "0987654321") {
+            if(u === "admin" && p === "1234567890") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
             } else {
@@ -110,7 +108,6 @@
             }
         }
 
-        // Tu Lógica del Generador (Sin Cambios)
         document.getElementById('fecha').valueAsDate = new Date();
         document.getElementById('monto').addEventListener('input', (e) => { 
             document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
