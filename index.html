@@ -3,107 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Generador 2026</title>
+    <title>Generador Oficial</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 10px; }
-        .app-card { width: 100%; max-width: 440px; background: #ffffff; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        body { font-family: 'Inter', sans-serif; background: #0b1120; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 15px; }
+        .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         
-        /* Contenedor de Apps Tipo Botones Gigantes */
-        .selector-box {
-            max-height: 200px;
+        /* Contenedor de lista de apps forzado */
+        .lista-apps {
+            max-height: 220px;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 10px;
-            background: #f1f5f9;
-            border-radius: 1rem;
+            background: #f8fafc;
             margin: 10px 20px;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
         }
 
-        .opcion-app {
+        /* Botones de apps - IMPOSIBLES DE OCULTAR */
+        .btn-app {
             width: 100%;
-            padding: 15px;
-            border: none;
+            margin-bottom: 8px;
+            padding: 14px;
             border-radius: 12px;
-            background: #1e293b; /* Fondo oscuro para que el texto se vea */
-            color: #ffffff !important;
-            font-weight: 900;
-            font-size: 14px;
+            background-color: #1e293b !important; /* Azul oscuro */
+            color: #ffffff !important; /* Texto blanco */
+            font-weight: 800;
+            font-size: 13px;
             text-transform: uppercase;
-            text-align: center;
+            border: none;
             cursor: pointer;
+            display: block;
+            text-align: center;
         }
 
-        .opcion-app:active { transform: scale(0.98); opacity: 0.8; }
-        .selected { border: 4px solid #14b8a6 !important; background: #0f172a; }
+        .btn-app:active { background-color: #334155 !important; transform: scale(0.98); }
+        .active-app { border: 3px solid #14b8a6 !important; background-color: #0f172a !important; }
     </style>
 </head>
 <body>
-
     <div class="app-card">
-        <div id="header-bg" class="bg-[#1e293b] pt-8 pb-4 text-center text-white transition-all">
-            <h2 id="app-titulo" class="text-xl font-black uppercase tracking-tighter">Selecciona una Aplicación</h2>
-            <p class="text-[10px] opacity-60 font-bold">TOCA EL NOMBRE DE LA APP ABAJO</p>
+        <div id="header-bg" class="bg-[#1e293b] pt-8 pb-4 text-center text-white">
+            <h1 id="titulo-app" class="text-lg font-black uppercase tracking-tighter">Selecciona la App</h1>
+            <p class="text-[10px] opacity-70">DESLIZA Y TOCA UN NOMBRE</p>
         </div>
 
-        <div class="selector-box">
-            <button onclick="fijar('TALA PRÉSTAMOS', '#14b8a6', this)" class="opcion-app">Tala Préstamos</button>
-            <button onclick="fijar('PRÉSTAMOS NU', '#820ad1', this)" class="opcion-app">Préstamos NU</button>
-            <button onclick="fijar('DIDAPRÉSTAMOS', '#2563eb', this)" class="opcion-app">DidaPréstamos</button>
-            <button onclick="fijar('PRÉSTAMOS RÁPIDOS', '#10b981', this)" class="opcion-app">Préstamos Rápidos</button>
-            <button onclick="fijar('WORLDMOXPRO GG', '#6366f1', this)" class="opcion-app">WorldmoxPro GG</button>
-            <button onclick="fijar('TALA CRÉDITO', '#0891b2', this)" class="opcion-app">Tala Crédito</button>
-            <button onclick="fijar('MOVIL CASH', '#f59e0b', this)" class="opcion-app">Movil Cash</button>
-            <button onclick="fijar('PRÉSTAMOS DE DINERO', '#db2777', this)" class="opcion-app">Préstamos de Dinero</button>
-            <button onclick="fijar('PRÉSTAMOS', '#475569', this)" class="opcion-app">Préstamos (General)</button>
+        <div class="lista-apps">
+            <button onclick="seleccionar('TALA PRÉSTAMOS', '#14b8a6', this)" class="btn-app">Tala Préstamos</button>
+            <button onclick="seleccionar('PRÉSTAMOS NU', '#820ad1', this)" class="btn-app">Préstamos NU</button>
+            <button onclick="seleccionar('DIDAPRÉSTAMOS', '#2563eb', this)" class="btn-app">DidaPréstamos</button>
+            <button onclick="seleccionar('PRÉSTAMOS RÁPIDOS', '#10b981', this)" class="btn-app">Préstamos Rápidos</button>
+            <button onclick="seleccionar('WORLDMOXPRO GG', '#6366f1', this)" class="btn-app">WorldmoxPro GG</button>
+            <button onclick="seleccionar('TALA CRÉDITO', '#0891b2', this)" class="btn-app">Tala Crédito</button>
+            <button onclick="seleccionar('MOVIL CASH', '#f59e0b', this)" class="btn-app">Movil Cash</button>
+            <button onclick="seleccionar('PRÉSTAMOS DE DINERO', '#db2777', this)" class="btn-app">Préstamos de Dinero</button>
+            <button onclick="seleccionar('PRÉSTAMOS', '#475569', this)" class="btn-app">Préstamos</button>
         </div>
 
         <div class="p-6 space-y-4">
-            <div class="bg-slate-100 p-4 rounded-2xl text-center">
-                <span class="text-[10px] font-bold text-slate-400 uppercase">Monto a Pagar</span>
-                <input type="number" id="monto" value="0.00" class="w-full bg-transparent text-3xl font-black text-center outline-none text-slate-800">
+            <div class="bg-slate-50 p-4 rounded-2xl border">
+                <p class="text-[10px] font-bold text-slate-400 uppercase text-center">Monto</p>
+                <input type="number" id="monto" value="0.00" class="w-full bg-transparent text-3xl font-black text-center outline-none">
             </div>
 
-            <input type="text" id="nom" placeholder="NOMBRE DEL CLIENTE" class="w-full border-b-2 py-3 text-center font-bold uppercase outline-none focus:border-blue-500">
-
-            <button onclick="crearLink()" id="btn-final" class="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-black uppercase tracking-widest">
+            <input type="text" id="nombre" placeholder="NOMBRE DEL CLIENTE" class="w-full border-b-2 py-2 text-center font-bold uppercase outline-none">
+            
+            <button onclick="generarLink()" id="btn-gen" class="w-full bg-[#1e293b] text-white py-5 rounded-2xl font-black uppercase tracking-widest">
                 Generar Orden de Pago
             </button>
         </div>
     </div>
 
     <script>
-        let appSeleccionada = "TALA PRÉSTAMOS";
-        let colorSeleccionado = "#1e293b";
+        let appGlobal = "TALA PRÉSTAMOS";
+        let colorGlobal = "#1e293b";
 
-        function fijar(nombre, color, elemento) {
-            appSeleccionada = nombre;
-            colorSeleccionado = color;
-            
-            // UI Update
+        function seleccionar(nombre, color, btn) {
+            appGlobal = nombre;
+            colorGlobal = color;
             document.getElementById('header-bg').style.backgroundColor = color;
-            document.getElementById('app-titulo').innerText = nombre;
-            document.getElementById('btn-final').style.backgroundColor = color;
+            document.getElementById('titulo-app').innerText = nombre;
+            document.getElementById('btn-gen').style.backgroundColor = color;
             
-            // Marcar seleccionado
-            document.querySelectorAll('.opcion-app').forEach(b => b.classList.remove('selected'));
-            elemento.classList.add('selected');
+            // Quitar clase activa de otros
+            document.querySelectorAll('.btn-app').forEach(b => b.classList.remove('active-app'));
+            btn.classList.add('active-app');
         }
 
-        function crearLink() {
-            const params = new URLSearchParams({
+        function generarLink() {
+            const data = new URLSearchParams({
                 m: document.getElementById('monto').value,
-                n: document.getElementById('nom').value || "CLIENTE",
+                n: document.getElementById('nombre').value || "CLIENTE",
+                pr: appGlobal,
                 f: new Date().toISOString().split('T')[0],
-                pr: appSeleccionada,
                 cl: "703010052250010635",
                 b: "MERCADO PAGO",
                 s: Date.now()
             });
-            window.location.href = `detalle.html?${params.toString()}`;
+            window.location.href = `detalle.html?${data.toString()}`;
         }
     </script>
 </body>
