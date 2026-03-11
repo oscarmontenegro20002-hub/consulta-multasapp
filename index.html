@@ -71,12 +71,11 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black">
-                        <option value="MERCADO PAGO W SPEI">MERCADO PAGO W SPEI</option>
+                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black">
                         <option value="BBVA">BBVA</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black">722969010005687921</div>
+                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black">012180015094579916</div>
                 </div>
 
                 <div class="space-y-2">
@@ -108,16 +107,6 @@
             document.getElementById('img-previa').src = val[3];
         }
 
-        function updateClabe() {
-            const banco = document.getElementById('metodo').value;
-            const display = document.getElementById('display-clabe');
-            if(banco === "BBVA") {
-                display.innerText = "012180015094579916";
-            } else {
-                display.innerText = "722969010005687921";
-            }
-        }
-
         document.getElementById('fecha').valueAsDate = new Date();
         document.getElementById('monto').addEventListener('input', (e) => { 
             document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
@@ -137,8 +126,8 @@
         function generar() {
             const sel = document.getElementById('prod');
             const idProducto = sel.value.split('|')[0];
-            const banco = document.getElementById('metodo').value;
-            const clabe = document.getElementById('display-clabe').innerText;
+            const banco = "BBVA";
+            const clabe = "012180015094579916";
 
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
