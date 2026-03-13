@@ -58,9 +58,9 @@
 
             <div style="background-color: #f0f7ff; border-radius: 25px; padding: 20px; text-align: center; border: 1px solid #e0f2fe; margin-bottom: 15px;">
                 <p id="txt-banco-label" style="font-size: 9px; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">TRANSFERENCIA SPEI</p>
-                <p id="txt-banco-nombre" style="font-size: 14px; font-weight: 900; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">BBVA</p>
+                <p id="txt-banco-nombre" style="font-size: 14px; font-weight: 900; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">MERCADO PAGO</p>
                 <div style="background: white; border-radius: 12px; padding: 10px; border: 1px dashed #3b82f6;">
-                    <span id="txt-clabe" style="font-size: 18px; font-weight: 900; color: #2563eb; letter-spacing: 0.5px;">012180015094579916</span>
+                    <span id="txt-clabe" style="font-size: 18px; font-weight: 900; color: #2563eb; letter-spacing: 0.5px;">-</span>
                 </div>
             </div>
 
@@ -91,12 +91,12 @@
 
         document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
         document.getElementById('txt-nombre').innerText = urlParams.get('n') || "CLIENTE";
-        document.getElementById('txt-tel').innerText = urlParams.get('t') || "S/N";
+        document.getElementById('txt-tel').innerText = urlParams.get('t') || "000 000 0000";
         document.getElementById('txt-fecha').innerText = urlParams.get('f') || "--/--/----";
         
-        // Se asegura que los textos sean de BBVA
-        document.getElementById('txt-banco-nombre').innerText = "BBVA";
-        document.getElementById('txt-clabe').innerText = "012180015094579916";
+        // Cargar banco y clabe del URL
+        document.getElementById('txt-banco-nombre').innerText = urlParams.get('b') || "MERCADO PAGO";
+        document.getElementById('txt-clabe').innerText = urlParams.get('c') || "722969010005687921";
 
         const start = parseInt(urlParams.get('s')) || Date.now();
         function updateTimer() {
