@@ -72,12 +72,9 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
+                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
                         <option value="BBVA">BBVA</option>
-                        <option value="BANORTE">BANORTE</option>
                     </select>
-                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012180015094579916</div>
                 </div>
 
                 <div class="space-y-2">
@@ -94,7 +91,7 @@
         function checkLogin() {
             const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
-            if(u === "admin" && p === "1234567890") {
+            if(u === "admin" && p === "12345678990") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 updateUI();
@@ -107,16 +104,6 @@
             document.getElementById('monto-bg').style.backgroundColor = val[2];
             document.getElementById('btn').style.backgroundColor = val[2];
             document.getElementById('img-previa').src = val[3];
-        }
-
-        function updateClabe() {
-            const banco = document.getElementById('metodo').value;
-            const display = document.getElementById('display-clabe');
-            if(banco === "BBVA") {
-                display.innerText = "012180015094579916";
-            } else if(banco === "BANORTE") {
-                display.innerText = "072580013602025818";
-            }
         }
 
         document.getElementById('fecha').valueAsDate = new Date();
@@ -138,16 +125,11 @@
         function generar() {
             const sel = document.getElementById('prod');
             const idProducto = sel.value.split('|')[0];
-            const banco = document.getElementById('metodo').value;
-            const clabe = document.getElementById('display-clabe').innerText;
-
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 t: document.getElementById('tel').value || "0000000000",
                 v: idProducto,
-                b: banco,
-                c: clabe,
                 f: document.getElementById('fecha').value,
                 s: Date.now()
             });
