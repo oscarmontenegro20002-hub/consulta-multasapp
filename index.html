@@ -97,6 +97,7 @@
         function checkLogin() {
             const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
+            // Manteniendo tu contraseña actual
             if(u === "admin" && p === "12345678990") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
@@ -118,6 +119,7 @@
             if(banco === "BBVA") {
                 display.innerText = "012010015251291615";
             } else if(banco === "STP") {
+                // Tu CLABE STP actualizada
                 display.innerText = "646193405604451002";
             }
         }
