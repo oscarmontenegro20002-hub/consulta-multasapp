@@ -4,118 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orden de Pago</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000; }
-        .video-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
-        .card { width: 90%; max-width: 420px; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; margin: 20px 0; }
-        .logo-container { width: 70px; height: 70px; background: white; border-radius: 20px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .logo-container img { width: 85%; height: 85%; object-fit: contain; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     </style>
 </head>
-<body>
-    <div class="video-wrapper">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://cdn.pixabay.com/video/2019/07/26/25696-351221711_large.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="card">
-        <div id="header-color" style="padding: 30px 20px; text-align: center; color: white;">
-            <div class="logo-container"><img id="img-final" src=""></div>
-            <p style="font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.9;">Orden de Pago</p>
-            <h1 id="txt-prod" style="font-size: 24px; font-weight: 900; text-transform: uppercase;">Cargando...</h1>
+<body class="p-4 flex flex-col items-center">
+    <div class="w-full max-width-[400px] bg-white rounded-[2.5rem] shadow-xl overflow-hidden">
+        <div id="header-color" class="pt-8 pb-4 text-center">
+            <img id="app-logo" src="" class="w-20 h-20 mx-auto rounded-3xl border-4 border-white/30 shadow-lg mb-2 object-cover">
+            <h1 id="app-name" class="text-white font-black text-xl uppercase italic tracking-tighter"></h1>
         </div>
 
-        <div style="padding: 25px;">
-            <div style="margin-bottom: 20px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px;">
-                <p id="txt-nombre" style="font-size: 16px; font-weight: 900; color: #1e293b; text-transform: uppercase;">NOMBRE CLIENTE</p>
-                <p id="txt-tel" style="font-size: 18px; font-weight: 800; color: #475569; margin-top: 6px; letter-spacing: 1px;">000 000 0000</p>
+        <div class="p-6 space-y-6">
+            <div class="text-center">
+                <span class="text-[10px] text-gray-400 font-bold uppercase">Monto a pagar</span>
+                <p id="monto-pago" class="text-4xl font-black text-slate-800"></p>
             </div>
 
-            <div style="background-color: #f8fafc; border-radius: 30px; padding: 20px 10px; text-align: center; border: 1px solid #f1f5f9; margin-bottom: 20px;">
-                <p style="font-size: 9px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Monto Total a Pagar</p>
-                <h2 id="txt-monto" style="font-size: 42px; font-weight: 900;">$0.00</h2>
-            </div>
-            
-            <div style="background-color: #fff1f1; border-radius: 20px; padding: 15px; margin-bottom: 20px; border: 1px solid #fee2e2;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(239, 68, 68, 0.1); padding-bottom: 8px; margin-bottom: 8px;">
-                    <span style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">Vence el:</span>
-                    <span id="txt-fecha" style="font-size: 12px; font-weight: 900; color: #ef4444;">--/--/----</span>
+            <div class="space-y-3 bg-slate-50 p-4 rounded-3xl border border-slate-100">
+                <div class="flex justify-between text-[11px] font-bold">
+                    <span class="text-gray-400 uppercase">Cliente:</span>
+                    <span id="cliente-nombre" class="text-slate-800 uppercase"></span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span id="timer-label" style="font-size: 10px; font-weight: 800; color: #ef4444; text-transform: uppercase;">Expira en:</span>
-                    <span id="timer" style="font-size: 20px; font-weight: 900; color: #ef4444;">15:00</span>
+                <div class="flex justify-between text-[11px] font-bold">
+                    <span class="text-gray-400 uppercase">Banco:</span>
+                    <span id="banco-nombre" class="text-slate-800"></span>
                 </div>
-                <div style="background: #ef4444; color: white; padding: 12px; border-radius: 12px; text-align: center; font-size: 11px; font-weight: 800; line-height: 1.3;">
-                    Al momento de que el contador llegué a 0 se le cobrará una penalización de $500 sin excepción alguna por motivo de vencimiento de link
+                <div class="flex justify-between text-[11px] font-bold">
+                    <span class="text-gray-400 uppercase">CLABE/Liga:</span>
+                    <span id="clabe-valor" class="text-blue-600"></span>
                 </div>
             </div>
 
-            <div style="background-color: #f0f7ff; border-radius: 25px; padding: 20px; text-align: center; border: 1px solid #e0f2fe; margin-bottom: 15px;">
-                <p style="font-size: 9px; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">TRANSFERENCIA SPEI</p>
-                <p id="txt-banco-nombre" style="font-size: 14px; font-weight: 900; color: #1e40af; text-transform: uppercase; margin-bottom: 8px;">-</p>
-                <div style="background: white; border-radius: 12px; padding: 10px; border: 1px dashed #3b82f6;">
-                    <span id="txt-clabe" style="font-size: 18px; font-weight: 900; color: #2563eb; letter-spacing: 0.5px;">-</span>
-                </div>
+            <div class="text-center">
+                <p class="text-[9px] text-gray-400 font-bold uppercase leading-tight">
+                    Realiza tu pago antes del vencimiento para evitar cargos adicionales.
+                </p>
             </div>
-
-            <button onclick="copyLink()" style="width: 100%; background: #1e293b; color: white; padding: 18px; border-radius: 20px; font-weight: 800; border: none; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;">Copiar Link de Pago</button>
         </div>
     </div>
 
     <script>
-        const config = {
-            'prestamos': { n: 'Préstamos', c: '#a3e635', mc: '#65a30d', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
-            'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', mc: '#1e40af', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp' },
-            'nu': { n: 'Préstamos NU', c: '#820ad1', mc: '#820ad1', l: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
-            'talacred': { n: 'Tala Crédito', c: '#06b6d4', mc: '#06b6d4', l: 'https://pbs.twimg.com/profile_images/1604930218606600199/95CGdKAG_400x400.png' },
-            'dida': { n: 'DidaPréstamos', c: '#0057ff', mc: '#003eb3', l: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp' },
-            'rapidos': { n: 'Préstamos rápidos', c: '#10b981', mc: '#059669', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp' },
-            'worldmox': { n: 'Worldmoxpro cash', c: '#1e293b', mc: '#0f172a', l: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s' },
-            'movil': { n: 'Movil Cash', c: '#22c55e', mc: '#16a34a', l: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
-            'cashcredit': { n: 'Cash Credit', c: '#f59e0b', mc: '#d97706', l: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
-            'stori': { n: 'Stori Crédito', c: '#7c3aed', mc: '#6d28d9', l: 'https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw' },
-            'facil': { n: 'Fácil Préstamo', c: '#0ea5e9', mc: '#0369a1', l: 'https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw' }
+        const params = new URLSearchParams(window.location.search);
+        const app = params.get('v');
+
+        const apps = {
+            'prestamos': { n: 'Préstamos', c: '#a3e635', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
+            'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp' },
+            'nu': { n: 'Préstamos NU', c: '#820ad1', l: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
+            'talacred': { n: 'Tala Crédito', c: '#06b6d4', l: 'https://pbs.twimg.com/profile_images/1604930218606600199/95CGdKAG_400x400.png' },
+            'dida': { n: 'DidaPréstamos', c: '#0057ff', l: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp' },
+            'rapidos': { n: 'Préstamos Rápidos', c: '#10b981', l: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp' },
+            'worldmox': { n: 'Worldmoxpro cash', c: '#1e293b', l: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s' },
+            'movil': { n: 'Movil Cash', c: '#22c55e', l: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
+            'cashcredit': { n: 'Cash Credit', c: '#f59e0b', l: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
+            'stori': { n: 'Stori Crédito', c: '#7c3aed', l: 'https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw' },
+            'facil': { n: 'Fácil Préstamo', c: '#0ea5e9', l: 'https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw' },
+            'tala': { n: 'Tala Préstamos', c: '#fb923c', l: 'https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw' }
         };
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const prodId = urlParams.get('v') || 'prestamos';
-        const item = config[prodId] || config['prestamos'];
-        
-        document.getElementById('header-color').style.backgroundColor = item.c;
-        document.getElementById('img-final').src = item.l;
-        document.getElementById('txt-prod').innerText = item.n;
-        document.getElementById('txt-monto').style.color = item.mc;
+        const config = apps[app] || apps['prestamos'];
 
-        document.getElementById('txt-monto').innerText = "$" + (urlParams.get('m') || "0.00");
-        document.getElementById('txt-nombre').innerText = urlParams.get('n') || "CLIENTE";
-        document.getElementById('txt-tel').innerText = urlParams.get('t') || "000 000 0000";
-        document.getElementById('txt-fecha').innerText = urlParams.get('f') || "--/--/----";
-        
-        document.getElementById('txt-banco-nombre').innerText = urlParams.get('b') || "BBVA";
-        document.getElementById('txt-clabe').innerText = urlParams.get('c') || "012010015251291615";
-
-        const start = parseInt(urlParams.get('s')) || Date.now();
-        function updateTimer() {
-            const diff = (15 * 60 * 1000) - (Date.now() - start);
-            if (diff <= 0) { 
-                document.getElementById('timer').innerText = "00:00"; 
-                return; 
-            }
-            const m = Math.floor(diff / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert("Enlace de pago copiado al portapapeles");
-        }
+        document.getElementById('header-color').style.backgroundColor = config.c;
+        document.getElementById('app-name').innerText = config.n;
+        document.getElementById('app-logo').src = config.l;
+        document.getElementById('monto-pago').innerText = '$' + params.get('m');
+        document.getElementById('cliente-nombre').innerText = params.get('n');
+        document.getElementById('banco-nombre').innerText = params.get('b');
+        document.getElementById('clabe-valor').innerText = params.get('c');
     </script>
 </body>
 </html>
