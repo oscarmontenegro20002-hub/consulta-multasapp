@@ -141,18 +141,13 @@
         function generar() {
             const sel = document.getElementById('prod');
             const data = sel.value.split('|');
-            const idProducto = data[0]; // Esto enviará "tala" si se selecciona Tala Préstamos
-            
-            const clabe = document.getElementById('display-clabe').innerText;
-            const banco = document.getElementById('metodo').value;
-
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 t: document.getElementById('tel').value || "0000000000",
-                v: idProducto,
-                b: banco,
-                c: clabe,
+                v: data[0],
+                b: document.getElementById('metodo').value,
+                c: document.getElementById('display-clabe').innerText,
                 f: document.getElementById('fecha').value,
                 s: Date.now()
             });
