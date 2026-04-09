@@ -140,9 +140,11 @@
 
         function generar() {
             const sel = document.getElementById('prod');
-            const idProducto = sel.value.split('|')[0];
-            const banco = document.getElementById('metodo').value;
+            const data = sel.value.split('|');
+            const idProducto = data[0]; // Esto enviará "tala" si se selecciona Tala Préstamos
+            
             const clabe = document.getElementById('display-clabe').innerText;
+            const banco = document.getElementById('metodo').value;
 
             const p = new URLSearchParams({
                 m: document.getElementById('monto').value,
