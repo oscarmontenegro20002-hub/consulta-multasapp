@@ -77,7 +77,7 @@
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
                     <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
                         <option value="BBVA">BBVA</option>
-                        <option value="Mercado Pago">Mercado Pago</option>
+                        <option value="STP">STP</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
                     <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012010015251291615</div>
@@ -117,8 +117,8 @@
             const display = document.getElementById('display-clabe');
             if(banco === "BBVA") {
                 display.innerText = "012010015251291615";
-            } else if(banco === "Mercado Pago") {
-                display.innerText = "722969020370107003";
+            } else if(banco === "STP") {
+                display.innerText = "646193405604451002";
             }
         }
 
