@@ -70,12 +70,12 @@
         const v = p.get('v');
 
         const apps = {
-            'prestamos': { n: 'Préstamos', c: '#a3e635', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
-            'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp' },
+            'prestamos': { n: 'Préstamos', c: '#a3e635', i: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
+            'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', i: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
             'nu': { n: 'Préstamos NU', c: '#820ad1', i: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
-            'talacred': { n: 'Tala Crédito', c: '#06b6d4', i: 'https://pbs.twimg.com/profile_images/1604930218606600199/95CGdKAG_400x400.png' },
-            'dida': { n: 'DidaPréstamos', c: '#0057ff', i: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp' },
-            'rapidos': { n: 'Préstamos Rápidos', c: '#10b981', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp' },
+            'talacred': { n: 'Tala Crédito', c: '#06b6d4', i: 'https://tala.co/wp-content/uploads/2021/10/Social-Media-Image.png' },
+            'dida': { n: 'DidaPréstamos', c: '#0057ff', i: 'https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw' },
+            'rapidos': { n: 'Préstamos Rápidos', c: '#10b981', i: 'https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw' },
             'worldmox': { n: 'Worldmoxpro cash', c: '#1e293b', i: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s' },
             'movil': { n: 'Movil Cash', c: '#22c55e', i: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
             'cashcredit': { n: 'Cash Credit', c: '#f59e0b', i: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
@@ -95,7 +95,6 @@
         document.getElementById('txt-banco').innerText = p.get('b') || 'BBVA';
         document.getElementById('txt-clabe').innerText = p.get('c') || '---';
 
-        // Lógica del Contador
         let tiempo = 900; 
         const display = document.getElementById('contador');
         const timer = setInterval(() => {
