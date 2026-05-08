@@ -12,7 +12,6 @@
         .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
         #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 2rem; }
         #main-content { display: none; width: 100%; }
-        .input-monto::-webkit-inner-spin-button { display: none; }
     </style>
 </head>
 <body>
@@ -39,26 +38,17 @@
                 <div class="px-8 mb-4">
                     <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none bg-white">
                         <option value="prestamos|#a3e635|#65a30d|https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png">Préstamos</option>
-                        <option value="dinero|#1e40af|#1d4ed8|https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp">Préstamos de Dinero</option>
                         <option value="nu|#820ad1|#581c87|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png">Préstamos NU</option>
-                        <option value="talacred|#06b6d4|#0891b2|https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw">Tala Crédito</option>
                         <option value="mercadona|#007a33|#005926|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/25/9d/8e/259d8e75-f5f7-eefb-73de-0f5d693e7544/Placeholder.mill/400x400bb-75.webp">MERCADONA</option>
+                        <option value="talacred|#06b6d4|#0891b2|https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw">Tala Crédito</option>
                         <option value="tilt|#3b82f6|#1d4ed8|https://play-lh.googleusercontent.com/GALkEmiM5acYbAGJVkkma1Ij5rDW6CWhSKeGFLcXddAtK3uXmgCPxvfAnVxe325A2_b80xRieYiGjktUw5ajww=w480-h960-rw">Tilt</option>
-                        <option value="dida|#0057ff|#003eb3|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp">DidaPréstamos</option>
-                        <option value="rapidos|#10b981|#059669|https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp">Préstamos rápidos</option>
-                        <option value="worldmox|#1e293b|#0f172a|https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s">Worldmoxpro cash</option>
-                        <option value="movil|#22c55e|#16a34a|https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx">Movil Cash</option>
-                        <option value="cashcredit|#f59e0b|#d97706|https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw">Cash Credit</option>
-                        <option value="stori|#7c3aed|#6d28d9|https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw">Stori Crédito</option>
-                        <option value="facil|#0ea5e9|#0369a1|https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw">Fácil Préstamo</option>
-                        <option value="tala|#fb923c|#ea580c|https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw">Tala Préstamos</option>
-                    </select>
+                        </select>
                 </div>
                 <div id="monto-bg" class="bg-[#65a30d] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
                     <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
                     <div class="flex items-center text-4xl font-black">
                         <span>$</span>
-                        <input type="number" id="monto" value="0.00" step="0.01" class="input-monto bg-transparent border-none outline-none w-full text-white ml-1">
+                        <input type="number" id="monto" value="0.00" step="0.01" class="bg-transparent border-none outline-none w-full text-white ml-1">
                     </div>
                 </div>
             </div>
@@ -68,11 +58,7 @@
                 
                 <div class="flex justify-between border-b pb-2">
                     <span class="text-gray-400 uppercase text-[10px]">Fecha Vencimiento</span>
-                    <input type="date" id="fecha" onchange="calcDias()" class="outline-none text-right font-bold bg-white">
-                </div>
-                <div class="flex justify-between border-b pb-2">
-                    <span class="text-gray-400 uppercase text-[10px]">Días Vencimiento</span>
-                    <span id="l-dias" class="font-black text-lg">0</span>
+                    <input type="date" id="fecha" class="outline-none text-right font-bold bg-white">
                 </div>
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
@@ -81,13 +67,13 @@
                         <option value="STP">STP</option>
                         <option value="KLAR">KLAR</option>
                     </select>
-                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
+                    <span class="text-[10px] text-gray-400 uppercase">Liga de Pago (CLABE)</span>
                     <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">646193405604451002</div>
                 </div>
 
                 <div class="space-y-2">
                     <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase font-bold">
-                    <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none font-bold">
+                    <input type="tel" id="tel" placeholder="Número del cliente" class="w-full border-b py-2 text-center outline-none font-bold">
                 </div>
 
                 <button onclick="generar()" id="btn" class="w-full bg-[#65a30d] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR ORDEN</button>
@@ -129,17 +115,6 @@
             document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
         });
 
-        function calcDias() {
-            const f = new Date(document.getElementById('fecha').value);
-            const hoy = new Date();
-            hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
-            const diffTime = hoy - f;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const el = document.getElementById('l-dias');
-            if (diffDays > 0) { el.innerText = diffDays; el.style.color = "#ef4444"; } 
-            else { el.innerText = "0"; el.style.color = "#1e293b"; }
-        }
-
         function generar() {
             const sel = document.getElementById('prod');
             const data = sel.value.split('|');
@@ -150,7 +125,6 @@
                 v: data[0],
                 b: document.getElementById('metodo').value,
                 c: document.getElementById('display-clabe').innerText,
-                f: document.getElementById('fecha').value,
                 s: Date.now()
             });
             window.location.href = `detalle.html?${p.toString()}`;
