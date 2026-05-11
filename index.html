@@ -12,6 +12,7 @@
         .app-card { width: 100%; max-width: 440px; background: white; border-radius: 2.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
         #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 2rem; }
         #main-content { display: none; width: 100%; }
+        .input-monto::-webkit-inner-spin-button { display: none; }
     </style>
 </head>
 <body>
@@ -42,7 +43,7 @@
                         <option value="mercadona|#007a33|#005926|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/25/9d/8e/259d8e75-f5f7-eefb-73de-0f5d693e7544/Placeholder.mill/400x400bb-75.webp">MERCADONA</option>
                         <option value="talacred|#06b6d4|#0891b2|https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw">Tala Crédito</option>
                         <option value="tilt|#3b82f6|#1d4ed8|https://play-lh.googleusercontent.com/GALkEmiM5acYbAGJVkkma1Ij5rDW6CWhSKeGFLcXddAtK3uXmgCPxvfAnVxe325A2_b80xRieYiGjktUw5ajww=w480-h960-rw">Tilt</option>
-                        </select>
+                    </select>
                 </div>
                 <div id="monto-bg" class="bg-[#65a30d] mx-6 p-6 rounded-[1.5rem] text-left text-white transition-colors duration-500">
                     <span class="text-[10px] font-bold opacity-70 uppercase">Monto de Pago</span>
@@ -66,6 +67,8 @@
                     <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
                         <option value="STP">STP</option>
                         <option value="KLAR">KLAR</option>
+                        <option value="BANREGIO">BANREGIO</option>
+                        <option value="BBVA">BBVA</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago (CLABE)</span>
                     <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">646193405604451002</div>
@@ -107,6 +110,10 @@
                 display.innerText = "646193405604451002";
             } else if(banco === "KLAR") {
                 display.innerText = "661610004536177643";
+            } else if(banco === "BANREGIO") {
+                display.innerText = "058010000154094386";
+            } else if(banco === "BBVA") {
+                display.innerText = "012010015142187595";
             }
         }
 
