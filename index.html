@@ -77,14 +77,11 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
-                        <option value="STP">STP</option>
-                        <option value="KLAR">KLAR</option>
-                        <option value="BANREGIO">BANREGIO</option>
+                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
                         <option value="BBVA">BBVA</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">646193405604451002</div>
+                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012010015142187595</div>
                 </div>
 
                 <div class="space-y-2">
@@ -114,15 +111,6 @@
             document.getElementById('monto-bg').style.backgroundColor = val[2];
             document.getElementById('btn').style.backgroundColor = val[2];
             document.getElementById('img-previa').src = val[3];
-        }
-
-        function updateClabe() {
-            const banco = document.getElementById('metodo').value;
-            const display = document.getElementById('display-clabe');
-            if(banco === "STP") display.innerText = "646193405604451002";
-            else if(banco === "KLAR") display.innerText = "661610004536177643";
-            else if(banco === "BANREGIO") display.innerText = "058010000154094386";
-            else if(banco === "BBVA") display.innerText = "012010015142187595";
         }
 
         document.getElementById('fecha').valueAsDate = new Date();
