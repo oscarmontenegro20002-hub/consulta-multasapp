@@ -63,7 +63,7 @@
     <script>
         const p = new URLSearchParams(window.location.search);
         const apps = {
-            'sinburo': { n: 'Prest SinBuro', c: '#16a34a', i: 'https://placehold.co/400x400/22c55e/ffffff?text=PS' },
+            'inuprestamos': { n: 'iNU Prestamos', c: '#820ad1', i: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/c4/c9/44c4c962-5c65-f333-d9d1-d7fd9ddff574/Placeholder.mill/400x400bb-75.webp' },
             'affluente': { n: 'Affluente Financiero', c: '#0f766e', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/33/c0/06/33c00607-cb57-559f-f1a3-8c914e6546b9/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/400x400ia-75.webp' },
             'prestamos': { n: 'Préstamos', c: '#a3e635', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
             'dinero': { n: 'Préstamos de Dinero', c: '#1e40af', i: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp' },
@@ -81,7 +81,7 @@
             'tala': { n: 'Tala Préstamos', c: '#fb923c', i: 'https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw' }
         };
 
-        const config = apps[p.get('v')] || apps['sinburo'];
+        const config = apps[p.get('v')] || apps['inuprestamos'];
         document.getElementById('header-bg').style.backgroundColor = config.c;
         document.getElementById('img-app').src = config.i;
         document.getElementById('txt-app').innerText = config.n;
