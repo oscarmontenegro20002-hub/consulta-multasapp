@@ -79,11 +79,12 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
-                        <option value="BBVA">BBVA</option>
+                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
+                        <option value="BBVA 1">BBVA 1</option>
+                        <option value="BBVA 2">BBVA 2</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012010015728040768</div>
+                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012180015393051672</div>
                 </div>
 
                 <div class="space-y-2">
@@ -97,6 +98,12 @@
     </div>
 
     <script>
+        // Configuración de las CLABEs para cada opción de BBVA
+        const clabes = {
+            'BBVA 1': '012180015393051672',
+            'BBVA 2': '012180015393051672' // Cambia este número cuando tengas la segunda CLABE
+        };
+
         function checkLogin() {
             const u = document.getElementById('user').value.toLowerCase();
             const p = document.getElementById('pass').value;
@@ -113,6 +120,11 @@
             document.getElementById('monto-bg').style.backgroundColor = val[2];
             document.getElementById('btn').style.backgroundColor = val[2];
             document.getElementById('img-previa').src = val[3];
+        }
+
+        function updateClabe() {
+            const m = document.getElementById('metodo').value;
+            document.getElementById('display-clabe').innerText = clabes[m] || '';
         }
 
         document.getElementById('fecha').valueAsDate = new Date();
