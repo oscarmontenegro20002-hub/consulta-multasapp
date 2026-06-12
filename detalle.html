@@ -88,8 +88,11 @@
         document.getElementById('txt-monto').innerText = '$' + (p.get('m') || '0.00');
         document.getElementById('txt-nom').innerText = p.get('n') || 'Cliente';
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
-        document.getElementById('txt-banco').innerText = p.get('b') || 'BBVA';
-        document.getElementById('txt-clabe').innerText = p.get('c') || '012180015723266626';
+        
+        let bancoOriginal = p.get('b') || 'BBVA';
+        document.getElementById('txt-banco').innerText = bancoOriginal.replace(/ \d+$/, '');
+        
+        document.getElementById('txt-clabe').innerText = p.get('c') || '012010015142187595';
 
         let tiempo = 900; 
         const display = document.getElementById('contador');
