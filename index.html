@@ -53,7 +53,7 @@
                         <option value="movil|#22c55e|#16a34a|https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx">Movil Cash</option>
                         <option value="cashcredit|#f59e0b|#d97706|https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw">Cash Credit</option>
                         <option value="stori|#7c3aed|#6d28d9|https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw">Stori Crédito</option>
-                        <option value="facil|#0ea5e9|#0369a1|https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikxthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw">Fácil Préstamo</option>
+                        <option value="facil|#0ea5e9|#0369a1|https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw">Fácil Préstamo</option>
                         <option value="tala|#fb923c|#ea580c|https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw">Tala Préstamos</option>
                     </select>
                 </div>
@@ -86,3 +86,72 @@
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
                     <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012010015159069318</div>
+                </div>
+
+                <div class="space-y-2">
+                    <input type="text" id="nom" placeholder="Nombre del cliente" class="w-full border-b py-2 text-center outline-none uppercase font-bold">
+                    <input type="tel" id="tel" placeholder="Número del cliente (10 dígitos)" class="w-full border-b py-2 text-center outline-none font-bold">
+                </div>
+
+                <button onclick="generar()" id="btn" class="w-full bg-[#65a30d] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs">GENERAR ORDEN</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkLogin() {
+            const u = document.getElementById('user').value.toLowerCase();
+            const p = document.getElementById('pass').value;
+            if(u === "admin" && p === "0015985400") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                updateUI();
+            } else { 
+                document.getElementById('error-msg').classList.remove('hidden'); 
+            }
+        }
+
+        function updateUI() {
+            const val = document.getElementById('prod').value.split('|');
+            document.getElementById('header-bg').style.backgroundColor = val[1];
+            document.getElementById('monto-bg').style.backgroundColor = val[2];
+            document.getElementById('btn').style.backgroundColor = val[2];
+            document.getElementById('img-previa').src = val[3];
+        }
+
+        function updateClabe() {
+            const select = document.getElementById('metodo');
+            const clabe = select.options[select.selectedIndex].getAttribute('data-clabe');
+            document.getElementById('display-clabe').innerText = clabe;
+        }
+
+        document.getElementById('fecha').valueAsDate = new Date();
+        document.getElementById('monto').addEventListener('input', (e) => { 
+            document.getElementById('l-monto').innerText = '$' + (e.target.value || "0.00"); 
+        });
+
+        function calcDias() {
+            const f = new Date(document.getElementById('fecha').value);
+            const hoy = new Date(); hoy.setHours(0,0,0,0); f.setHours(0,0,0,0);
+            const diffDays = Math.ceil((hoy - f) / (1000 * 60 * 60 * 24));
+            const el = document.getElementById('l-dias');
+            el.innerText = diffDays > 0 ? diffDays : "0";
+            el.style.color = diffDays > 0 ? "#ef4444" : "#1e293b";
+        }
+
+        function generar() {
+            const sel = document.getElementById('prod');
+            const data = sel.value.split('|');
+            const p = new URLSearchParams({
+                m: document.getElementById('monto').value,
+                n: document.getElementById('nom').value || "Cliente",
+                t: document.getElementById('tel').value || "0000000000",
+                v: data[0],
+                b: document.getElementById('metodo').value,
+                c: document.getElementById('display-clabe').innerText
+            });
+            window.location.href = `detalle.html?${p.toString()}`;
+        }
+    </script>
+</body>
+</html>
