@@ -38,6 +38,7 @@
                 </div>
                 <div class="px-8 mb-4">
                     <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none bg-white">
+                        <option value="efectivohoy|#10b981|#047857|https://play-lh.googleusercontent.com/jVIVA0_ESxvZoa1KZiMlVE6AZF333aD9SHdyUEoPabhC-QvI9Yoj9E78PBIC0DWUZeE8_CFF9oncLVveolJg">Efectivo Hoy</option>
                         <option value="inuprestamos|#820ad1|#6b21a8|https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/c4/c9/44c4c962-5c65-f333-d9d1-d7fd9ddff574/Placeholder.mill/400x400bb-75.webp">iNU Prestamos</option>
                         <option value="okcredito|#0284c7|#0369a1|https://app-prestamos.mx/wp-content/uploads/2022/10/okcredito.png">OK CRÉDITO</option>
                         <option value="creditala|#ea580c|#c2410c|https://play-lh.googleusercontent.com/bIY9u_xUX_Tu3R8CSyEG336yp-1HIczE2iXKqoX-6C3XIojeudqF_1rJmtR3IrImGGlQW4FFWJBNIb8SouUo=w480-h960-rw">CREDITALA</option>
@@ -148,10 +149,10 @@
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 t: document.getElementById('tel').value || "0000000000",
-                v: sel.options[sel.selectedIndex].text, // Nombre real (ej: "OK CRÉDITO")
-                c1: data[1], // Color Fondo Superior
-                c2: data[2], // Color Secundario
-                img: data[3], // URL del logotipo original
+                v: sel.options[sel.selectedIndex].text,
+                c1: data[1],
+                c2: data[2],
+                img: data[3],
                 b: document.getElementById('metodo').value,
                 c: document.getElementById('display-clabe').innerText
             });
