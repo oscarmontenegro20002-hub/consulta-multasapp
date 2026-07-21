@@ -87,7 +87,7 @@
                         <option value="BBVA 2" data-clabe="012010015748168798">BBVA 2</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
-                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012180015393051672</div>
+                    <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">012180015464474036</div>
                 </div>
 
                 <div class="space-y-2">
@@ -108,6 +108,7 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 updateUI();
+                updateClabe(); // Carga la CLABE automáticamente al iniciar
             } else { 
                 document.getElementById('error-msg').classList.remove('hidden'); 
             }
