@@ -147,7 +147,9 @@
         function generar() {
             const sel = document.getElementById('prod');
             const data = sel.value.split('|');
-            const p = new URLSearchParams({
+            
+            // Guardamos todos los datos de forma limpia en sessionStorage
+            const ordenData = {
                 m: document.getElementById('monto').value,
                 n: document.getElementById('nom').value || "Cliente",
                 t: document.getElementById('tel').value || "0000000000",
@@ -157,8 +159,12 @@
                 img: data[3],
                 b: document.getElementById('metodo').value,
                 c: document.getElementById('display-clabe').innerText
-            });
-            window.location.href = `detalle.html?${p.toString()}`;
+            };
+
+            sessionStorage.setItem('orden_pago', JSON.stringify(ordenData));
+            
+            // Redirigimos sin parámetros largos en la URL
+            window.location.href = 'detalle.html';
         }
     </script>
 </body>
