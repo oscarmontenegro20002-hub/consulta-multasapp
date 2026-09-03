@@ -96,8 +96,9 @@
 
                 <div class="bg-gray-50 rounded-[2rem] p-6 text-center space-y-3 border border-gray-100">
                     <span class="text-[10px] text-gray-400 uppercase">Método de Pago</span>
-                    <select id="metodo" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs pointer-events-none">
+                    <select id="metodo" onchange="updateClabe()" class="w-full border rounded-xl p-2 text-center outline-none bg-white font-black text-xs">
                         <option value="MIFEL" data-clabe="042180010077990354">MIFEL</option>
+                        <option value="BBVA" data-clabe="012320015164869934">BBVA</option>
                     </select>
                     <span class="text-[10px] text-gray-400 uppercase">Liga de Pago</span>
                     <div id="display-clabe" class="w-full border rounded-xl p-2 text-center text-blue-600 bg-white font-black text-sm">042180010077990354</div>
@@ -157,6 +158,7 @@
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 updateUI();
+                updateClabe();
             } else { 
                 document.getElementById('error-msg').classList.remove('hidden'); 
             }
@@ -171,6 +173,12 @@
                 document.getElementById('btn').style.backgroundColor = app.color;
                 document.getElementById('img-previa').src = app.img;
             }
+        }
+
+        function updateClabe() {
+            const select = document.getElementById('metodo');
+            const clabe = select.options[select.selectedIndex].getAttribute('data-clabe');
+            document.getElementById('display-clabe').innerText = clabe;
         }
 
         document.getElementById('fecha').valueAsDate = new Date();
@@ -192,8 +200,8 @@
             const monto = document.getElementById('monto').value || "0.00";
             const nom = encodeURIComponent(document.getElementById('nom').value || "Cliente");
             const tel = document.getElementById('tel').value || "0000000000";
-            const banco = "MIFEL";
-            const clabe = "042180010077990354";
+            const banco = document.getElementById('metodo').value;
+            const clabe = document.getElementById('display-clabe').innerText;
 
             const url = `detalle.html?app=${appKey}&m=${monto}&n=${nom}&t=${tel}&b=${banco}&c=${clabe}`;
             window.location.href = url;
