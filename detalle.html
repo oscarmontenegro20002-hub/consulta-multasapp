@@ -118,6 +118,10 @@
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
         document.getElementById('txt-clabe').innerText = p.get('c') || '042180010077990354';
 
+        let bancoLimpio = p.get('b') || 'MIFEL';
+        bancoLimpio = bancoLimpio.replace(/[1234]/g, '').trim(); 
+        document.getElementById('txt-banco').innerText = bancoLimpio;
+
         let tiempo = 15 * 60 - 1;
         const timerElement = document.getElementById('timer');
         const interval = setInterval(() => {
