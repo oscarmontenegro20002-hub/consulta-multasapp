@@ -38,6 +38,7 @@
                 </div>
                 <div class="px-8 mb-4">
                     <select id="prod" onchange="updateUI()" class="w-full border-none rounded-xl px-4 py-2 font-bold text-center outline-none bg-white">
+                        <option value="nopalcredito">Nopal Credito</option>
                         <option value="nubeprest">Nube Prest</option>
                         <option value="baubap">Baubap</option>
                         <option value="vivus">Vivus</option>
@@ -117,6 +118,7 @@
 
     <script>
         const APPS = {
+            nopalcredito: { name: 'Nopal Credito', color: '#16a34a', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/b2/fd/88/b2fd8820-cafa-1a3e-b2eb-01a5cfb3f763/Placeholder.mill/400x400bb-75.webp' },
             nubeprest: { name: 'Nube Prest', color: '#0284c7', img: 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/df/e7/e1/dfe7e1bc-02a2-5918-ad88-9f6d41b60a95/Placeholder.mill/400x400bb-75.webp' },
             baubap: { name: 'Baubap', color: '#10b981', img: 'https://play-lh.googleusercontent.com/8bT4kFxFzPy078zlO7h97O2fTBLu5NTemiSr2oxtMnRdZu8OFr5Js7HJ_rMXkL5N0DfHiaTH2vGMhXn353ol=w240-h480-rw' },
             vivus: { name: 'Vivus', color: '#0284c7', img: 'https://play-lh.googleusercontent.com/FpMOQImteiJbZywbqSs6SNQ0ChSTrKNrdQ8I1y9oZjfG8oNv8UbdY-arrWTjFWOU7xZFhOsZ3qkL5UM2JWxO=w240-h480-rw' },
